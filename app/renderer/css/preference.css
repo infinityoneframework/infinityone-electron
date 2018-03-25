@@ -1,0 +1,607 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    cursor: default;
+    user-select: none;
+    font-family: menu, "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    color: #333;
+    background: #efefef;
+}
+
+kbd {
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 15px;
+    font-family: Courier New, Courier, monospace;
+    font-weight: bold;
+    white-space: nowrap;
+    background-color: #f7f7f7;
+    color: #333;
+    margin: 0 0.1em;
+    padding: 0.3em 0.8em;
+    text-shadow: 0 1px 0 #fff;
+    line-height: 1.4;
+}
+
+table,
+th,
+td {
+    border-collapse: collapse;
+    color: #383430;
+}
+
+table {
+    width: 100%;
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+
+table tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+table tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+td {
+    padding: 5px;
+}
+
+td:nth-child(odd) {
+    text-align: right;
+    width: 50%;
+}
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Material Icons'), local('MaterialIcons-Regular'), url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url(../fonts/Montserrat-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    /* Preferred icon size */
+    font-size: 24px;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+}
+
+#content {
+    display: flex;
+    height: 100%;
+    font-family: 'Montserrat';
+}
+
+#sidebar {
+    width: 150px;
+    min-width: 100px;
+    padding: 30px 30px 30px 35px;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    background: #f2f2f2;
+}
+
+#nav-container {
+    padding: 20px 0;
+}
+
+.nav {
+    padding: 5px 0;
+    color: #999;
+    cursor: pointer;
+}
+
+.nav.active {
+    color: #4ebfac;
+    cursor: default;
+    position: relative;
+}
+
+.nav.active::before {
+    background: #464e5a;
+    width: 3px;
+    height: 18px;
+    position: absolute;
+    left: -8px;
+    content: '';
+}
+
+
+/* We don't want to show this in nav item since we have the + button for adding an Organization */
+
+#nav-AddServer {
+    display: none;
+}
+
+#settings-header {
+    font-size: 22px;
+    color: #222c31;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#settings-container {
+    width: 100%;
+    display: flex;
+    padding: 30px;
+    overflow-y: scroll;
+}
+
+#new-server-container {
+    padding-left: 42px;
+    padding-top: 25px;
+    margin-right: 16px;
+}
+
+.title {
+    font-weight: 500;
+    color: #222c31;
+}
+
+.page-title {
+    color: #222c31;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 4px 0 6px 0;
+}
+
+.add-server-info-row {
+    display: flex;
+    margin: 8px 0 0 0;
+}
+
+.add-server-info-right {
+    flex-grow: 1;
+    margin-top: 10px;
+}
+
+.sub-title {
+    padding: 4px 0 6px 0;
+    font-weight: bold;
+    color: #616161;
+}
+
+img.server-info-icon {
+    width: 36px;
+    height: 36px;
+    padding: 4px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.server-info-left {
+    margin: 4px 20px 0 0;
+    min-width: 40%;
+}
+
+.server-info-right {
+    margin-top: 4px;
+    width: 55%;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.server-info-row {
+    display: inline-block;
+    margin: 5px 0 0 0;
+}
+
+.server-info-left .server-info-row {
+    display: inline-flex;
+    align-items: inherit;
+    vertical-align: -2px;
+    position: relative;
+}
+
+.server-url {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.server-info-alias {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.server-url-info {
+    margin-right: 10px;
+}
+
+.setting-input-key {
+    font-size: 14px;
+    height: 27px;
+    line-height: 27px;
+    font-weight: bold;
+    background: transparent;
+    flex-wrap: nowrap;
+    margin-right: 10px;
+}
+
+.setting-input-value {
+    flex-grow: 1;
+    font-size: 14px;
+    border-radius: 3px;
+    padding: 13px;
+    border: #ededed 2px solid;
+    outline-width: 0;
+    background: transparent;
+    max-width: 450px;
+}
+
+.setting-input-value:focus {
+    border: #4EBFAC 2px solid;
+}
+
+.setting-block {
+    width: 100%;
+}
+
+.actions-container {
+    display: flex;
+    font-size: 14px;
+    color: #235d3a;
+    vertical-align: middle;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+
+.action {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    margin-right: 10px;
+}
+
+.action i {
+    margin-right: 5px;
+    font-size: 18px;
+    line-height: 26px;
+}
+
+.settings-pane {
+    flex-grow: 1;
+}
+
+.action:hover {
+    cursor: pointer;
+}
+
+.action.disabled:hover {
+    cursor: default;
+}
+
+.action.disabled {
+    color: #999;
+}
+
+.settings-card {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 12px 30px;
+    margin: 10px 0 20px 0;
+    background: #fff;
+    width: 70%;
+    transition: all 0.2s;
+}
+
+.settings-card:hover {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 0px 0px rgba(0, 0, 0, 0.12);
+}
+
+.hidden {
+    display: none;
+    margin: 5px !important;
+}
+
+.red {
+    color: #ef5350;
+    padding: 8px;
+    border: rgba(239, 83, 80, 0.5) solid 1px;
+}
+
+.red:hover {
+    color: #e63431;
+    border: rgba(239, 83, 80, 0.7) solid 1px;
+    ;
+}
+
+.blue {
+    color: #ffffff;
+    background: #4EBFAC;
+    padding: 3px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.grey {
+    color: #9E9E9E;
+    background: #FAFAFA;
+    border: 1px solid #9E9E9E;
+}
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 6px;
+}
+
+.code {
+    font-family: Courier New, Courier, monospace;
+}
+
+i.open-tab-button {
+    padding-left: 2px;
+    font-size: 19px;
+    cursor: pointer;
+}
+
+.reset-data-button,
+.custom-css-button {
+    display: inline-block;
+    border: none;
+    padding: 10px;
+    width: 120px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+}
+
+.css-delete-action {
+    margin-bottom: 10px;
+}
+
+.reset-data-button:hover {
+    background-color: #3c9f8d;
+    color: #fff;
+}
+
+.selected-css-path {
+    background: #eeeeee;
+    padding: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+}
+
+#remove-custom-css {
+    align-items: flex-end;
+}
+
+#server-info-container {
+    min-height: calc(100% - 260px);
+}
+
+#create-organization-container {
+    font-size: 1.15em;
+}
+
+#create-organization-container i {
+    position: relative;
+    top: 3px;
+}
+
+#open-create-org-link {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.toggle {
+    position: absolute;
+    margin-left: -9999px;
+    visibility: hidden;
+}
+
+.toggle+label {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+}
+
+input.toggle-round+label {
+    padding: 2px;
+    width: 50px;
+    height: 25px;
+    background-color: #dddddd;
+    border-radius: 25px;
+}
+
+input.toggle-round+label:before,
+input.toggle-round+label:after {
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    bottom: 2px;
+    content: "";
+}
+
+input.toggle-round+label:before {
+    right: 2px;
+    background-color: #f1f1f1;
+    border-radius: 25px;
+}
+
+input.toggle-round+label:after {
+    width: 25px;
+    height: 25px;
+    background-color: #fff;
+    border-radius: 100%;
+}
+
+input.toggle-round:checked+label:before {
+    background-color: #4EBFAC;
+}
+
+input.toggle-round:checked+label:after {
+    margin-left: 25px;
+}
+
+
+/*  Add new server modal */
+
+.add-server-modal {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    padding-top: 15vh;
+    left: 0;
+    top: 0;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    /* background: rgba(61, 64, 67, 15); */
+    background: linear-gradient(35deg, #003b52, #45b59b);
+    overflow: auto;
+}
+
+
+/* Modal Content */
+
+.modal-container {
+    background-color: #f4f7f8;
+    margin: auto;
+    padding: 57px;
+    border: #dae1e3 1px solid;
+    width: 550px;
+    height: 370px;
+    border-radius: 4px;
+}
+
+.add-server-modal .page-title {
+    text-align: center;
+    font-size: 1.6rem;
+}
+
+.divider {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    color: #7d878a;
+}
+
+.divider hr {
+    margin-left: 8px;
+    margin-right: 8px;
+    width: 44%;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.server-center {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    padding-top: 13px;
+    margin-left: -5px;
+}
+
+.server-center button {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: auto;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    background: #4EBFAC;
+    border-color: none;
+    border: none;
+    width: 98%;
+    height: 46px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.server-center button:hover {
+    background: #329588;
+}
+
+.server-center button:focus {
+    background: #329588;
+}
+
+
+/* responsive grid */
+
+@media (max-width: 650px) {
+    .selected-css-path {
+        margin-right: 15px;
+    }
+    #css-delete-action {
+        margin-left: 10px;
+    }
+    #css-delete-action span {
+        display: none;
+    }
+}
+
+@media (max-width: 720px) {
+    .modal-container {
+        width: 60vw;
+        padding: 40px;
+        min-width: 300px;
+    }
+    .server-center button {
+        margin-right: -12px;
+        width: 100%;
+    }
+    .divider {
+        margin-right: -8px;
+    }
+    .divider hr {
+        margin-left: 6px;
+        margin-right: 6px;
+        width: 43%;
+    }
+    #new-server-container {
+        padding-left: 0px;
+    }
+}
+
+@media (max-width: 600px) {
+    .divider {
+        margin-left: 4%;
+    }
+    .divider hr {
+        margin-left: 2px;
+        margin-right: 2px;
+        width: 40%;
+    }
+}
