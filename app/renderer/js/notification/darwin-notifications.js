@@ -65,7 +65,7 @@ class DarwinNotification {
 	}
 
 	// not something that is common or
-	// used by zulip server but added to be
+	// used by infinityone server but added to be
 	// future proff.
 	addEventListener(event, handler) {
 		if (event === 'click') {
@@ -91,7 +91,7 @@ class DarwinNotification {
 	}
 
 	// method specific to notification api
-	// used by zulip
+	// used by infinityone
 	close() {
 		return; // eslint-disable-line no-useless-return
 	}

@@ -15,7 +15,7 @@ const setAutoLaunch = AutoLaunchValue => {
 
 	const appPath = process.platform === 'darwin' ? app.getPath('exe').replace(/\.app\/Content.*/, '.app') : undefined; // Use the default
 
-	const ZulipAutoLauncher = new AutoLaunch({
+	const OneAutoLauncher = new AutoLaunch({
 		name: 'InfinityOne',
 		path: appPath,
 		isHidden: false
@@ -23,9 +23,9 @@ const setAutoLaunch = AutoLaunchValue => {
 	const autoLaunchOption = ConfigUtil.getConfigItem('startAtLogin', AutoLaunchValue);
 
 	if (autoLaunchOption) {
-		ZulipAutoLauncher.enable();
+		OneAutoLauncher.enable();
 	} else {
-		ZulipAutoLauncher.disable();
+		OneAutoLauncher.disable();
 	}
 };
 

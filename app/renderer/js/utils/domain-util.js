@@ -28,7 +28,7 @@ class DomainUtil {
 		// Migrate from old schema
 		if (this.db.getData('/').domain) {
 			this.addDomain({
-				alias: 'Zulip',
+				alias: 'InfinityOne',
 				url: this.db.getData('/domain')
 			});
 			this.db.delete('/domain');
@@ -146,7 +146,7 @@ class DomainUtil {
 						});
 					} else {
 						const certErrorMessage = `Do you trust certificate from ${domain}? \n ${error}`;
-						const certErrorDetail = `The server you're connecting to is either someone impersonating the Zulip server you entered, or the server you're trying to connect to is configured in an insecure way.
+						const certErrorDetail = `The server you're connecting to is either someone impersonating the InfinityOne server you entered, or the server you're trying to connect to is configured in an insecure way.
 						\n Unless you have a good reason to believe otherwise, you should not proceed.
 						\n You can click here if you'd like to proceed with the connection.`;
 
@@ -169,9 +169,9 @@ class DomainUtil {
 						});
 					}
 				} else {
-					const invalidZulipServerError = `${domain} does not appear to be a valid Zulip server. Make sure that \
-					\n(1) you can connect to that URL in a web browser and \n (2) if you need a proxy to connect to the Internet, that you've configured your proxy in the Network settings \n (3) its a zulip server`;
-					reject(invalidZulipServerError);
+					const invalidOneServerError = `${domain} does not appear to be a valid InfinityOne server. Make sure that \
+					\n(1) you can connect to that URL in a web browser and \n (2) if you need a proxy to connect to the Internet, that you've configured your proxy in the Network settings \n (3) its a infinityone server`;
+					reject(invalidOneServerError);
 				}
 			});
 		});
@@ -185,7 +185,7 @@ class DomainUtil {
 					const data = JSON.parse(response.body);
 					if (data.hasOwnProperty('realm_icon') && data.realm_icon) {
 						resolve({
-							// Some Zulip Servers use absolute URL for server icon whereas others use relative URL
+							// Some InfinityOne Servers use absolute URL for server icon whereas others use relative URL
 							// Following check handles both the cases
 							icon: data.realm_icon.startsWith('/') ? data.realm_uri + data.realm_icon : data.realm_icon,
 							url: data.realm_uri,
@@ -193,7 +193,7 @@ class DomainUtil {
 						});
 					}
 				} else {
-					reject('Zulip server version < 1.6.');
+					reject('InfinityOne server invalid version.');
 				}
 			});
 		});
@@ -244,9 +244,9 @@ class DomainUtil {
 			if (fs.existsSync(domainJsonPath)) {
 				fs.unlinkSync(domainJsonPath);
 				dialog.showErrorBox(
-					'Error saving new organization',
-					'There seems to be error while saving new organization, ' +
-					'you may have to re-add your previous organizations back.'
+					'Error saving new server',
+					'There seems to be error while saving new server, ' +
+					'you may have to re-add your previous servers back.'
 				);
 				logger.error('Error while JSON parsing domain.json: ');
 				logger.error(err);
@@ -275,11 +275,12 @@ class DomainUtil {
 	}
 
 	formatUrl(domain) {
-		const hasPrefix = (domain.indexOf('http') === 0);
-		if (hasPrefix) {
-			return domain;
+		const link = 'https://' + domain.replace(/https?:\/\//, '');
+
+		if (link.match(/:\d+$/)) {
+			return link;
 		} else {
-			return (domain.indexOf('localhost:') >= 0) ? `http://${domain}` : `https://${domain}`;
+			return link + ':4021';
 		}
 	}
 }
