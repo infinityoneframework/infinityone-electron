@@ -16,7 +16,7 @@ const setAutoLaunch = AutoLaunchValue => {
 	const appPath = process.platform === 'darwin' ? app.getPath('exe').replace(/\.app\/Content.*/, '.app') : undefined; // Use the default
 
 	const ZulipAutoLauncher = new AutoLaunch({
-		name: 'Zulip',
+		name: 'InfinityOne',
 		path: appPath,
 		isHidden: false
 	});
