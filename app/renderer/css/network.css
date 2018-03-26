@@ -27,7 +27,8 @@ html, body {
 
 #reconnect {
     font-size: 16px;
-    background: #009688;
+    background: #5a7920;
+    /*background: #009688;*/
     color: #fff;
     width: 84px;
     height: 32px;

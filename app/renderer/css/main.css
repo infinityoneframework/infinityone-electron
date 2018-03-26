@@ -189,7 +189,8 @@ body {
 
 .tab.active .server-tab {
     opacity: 1;
-    background-color: #648478;
+    background-color: #dfefc3;
+    /*background-color: #648478;*/
 }
 
 .tab .server-tab-badge.active {
@@ -233,7 +234,8 @@ body {
 }
 
 .tab .server-tab-shortcut {
-    color: #648478;
+    color: #a6d256;
+    /*color: #648478;*/
     font-size: 12px;
     text-align: center;
     font-family: sans-serif;

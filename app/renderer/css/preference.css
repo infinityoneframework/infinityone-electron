@@ -115,7 +115,8 @@ td:nth-child(odd) {
 }
 
 .nav.active {
-    color: #4ebfac;
+    color: #a6d256;
+    /*color: #4ebfac;*/
     cursor: default;
     position: relative;
 }
@@ -255,7 +256,8 @@ img.server-info-icon {
 }
 
 .setting-input-value:focus {
-    border: #4EBFAC 2px solid;
+    border: #a6d256 2px solid;
+    /*border: #4EBFAC 2px solid;*/
 }
 
 .setting-block {
@@ -265,7 +267,8 @@ img.server-info-icon {
 .actions-container {
     display: flex;
     font-size: 14px;
-    color: #235d3a;
+    color: #2d3c10;
+    /*color: #235d3a;*/
     vertical-align: middle;
     margin: 10px 0;
     flex-wrap: wrap;
@@ -333,7 +336,8 @@ img.server-info-icon {
 
 .blue {
     color: #ffffff;
-    background: #4EBFAC;
+    /*background: #4EBFAC;*/
+    background: #a6d256;
     padding: 3px;
     padding-right: 10px;
     padding-left: 10px;
@@ -380,7 +384,8 @@ i.open-tab-button {
 }
 
 .reset-data-button:hover {
-    background-color: #3c9f8d;
+    /*background-color: #3c9f8d;*/
+    background-color: #87b530;
     color: #fff;
 }
 
@@ -462,7 +467,8 @@ input.toggle-round+label:after {
 }
 
 input.toggle-round:checked+label:before {
-    background-color: #4EBFAC;
+    /*background-color: #4EBFAC;*/
+    background-color: #a6d256;
 }
 
 input.toggle-round:checked+label:after {
@@ -483,7 +489,8 @@ input.toggle-round:checked+label:after {
     width: 100%;
     height: 100%;
     /* background: rgba(61, 64, 67, 15); */
-    background: linear-gradient(35deg, #003b52, #45b59b);
+    background: linear-gradient(35deg, #003b52, #a6d256);
+    /*background: linear-gradient(35deg, #003b52, #45b59b);*/
     overflow: auto;
 }
 
@@ -540,7 +547,8 @@ input.toggle-round:checked+label:after {
     align-items: center;
     text-align: center;
     color: #fff;
-    background: #4EBFAC;
+    background: #a6d256;
+    /*background: #4EBFAC;*/
     border-color: none;
     border: none;
     width: 98%;
@@ -550,11 +558,13 @@ input.toggle-round:checked+label:after {
 }
 
 .server-center button:hover {
-    background: #329588;
+    background: #87b530;
+    /*background: #329588;*/
 }
 
 .server-center button:focus {
-    background: #329588;
+    background: #87b530;
+    /*background: #329588;*/
 }
 
 

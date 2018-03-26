@@ -62,7 +62,8 @@ body {
 	padding: 8px 15px;
 	margin-top: 30px;
 	text-decoration: none;
-	background-color: #52c2af;
+	background-color: #87b530;
+	/*background-color: #52c2af;*/
 	color: #fff;
 	border-radius: 4px;
 
@@ -70,11 +71,13 @@ body {
 }
 
 .maintenance-info .bug:hover {
-	background-color: #32a692;
+	background-color: #698d25;
+	/*background-color: #32a692;*/
 }
 
 p.detail a {
-	color: #355f4c;
+	color: #5a7920;
+	/*color: #355f4c;*/
 }
 
 p.detail a:hover {

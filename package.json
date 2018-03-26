@@ -44,23 +44,23 @@
       "!docs${/*}",
       "!node_modules/@paulcbetts/cld/deps/cld${/*}"
     ],
-    "copyright": "©2017 Kandra Labs, Inc.",
+    "copyright": "©2018 E-MetroTel",
     "mac": {
       "category": "public.app-category.productivity"
     },
     "linux": {
       "category": "Chat;GNOME;GTK;Network;InstantMessaging",
       "packageCategory": "GNOME;GTK;Network;InstantMessaging",
-      "description": "Zulip Desktop Client for Linux",
+      "description": "InfinityOne Desktop Client for Linux",
       "target": [
         "deb",
         "zip",
         "AppImage"
       ],
-      "maintainer": "Akash Nimare <svnitakash@gmail.com>"
+      "maintainer": "Stephen Pallen <steve.pallen@emetrotel.com>"
     },
     "deb": {
-      "synopsis": "Zulip Desktop App",
+      "synopsis": "InfinityOne Desktop App",
       "afterInstall": "./scripts/debian-add-repo.sh",
       "afterRemove": "./scripts/debian-uninstaller.sh"
     },
@@ -93,7 +93,7 @@
         }
       ],
       "icon": "build/icon.ico",
-      "publisherName": "Kandra Labs, Inc."
+      "publisherName": "E-MetroTel"
     },
     "nsis": {
       "perMachine": true,
