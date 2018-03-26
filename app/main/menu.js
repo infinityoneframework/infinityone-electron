@@ -123,7 +123,7 @@ class AppMenu {
 			{
 				label: `What's New...`,
 				click() {
-					shell.openExternal(`https://github.com/zulip/zulip-electron/releases/tag/v${app.getVersion()}`);
+					shell.openExternal(`https://github.com/infinityoneframework/infinityone-electron/releases/tag/v${app.getVersion()}`);
 				}
 			},
 			{
@@ -145,7 +145,7 @@ class AppMenu {
 					${app.getName()} ${app.getVersion()}
 					Electron ${process.versions.electron}
 					${process.platform} ${process.arch} ${os.release()}`;
-					shell.openExternal(`https://github.com/zulip/zulip-electron/issues/new?body=${encodeURIComponent(body)}`);
+					shell.openExternal(`https://github.com/infinityoneframework/infinityone-electron/issues/new?body=${encodeURIComponent(body)}`);
 				}
 			}];
 	}

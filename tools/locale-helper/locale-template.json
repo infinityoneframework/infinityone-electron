@@ -1,6 +1,6 @@
 {
 	"phrases": [
-		"About Zulip",
+		"About InfinityOne",
 		"Actual Size",
 		"Back",
 		"Close",
@@ -27,7 +27,7 @@
 		"Select All",
 		"Show App Logs",
 		"Toggle DevTools for Active Tab",
-		"Toggle DevTools for Zulip App",
+		"Toggle DevTools for InfinityOne App",
 		"Toggle Full Screen",
 		"Toggle Sidebar",
 		"Toggle Tray Icon",
@@ -36,6 +36,6 @@
 		"Window",
 		"Zoom In",
 		"Zoom Out",
-		"Zulip Help"
+		"InfinityOne Help"
 	]
 }

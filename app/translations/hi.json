@@ -1,5 +1,5 @@
 {
-	"About Zulip": "Zulip के बारे में",
+	"About InfinityOne": "इन्फ़िनिटी के बारे में",
 	"Actual Size": "वास्तविक आकार",
 	"Back": "वापस",
 	"Close": "बंद करे",
@@ -13,6 +13,7 @@
 	"Hard Reload": "कठिन पुन: लोड करें",
 	"Help": "मदद",
 	"History": "इतिहास",
+	"InfinityOne Help": "इन्फिनिटी एक सहायता",
 	"Keyboard Shortcuts": "कुंजीपटल अल्प मार्ग",
 	"Log Out": "लोग आउट",
 	"Minimize": "छोटा करना",
@@ -26,7 +27,7 @@
 	"Select All": "सभी का चयन करे",
 	"Show App Logs": "ऐप लॉग दिखाएं",
 	"Toggle DevTools for Active Tab": "सक्रिय टैब के लिए DevTools टॉगल करें",
-	"Toggle DevTools for Zulip App": "Zulip ऐप के लिए DevTools टॉगल करें",
+	"Toggle DevTools for InfinityOne App": "इन्फिनिटी एक ऐप के लिए DevTools टॉगल करें",
 	"Toggle Full Screen": "पूर्णस्क्रीन चालू करें",
 	"Toggle Sidebar": "साइडबार टॉगल करें",
 	"Toggle Tray Icon": "ट्रे आइकन टॉगल करें",
@@ -34,6 +35,5 @@
 	"View": "राय",
 	"Window": "खिड़की",
 	"Zoom In": "ज़ूम इन",
-	"Zoom Out": "ज़ूम आउट",
-	"Zulip Help": "Zulip सहायता"
+	"Zoom Out": "ज़ूम आउट"
 }
