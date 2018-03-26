@@ -34,7 +34,7 @@ class ShortcutsSection extends BaseSection {
                   </tr>
                   <tr>
                     <td><kbd>${userOSKey}</kbd><kbd>H</kbd></td>
-                    <td>Hide Zulip</td>
+                    <td>Hide InfinityOne</td>
                   </tr>
                   <tr>
                     <td><kbd>Option</kbd><kbd>${userOSKey}</kbd><kbd>H</kbd></td>
@@ -42,7 +42,7 @@ class ShortcutsSection extends BaseSection {
                   </tr>
                   <tr>
                     <td><kbd>${userOSKey}</kbd><kbd>Q</kbd></td>
-                    <td>Quit Zulip</td>
+                    <td>Quit InfinityOne</td>
                   </tr>
                 </table>
                 <div class="setting-control"></div>
@@ -126,7 +126,7 @@ class ShortcutsSection extends BaseSection {
                   </tr>
                   <tr>
                     <td><kbd>Option</kbd><kbd>${userOSKey}</kbd><kbd>I</kbd></td>
-                    <td>Toggle DevTools for Zulip App</td>
+                    <td>Toggle DevTools for InfinityOne App</td>
                   </tr>
                   <tr>
                     <td><kbd>Option</kbd><kbd>${userOSKey}</kbd><kbd>U</kbd></td>
@@ -189,7 +189,7 @@ class ShortcutsSection extends BaseSection {
                   </tr>
                   <tr>
                     <td><kbd>${userOSKey}</kbd> + <kbd>Q</kbd></td>
-                    <td>Quit Zulip</td>
+                    <td>Quit InfinityOne</td>
                   </tr>
                 </table>
                 <div class="setting-control"></div>
@@ -261,7 +261,7 @@ class ShortcutsSection extends BaseSection {
                   </tr>
                   <tr>
                     <td><kbd>${userOSKey}</kbd> + <kbd>Shift</kbd> + <kbd>I</kbd></td>
-                    <td>Toggle DevTools for Zulip App</td>
+                    <td>Toggle DevTools for InfinityOne App</td>
                   </tr>
                   <tr>
                     <td><kbd>${userOSKey}</kbd> + <kbd>Shift</kbd> + <kbd>U</kbd></td>

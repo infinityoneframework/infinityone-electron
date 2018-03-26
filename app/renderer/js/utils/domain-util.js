@@ -104,7 +104,7 @@ class DomainUtil {
 
 		domain = this.formatUrl(domain);
 
-		const checkDomain = domain + '/static/audio/zulip.ogg';
+		const checkDomain = domain + '/images/notification_logo.png';
 
 		const serverConf = {
 			icon: defaultIconUrl,
@@ -123,7 +123,8 @@ class DomainUtil {
 
 				// If the domain contains following strings we just bypass the server
 				const whitelistDomains = [
-					'zulipdev.org'
+					'zulipdev.org',
+					'localhost'
 				];
 
 				// make sure that error is a error or string not undefined

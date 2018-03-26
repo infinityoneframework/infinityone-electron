@@ -13,9 +13,9 @@ class NewServerForm extends BaseComponent {
 	template() {
 		return `
 			<div class="server-input-container">
-				<div class="title">Organization URL</div>
+				<div class="title">InfinityOne URL</div>
 				<div class="add-server-info-row">
-					<input class="setting-input-value" autofocus placeholder="your-organization.zulipchat.com or zulip.your-organization.com"/>
+					<input class="setting-input-value" autofocus placeholder="your-infinityone-server"/>
 				</div>
 				<div class="server-center">
 					<div class="server-save-action">
@@ -23,15 +23,7 @@ class NewServerForm extends BaseComponent {
 					</div>
 				</div>
 				<div class="server-center">
-				<div class="divider">
-					<hr class="left"/>OR<hr class="right" />
 				</div>
-				</div>
-				<div class="server-center">
-				<div class="server-save-action">
-					<button id="open-create-org-link">Create a new organization</button>
-			</div>
-					</div>
 			</div>
 		`;
 	}

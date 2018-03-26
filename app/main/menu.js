@@ -96,7 +96,7 @@ class AppMenu {
 				}
 			}
 		}, {
-			label: 'Toggle DevTools for Zulip App',
+			label: 'Toggle DevTools for InfinityOne App',
 			accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
 			click(item, focusedWindow) {
 				if (focusedWindow) {
@@ -191,7 +191,7 @@ class AppMenu {
 		return [{
 			label: `${app.getName()}`,
 			submenu: [{
-				label: 'About Zulip',
+				label: 'About InfinityOne',
 				click(item, focusedWindow) {
 					if (focusedWindow) {
 						AppMenu.sendAction('open-about');
@@ -291,7 +291,7 @@ class AppMenu {
 		return [{
 			label: 'File',
 			submenu: [{
-				label: 'About Zulip',
+				label: 'About InfinityOne',
 				click(item, focusedWindow) {
 					if (focusedWindow) {
 						AppMenu.sendAction('open-about');
