@@ -5,9 +5,9 @@
 ## - Spellchecker
 ## - Auto updates
   **Check for the logs in -**
-  - **on Linux:** `~/.config/Zulip/log.log`
-  - **on OS X:** `~/Library/Logs/Zulip/log.log`
-  - **on Windows:** `%USERPROFILE%\AppData\Roaming\Zulip\log.log`
+  - **on Linux:** `~/.config/InfinityOne/log.log`
+  - **on OS X:** `~/Library/Logs/InfinityOne/log.log`
+  - **on Windows:** `%USERPROFILE%\AppData\Roaming\InfinityOne\log.log`
 ## - All the installer i.e.
   - Linux (.deb, AppImage)
   - Mac - (.dmg)

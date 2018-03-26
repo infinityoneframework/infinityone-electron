@@ -21,8 +21,8 @@ C:\Windows\system32> npm install --global --production windows-build-tools
 Clone the source locally:
 
 ```sh
-$ git clone https://github.com/zulip/zulip-electron
-$ cd zulip-electron
+$ git clone https://github.com/infinityoneframework/infinityone-electron
+$ cd infinityone-electron
 ```
 
 Install project dependencies:
