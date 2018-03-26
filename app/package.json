@@ -11,10 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/infinityoneframework/infinityone-electron.git"
   },
   "bugs": {
-    "url": ""
+    "url": "https://github.com/infinityoneframework/infinityone-electron/issues"
   },
   "main": "main/index.js",
   "keywords": [

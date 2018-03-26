@@ -13,10 +13,12 @@ require(__dirname + '/shared/preventdrag.js');
 
 const logout = () => {
 	// Create the menu for the below
-	document.querySelector('.dropdown-toggle').click();
+	// document.querySelector('.dropdown-toggle').click();
+	document.querySelector('.account-box').click();
 
-	const nodes = document.querySelectorAll('.dropdown-menu li:last-child a');
-	nodes[nodes.length - 1].click();
+	document.querySelector('#logout').click();
+	// const nodes = document.querySelectorAll('.dropdown-menu li:last-child a');
+	// nodes[nodes.length - 1].click();
 };
 
 const shortcut = () => {
