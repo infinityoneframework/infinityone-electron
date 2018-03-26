@@ -1,7 +1,7 @@
 {
   "name": "infinityone",
   "productName": "InfinityOne",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "main": "./app/main",
   "description": "InfinityOne Desktop App",
   "license": "Apache-2.0",
@@ -31,13 +31,20 @@
     "dist": "electron-builder",
     "mas": "electron-builder --mac mas",
     "travis": "cd ./scripts && ./travis-build-test.sh",
-    "build-locales": "node tools/locale-helper"
+    "build-locales": "node tools/locale-helper",
+    "rel": "build"
   },
   "pre-commit": [
     "test"
   ],
   "build": {
-    "appId": "org.zulip.zulip-electron",
+    "publish": [
+      {
+        "provider": "github",
+        "releaseType": "release"
+      }
+    ],
+    "appId": "org.emetrotel.infinityone-electron",
     "asar": true,
     "files": [
       "**/*",
@@ -83,6 +90,7 @@
       ]
     },
     "win": {
+      "verifyUpdateCodeSignature": false,
       "target": [
         {
           "target": "nsis-web",

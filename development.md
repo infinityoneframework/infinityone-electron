@@ -1,6 +1,6 @@
 # Development setup
 
-This is a guide to running the Zulip desktop app from a source tree,
+This is a guide to running the InfinityOne desktop app from a source tree,
 in order to contribute to developing it.
 
 ## Prerequisites
@@ -41,8 +41,8 @@ On Windows, your C++ compiler should be Visual Studio 2015 or later.
 
 Clone the source locally:
 ```sh
-$ git clone https://github.com/zulip/zulip-electron
-$ cd zulip-electron
+$ git clone https://github.com/infinityoneframework/infinityone-electron
+$ cd infinityone-electron
 ```
 
 Install project dependencies:
