@@ -1,7 +1,7 @@
 const { remote } = require('electron');
 
 // Do not change this
-const appId = 'org.emetrotel.infinityone-electron';
+const appId = 'org.zulip.zulip-electron';
 
 const botsList = [];
 let botsListLoaded = false;

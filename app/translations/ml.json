@@ -1,5 +1,5 @@
 {
-	"About InfinityOne": "എന്നെക്കുറിച്ച്",
+	"About Zulip": "സുലിപ്",
 	"Actual Size": "യഥാർത്ഥ വലുപ്പം",
 	"Back": "തിരികെ",
 	"Close": "അടയ്ക്കുക",
@@ -13,7 +13,6 @@
 	"Hard Reload": "ഹാർഡ് റീലോഡ്",
 	"Help": "സഹായിക്കൂ",
 	"History": "ചരിത്രം",
-	"InfinityOne Help": "ഇൻഫിനിറ്റിഒൻ ഹെൽപ്",
 	"Keyboard Shortcuts": "കീബോർഡ് കുറുക്കുവഴികൾ",
 	"Log Out": "ലോഗ് ഔട്ട്",
 	"Minimize": "ചെറുതാക്കുക",
@@ -27,7 +26,7 @@
 	"Select All": "എല്ലാം തിരഞ്ഞെടുക്കുക",
 	"Show App Logs": "അപ്ലിക്കേഷൻ ലോഗുകൾ കാണിക്കുക",
 	"Toggle DevTools for Active Tab": "സജീവ ടാബിനായി DevTools ടോഗിൾ ചെയ്യുക",
-	"Toggle DevTools for InfinityOne App": "DevinityOne ആപ്ലിക്കേഷനായി DevTools ടോഗിൾ ചെയ്യുക",
+	"Toggle DevTools for Zulip App": "സുലിപ്പ് ആപ്ലിക്കേഷനായി DevTools ടോഗിൾ ചെയ്യുക",
 	"Toggle Full Screen": "പൂർണ്ണ സ്ക്രീൻ ടോഗിൾ ചെയ്യുക",
 	"Toggle Sidebar": "സൈഡ്ബാർ ടോഗിൾ ചെയ്യുക",
 	"Toggle Tray Icon": "ട്രേ ഐക്കൺ ടോഗിൾ ചെയ്യുക",
@@ -35,5 +34,6 @@
 	"View": "കാണുക",
 	"Window": "ജാലകം",
 	"Zoom In": "വലുതാക്കുക",
-	"Zoom Out": "സൂം ഔട്ട്"
+	"Zoom Out": "സൂം ഔട്ട്",
+	"Zulip Help": "സുലിപ്പ് സഹായം"
 }

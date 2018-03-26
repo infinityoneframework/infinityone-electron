@@ -1,5 +1,5 @@
 {
-	"About InfinityOne": "За InfinityOne",
+	"About Zulip": "За Зулип",
 	"Actual Size": "Реален размер",
 	"Back": "обратно",
 	"Close": "Близо",
@@ -13,7 +13,6 @@
 	"Hard Reload": "Трудно презареждане",
 	"Help": "Помогне",
 	"History": "история",
-	"InfinityOne Help": "Помощ за InfinityOne",
 	"Keyboard Shortcuts": "Комбинация от клавиши",
 	"Log Out": "Излез от профила си",
 	"Minimize": "Минимизиране",
@@ -27,7 +26,7 @@
 	"Select All": "Избери всички",
 	"Show App Logs": "Показване на регистрационните файлове на приложения",
 	"Toggle DevTools for Active Tab": "Превключете DevTools за активен раздел",
-	"Toggle DevTools for InfinityOne App": "Превключете DevTools за приложение InfinityOne",
+	"Toggle DevTools for Zulip App": "Превключете DevTools за Zulip App",
 	"Toggle Full Screen": "Превключване на цял екран",
 	"Toggle Sidebar": "Превключване на страничната лента",
 	"Toggle Tray Icon": "Превключване на иконата на тавата",
@@ -35,5 +34,6 @@
 	"View": "изглед",
 	"Window": "прозорец",
 	"Zoom In": "Увеличавам",
-	"Zoom Out": "Отдалечавам"
+	"Zoom Out": "Отдалечавам",
+	"Zulip Help": "Помощ за Zulip"
 }

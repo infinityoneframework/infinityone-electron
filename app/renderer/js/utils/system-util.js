@@ -44,7 +44,7 @@ class SystemUtil {
 	}
 
 	setUserAgent(webViewUserAgent) {
-		this.userAgent = 'InfinityOneElectron/' + app.getVersion() + ' ' + webViewUserAgent;
+		this.userAgent = 'ZulipElectron/' + app.getVersion() + ' ' + webViewUserAgent;
 	}
 
 	getUserAgent() {

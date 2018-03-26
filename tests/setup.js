@@ -31,7 +31,7 @@ function createApp (t) {
 }
 
 // Generates package.json for test app
-// Reads app package.json and updates the productName to config.TEST_APP_PRODUCT_NAME
+// Reads app package.json and updates the productName to config.TEST_APP_PRODUCT_NAME 
 // We do this so that the app integration doesn't doesn't share the same appDataDir as the dev application
 function generateTestAppPackageJson () {
   let packageJson = require(path.join(__dirname, '../package.json'))
@@ -54,7 +54,7 @@ function waitForLoad (app, t, opts) {
   .then(function () {
     return app.webContents.getTitle()
   }).then(function (title) {
-    t.equal(title, 'InfinityOne', 'html title')
+    t.equal(title, 'Zulip', 'html title')
   })
 }
 

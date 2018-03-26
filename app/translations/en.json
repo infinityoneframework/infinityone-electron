@@ -1,5 +1,5 @@
 {
-	"About InfinityOne": "About InfinityOne",
+	"About Zulip": "About Zulip",
 	"Actual Size": "Actual Size",
 	"Back": "Back",
 	"Close": "Close",
@@ -13,7 +13,6 @@
 	"Hard Reload": "Hard Reload",
 	"Help": "Help",
 	"History": "History",
-	"InfinityOne Help": "InfinityOne Help",
 	"Keyboard Shortcuts": "Keyboard Shortcuts",
 	"Log Out": "Log Out",
 	"Minimize": "Minimize",
@@ -27,7 +26,7 @@
 	"Select All": "Select All",
 	"Show App Logs": "Show App Logs",
 	"Toggle DevTools for Active Tab": "Toggle DevTools for Active Tab",
-	"Toggle DevTools for InfinityOne App": "Toggle DevTools for InfinityOne App",
+	"Toggle DevTools for Zulip App": "Toggle DevTools for Zulip App",
 	"Toggle Full Screen": "Toggle Full Screen",
 	"Toggle Sidebar": "Toggle Sidebar",
 	"Toggle Tray Icon": "Toggle Tray Icon",
@@ -35,5 +34,6 @@
 	"View": "View",
 	"Window": "Window",
 	"Zoom In": "Zoom In",
-	"Zoom Out": "Zoom Out"
+	"Zoom Out": "Zoom Out",
+	"Zulip Help": "Zulip Help"
 }

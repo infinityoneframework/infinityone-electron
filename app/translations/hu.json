@@ -1,5 +1,5 @@
 {
-	"About InfinityOne": "Az InfinityOne-ról",
+	"About Zulip": "A Zulipról",
 	"Actual Size": "Valódi méret",
 	"Back": "Hát",
 	"Close": "Bezárás",
@@ -13,7 +13,6 @@
 	"Hard Reload": "Hard Reload",
 	"Help": "Segítség",
 	"History": "Történelem",
-	"InfinityOne Help": "InfinityOne Súgó",
 	"Keyboard Shortcuts": "Gyorsbillentyűket",
 	"Log Out": "Kijelentkezés",
 	"Minimize": "Kis méret",
@@ -27,7 +26,7 @@
 	"Select All": "Mindet kiválaszt",
 	"Show App Logs": "Alkalmazásnaplók megjelenítése",
 	"Toggle DevTools for Active Tab": "A DevTools aktiválása az Aktív laphoz",
-	"Toggle DevTools for InfinityOne App": "A DevTools áthelyezése az InfinityOne App alkalmazásba",
+	"Toggle DevTools for Zulip App": "Kapcsolja a DevTools-ot a Zulip App-hoz",
 	"Toggle Full Screen": "Teljes képernyőre váltás",
 	"Toggle Sidebar": "Oldalsáv átkapcsolása",
 	"Toggle Tray Icon": "Tálcaikon átkapcsolása",
@@ -35,5 +34,6 @@
 	"View": "Kilátás",
 	"Window": "Ablak",
 	"Zoom In": "Nagyítás",
-	"Zoom Out": "Kicsinyítés"
+	"Zoom Out": "Kicsinyítés",
+	"Zulip Help": "Zulip Súgó"
 }

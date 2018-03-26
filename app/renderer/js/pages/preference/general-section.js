@@ -236,7 +236,7 @@ class GeneralSection extends BaseSection {
 	}
 
 	clearAppDataDialog() {
-		const clearAppDataMessage = 'By clicking proceed you will be removing all added accounts and preferences from InfinityOne. When the application restarts, it will be as if you are starting InfinityOne for the first time.';
+		const clearAppDataMessage = 'By clicking proceed you will be removing all added accounts and preferences from Zulip. When the application restarts, it will be as if you are starting InfinityOne for the first time.';
 		const getAppPath = path.join(app.getPath('appData'), app.getName());
 
 		dialog.showMessageBox({

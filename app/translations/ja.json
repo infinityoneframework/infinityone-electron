@@ -1,5 +1,5 @@
 {
-	"About InfinityOne": "InfinityOneについて",
+	"About Zulip": "チューリップについて",
 	"Actual Size": "実際のサイズ",
 	"Back": "バック",
 	"Close": "閉じる",
@@ -13,7 +13,6 @@
 	"Hard Reload": "ハードリロード",
 	"Help": "助けて",
 	"History": "歴史",
-	"InfinityOne Help": "InfinityOneヘルプ",
 	"Keyboard Shortcuts": "キーボードショートカット",
 	"Log Out": "ログアウト",
 	"Minimize": "最小化する",
@@ -27,7 +26,7 @@
 	"Select All": "すべて選択",
 	"Show App Logs": "アプリケーションログを表示する",
 	"Toggle DevTools for Active Tab": "DevTools for Activeタブを切り替える",
-	"Toggle DevTools for InfinityOne App": "InfinityOne AppのDevToolsの切り替え",
+	"Toggle DevTools for Zulip App": "Zulip AppのDevToolsの切り替え",
 	"Toggle Full Screen": "フルスクリーン切り替え",
 	"Toggle Sidebar": "サイドバーの切り替え",
 	"Toggle Tray Icon": "トレイアイコンを切り替える",
@@ -35,5 +34,6 @@
 	"View": "ビュー",
 	"Window": "窓",
 	"Zoom In": "ズームイン",
-	"Zoom Out": "ズームアウトする"
+	"Zoom Out": "ズームアウトする",
+	"Zulip Help": "チューリップヘルプ"
 }
