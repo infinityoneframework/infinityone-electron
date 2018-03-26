@@ -39,8 +39,8 @@ const config = {
 	showUnreadCount: true,
 	unreadColor: '#000000',
 	readColor: '#000000',
-	unreadBackgroundColor: '#B9FEEA',
-	readBackgroundColor: '#B9FEEA',
+	unreadBackgroundColor: '#C0DF86',
+	readBackgroundColor: '#C0DF86',
 	size: trayIconSize(),
 	thick: process.platform === 'win32'
 };
