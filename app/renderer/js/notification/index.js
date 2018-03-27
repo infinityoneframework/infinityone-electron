@@ -26,6 +26,7 @@ window.addEventListener('load', () => {
 	setNotificationCallback((title, opts) => {
 		// const handlersOpts = opts.opts;
 		// delete opts.opts;
+		console.log('notification', title, opts);
 		const localNotification = new Notification(title, opts);
 		// setHandlers(Notification, handlersOpts);
 		return localNotification;
