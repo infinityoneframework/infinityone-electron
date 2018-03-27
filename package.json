@@ -1,7 +1,7 @@
 {
   "name": "infinityone",
   "productName": "InfinityOne",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "main": "./app/main",
   "description": "InfinityOne Desktop App",
   "license": "Apache-2.0",
