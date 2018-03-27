@@ -14,7 +14,13 @@ const logger = new Logger({
 
 let instance = null;
 
-const defaultIconUrl = path.normailize('../renderer/img/icon.png');
+let defaultIconUrl = '../renderer/img/icon.png';
+
+console.log('process.platform', process.platform);
+
+if (process.platform === 'win') {
+	defaultIconUrl = path.normailize(defaultIconUrl);
+}
 
 class DomainUtil {
 	constructor() {
