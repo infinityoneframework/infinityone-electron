@@ -4,9 +4,15 @@ const { ipcRenderer } = require('electron');
 const url = require('url');
 const MacNotifier = require('node-mac-notifier');
 const ConfigUtil = require('../utils/config-util');
+const Logger = require('../utils/logger-util');
 const {
 	appId, customReply, focusCurrentServer, parseReply, setupReply
 } = require('./helpers');
+
+const logger = new Logger({
+	file: 'notifications.log',
+	timestamp: true
+});
 
 let replyHandler;
 let clickHandler;
@@ -16,6 +22,9 @@ class DarwinNotification {
 		const { host, protocol } = location;
 		const { icon } = opts;
 		const profilePic = url.resolve(`${protocol}//${host}`, icon);
+
+		logger.info('title:', title);
+		console.log('nofification', title, profilePic, opts);
 
 		this.tag = opts.tag;
 		const notification = new MacNotifier(title, Object.assign(opts, {
@@ -45,6 +54,7 @@ class DarwinNotification {
 
 	// Override default Notification permission
 	static get permission() {
+		logger.info('get permission');
 		return ConfigUtil.getConfigItem('showNotification') ? 'granted' : 'denied';
 	}
 

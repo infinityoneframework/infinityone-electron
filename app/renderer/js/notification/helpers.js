@@ -6,6 +6,20 @@ const appId = 'org.emetrotel.infinityone-electron';
 const botsList = [];
 let botsListLoaded = false;
 
+function setNotificationCallback(callback) {
+	const OldNotify = window.Notification;
+	const newNotify = (title, opt) => {
+		return callback(title, opt);
+		// return new OldNotify(title, opt);
+	};
+	newNotify.requestPermission = OldNotify.requestPermission.bind(OldNotify);
+	Object.defineProperty(newNotify, 'permission', {
+		get: () => OldNotify.permission
+	});
+
+	window.Notification = newNotify;
+}
+
 // this function load list of bots from the server
 // sync=True for a synchronous getJSON request
 // in case botsList isn't already completely loaded when required in parseRely
@@ -138,6 +152,19 @@ function setupReply(id) {
 	narrow.by_subject(id, { trigger: 'notification' });
 }
 
+function clickHandler() {
+
+}
+function replyHandler() {
+
+}
+
+function setHandlers(Notification, opts) {
+	console.log(opts);
+	Notification.addEventListener('click', clickHandler);
+	Notification.addEventListener('reply', replyHandler);
+}
+
 module.exports = {
 	appId,
 	checkElements,
@@ -145,5 +172,6 @@ module.exports = {
 	parseReply,
 	setupReply,
 	focusCurrentServer,
-	loadBots
+	setHandlers,
+	setNotificationCallback
 };
