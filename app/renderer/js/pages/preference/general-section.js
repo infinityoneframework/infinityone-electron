@@ -38,7 +38,7 @@ class GeneralSection extends BaseSection {
 				</div>
 				<div class="title">Desktop Notification</div>
 				<div class="settings-card">
-					<div class="setting-row" id="show-notification-option">
+					<div class="setting-row" id="show-notification-option" style="display:${process.platform === 'darwin' ? '' : 'none'}">
 						<div class="setting-description">Show Desktop Notifications</div>
 						<div class="setting-control"></div>
 					</div>
@@ -95,7 +95,7 @@ class GeneralSection extends BaseSection {
 						<button class="reset-data-button blue">Reset App Data</button>
 					</div>
 				</div>
-            </div>
+      </div>
 		`;
 	}
 
