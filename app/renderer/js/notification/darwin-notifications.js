@@ -3,8 +3,8 @@
 const { ipcRenderer } = require('electron');
 const url = require('url');
 const MacNotifier = require('node-mac-notifier');
-const ConfigUtil = require('../utils/config-util');
 const Logger = require('../utils/logger-util');
+const ConfigUtil = require('../utils/config-util');
 const {
 	appId, customReply, focusCurrentServer, parseReply, setupReply
 } = require('./helpers');
@@ -17,21 +17,26 @@ const logger = new Logger({
 let replyHandler;
 let clickHandler;
 class DarwinNotification {
+
 	constructor(title, opts) {
+		if (DarwinNotification.permission === 'denied') {
+			return;
+		}
+
 		const silent = ConfigUtil.getConfigItem('silent') || false;
 		const { host, protocol } = location;
 		const { icon } = opts;
 		const profilePic = url.resolve(`${protocol}//${host}`, icon);
 
-		logger.info('title:', title);
-		console.log('nofification', title, profilePic, opts);
-
+		console.log('permission: ', DarwinNotification.permission);
+		logger.info('permission: ', DarwinNotification.permission);
 		this.tag = opts.tag;
 		const notification = new MacNotifier(title, Object.assign(opts, {
 			bundleId: appId,
-			canReply: true,
+			canReply: false,
 			silent,
-			icon: profilePic
+			icon: profilePic,
+			subtitle: opts.subtitle
 		}));
 
 		notification.addEventListener('click', () => {
@@ -53,8 +58,8 @@ class DarwinNotification {
 	}
 
 	// Override default Notification permission
-	static get permission() {
-		logger.info('get permission');
+	static get _permission() {
+		console.log('-------> darwin notification permission', ConfigUtil.getConfigItem('showNotification'));
 		return ConfigUtil.getConfigItem('showNotification') ? 'granted' : 'denied';
 	}
 

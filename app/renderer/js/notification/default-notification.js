@@ -13,6 +13,10 @@ const logger = new Logger({
 const NativeNotification = window.Notification;
 class BaseNotification extends NativeNotification {
 	constructor(title, opts) {
+		// if (BaseNotification.permission === 'denied') {
+		// 	return;
+		// }
+
 		logger.info('constructor', title);
 		console.log('notification opts', opts);
 		// opts.silent = true;
@@ -31,7 +35,7 @@ class BaseNotification extends NativeNotification {
 	}
 
 	// Override default Notification permission
-	static get permission() {
+	static get _permission() {
 		return ConfigUtil.getConfigItem('showNotification') ? 'granted' : 'denied';
 	}
 }
