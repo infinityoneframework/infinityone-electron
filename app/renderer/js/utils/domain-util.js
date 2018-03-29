@@ -7,6 +7,8 @@ const JsonDB = require('node-json-db');
 const request = require('request');
 const Logger = require('./logger-util');
 
+const defaultRealmIcon = '/images/notification_logo.png';
+
 const logger = new Logger({
 	file: `domain-util.log`,
 	timestamp: true
@@ -16,11 +18,12 @@ let instance = null;
 
 let defaultIconUrl = '../renderer/img/icon.png';
 
-console.log('process.platform', process.platform);
-
-if (process.platform === 'win') {
-	defaultIconUrl = path.normailize(defaultIconUrl);
+if (process.platform === 'win32') {
+	defaultIconUrl = path.normalize(defaultIconUrl);
 }
+
+// Fix https issue
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 class DomainUtil {
 	constructor() {
@@ -110,7 +113,7 @@ class DomainUtil {
 
 		domain = this.formatUrl(domain);
 
-		const checkDomain = domain + '/images/notification_logo.png';
+		const checkDomain = domain + defaultRealmIcon;
 
 		const serverConf = {
 			icon: defaultIconUrl,
@@ -189,11 +192,19 @@ class DomainUtil {
 			request(serverSettingsUrl, (error, response) => {
 				if (!error && response.statusCode === 200) {
 					const data = JSON.parse(response.body);
-					if (data.hasOwnProperty('realm_icon') && data.realm_icon) {
+					if (data.hasOwnProperty('realm_uri')) {
+						let realmIcon;
+
+						if (data.realm_icon) {
+							realmIcon = data.realm_icon;
+						} else {
+							realmIcon = defaultRealmIcon;
+						}
+
 						resolve({
 							// Some InfinityOne Servers use absolute URL for server icon whereas others use relative URL
 							// Following check handles both the cases
-							icon: data.realm_icon.startsWith('/') ? data.realm_uri + data.realm_icon : data.realm_icon,
+							icon: realmIcon.startsWith('/') ? data.realm_uri + realmIcon : realmIcon,
 							url: data.realm_uri,
 							alias: data.realm_name
 						});
