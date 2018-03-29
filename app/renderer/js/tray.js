@@ -10,6 +10,7 @@ const {Tray, Menu, nativeImage, BrowserWindow} = remote;
 const APP_ICON = path.join(__dirname, '../../resources/tray', 'tray');
 
 const ConfigUtil = require(__dirname + '/utils/config-util.js');
+const DomainUtil = require(__dirname + '/utils/domain-util.js');
 
 const iconPath = () => {
 	if (process.platform === 'linux') {
@@ -176,21 +177,27 @@ ipcRenderer.on('destroytray', event => {
 	return event;
 });
 
+const getToolTip = function () {
+	const { url } = DomainUtil.getDomain(ConfigUtil.getConfigItem('lastActiveTab'));
+	return `InfinityOne\nActive Server: ${url}\n`;
+};
+
 ipcRenderer.on('tray', (event, arg) => {
 	if (!window.tray) {
 		return;
 	}
 	// We don't want to create tray from unread messages on macOS since it already has dock badges.
 	if (process.platform === 'linux' || process.platform === 'win32') {
+		const prefix = getToolTip();
 		if (arg === 0) {
 			unread = arg;
 			window.tray.setImage(iconPath());
-			window.tray.setToolTip('No unread messages');
+			window.tray.setToolTip(prefix + 'No unread messages');
 		} else {
 			unread = arg;
 			renderNativeImage(arg).then(image => {
 				window.tray.setImage(image);
-				window.tray.setToolTip(arg + ' unread messages');
+				window.tray.setToolTip(prefix + arg + ' unread messages');
 			});
 		}
 	}
