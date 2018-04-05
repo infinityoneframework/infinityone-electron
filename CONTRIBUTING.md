@@ -10,14 +10,12 @@ InfinityOne-Desktop app is built on top of [Electron](http://electron.atom.io/).
 
 ## Community
 
-* The whole InfinityOne documentation, such as setting up a development environment, setting up with the InfinityOne webapp project, and testing, can be read [here](https://zulip.readthedocs.io).
+* The whole InfinityOne documentation, such as setting up a development environment, setting up with the InfinityOne webapp project, and testing, can be read [here](https://github.com/infinityoneframework/infinity_one).
 
-* If you have any questions regarding infinityone-electron, open an [issue](https://github.com/infinityoneframework/infinityone-electron/issues/new/) or ask it on [chat.zulip.org](https://chat.zulip.org/#narrow/stream/electron).
+* If you have any questions regarding infinityone-electron, open an [issue](https://github.com/infinityoneframework/infinityone-electron/issues/new/).
 
 ## Issue
 Ensure the bug was not already reported by searching on GitHub under [issues](https://github.com/infinityoneframework/infinityone-electron/issues). If you're unable to find an open issue addressing the bug, open a [new issue](https://github.com/infinityoneframework/infinityone-electron/issues/new).
-
-The [zulipbot](https://github.com/zulip/zulipbot) helps to claim an issue by commenting the following in the comment section: "**@zulipbot** claim". **@zulipbot** will assign you to the issue and label the issue as **in progress**. For more details, check out [**@zulipbot**](https://github.com/zulip/zulipbot).
 
 Please pay attention to the following points while opening an issue.
 
