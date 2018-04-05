@@ -129,7 +129,7 @@ class AppMenu {
 			{
 				label: `${appName} Help`,
 				click() {
-					shell.openExternal('https://zulipchat.com/help/');
+					shell.openExternal('https://chat.spallen.com/help/');
 				}
 			}, {
 				label: 'Show App Logs',
