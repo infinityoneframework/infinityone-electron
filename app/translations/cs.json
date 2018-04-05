@@ -1,5 +1,5 @@
 {
-	"About Zulip": "O společnosti Zulip",
+	"About InfinityOne": "O společnosti InfinityOne",
 	"Actual Size": "Aktuální velikost",
 	"Back": "Zadní",
 	"Close": "Zavřít",
@@ -13,6 +13,7 @@
 	"Hard Reload": "Hard Reload",
 	"Help": "Pomoc",
 	"History": "Dějiny",
+	"InfinityOne Help": "Nápověda InfinityOne",
 	"Keyboard Shortcuts": "Klávesové zkratky",
 	"Log Out": "Odhlásit se",
 	"Minimize": "Minimalizujte",
@@ -26,7 +27,7 @@
 	"Select All": "Vybrat vše",
 	"Show App Logs": "Zobrazit protokoly aplikace",
 	"Toggle DevTools for Active Tab": "Přepínač DevTools pro aktivní kartu",
-	"Toggle DevTools for Zulip App": "Přepnout nástroj DevTools pro aplikaci Zulip App",
+	"Toggle DevTools for InfinityOne App": "Přepnout nástroj DevTools pro aplikace InfinityOne",
 	"Toggle Full Screen": "Přepnout na celou obrazovku",
 	"Toggle Sidebar": "Přepnout postranní panel",
 	"Toggle Tray Icon": "Přepnout ikonu zásobníku",
@@ -34,6 +35,5 @@
 	"View": "Pohled",
 	"Window": "Okno",
 	"Zoom In": "Přiblížit",
-	"Zoom Out": "Oddálit",
-	"Zulip Help": "Zulip Nápověda"
+	"Zoom Out": "Oddálit"
 }
