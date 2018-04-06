@@ -309,7 +309,7 @@ img.server-info-icon {
     padding: 12px 30px;
     margin: 10px 0 20px 0;
     background: #fff;
-    width: 70%;
+    width: calc(100% - 60px);
     transition: all 0.2s;
 }
 
