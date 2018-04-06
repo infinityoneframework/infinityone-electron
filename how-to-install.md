@@ -24,7 +24,7 @@
 
 **Installer (recommended)**:
 
-1. Download [InfinityOne-Web-Setup-x.x.x.exe][LR]
+1. Download [Infinity One-Web-Setup-x.x.x.exe][LR]
 2. Run the installer, wait until it finishes
 3. Done! The app will update automatically
 

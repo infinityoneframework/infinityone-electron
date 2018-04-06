@@ -14,7 +14,7 @@ class ServersSection extends BaseSection {
 		<div class="add-server-modal">
 			<div class="modal-container">
 				<div class="settings-pane" id="server-settings-pane">
-					<div class="page-title">Add a InfinityOne server</div>
+					<div class="page-title">Add an Infinity One server</div>
 					<div id="new-server-container"></div>
 				</div>
 			</div>

@@ -1,9 +1,9 @@
 {
   "name": "infinityone",
   "productName": "InfinityOne",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "main": "./app/main",
-  "description": "InfinityOne Desktop App",
+  "description": "Infinity One Desktop App",
   "license": "Apache-2.0",
   "copyright": "E-MetroTel Global Inc.",
   "author": {
@@ -58,7 +58,7 @@
     "linux": {
       "category": "Chat;GNOME;GTK;Network;InstantMessaging",
       "packageCategory": "GNOME;GTK;Network;InstantMessaging",
-      "description": "InfinityOne Desktop Client for Linux",
+      "description": "Infinity One Desktop Client for Linux",
       "target": [
         "deb",
         "zip",
@@ -67,7 +67,7 @@
       "maintainer": "Stephen Pallen <steve.pallen@emetrotel.com>"
     },
     "deb": {
-      "synopsis": "InfinityOne Desktop App",
+      "synopsis": "Infinity One Desktop App",
       "afterInstall": "./scripts/debian-add-repo.sh",
       "afterRemove": "./scripts/debian-uninstaller.sh"
     },
@@ -110,7 +110,7 @@
     }
   },
   "keywords": [
-    "InfinityOne",
+    "Infinity One",
     "Group Chat app",
     "electron-app",
     "electron",

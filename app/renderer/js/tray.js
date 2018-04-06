@@ -179,7 +179,7 @@ ipcRenderer.on('destroytray', event => {
 
 const getToolTip = function () {
 	const { url } = DomainUtil.getDomain(ConfigUtil.getConfigItem('lastActiveTab'));
-	return `InfinityOne\nActive Server: ${url}\n`;
+	return `Infinity One\nActive Server: ${url}\n`;
 };
 
 ipcRenderer.on('tray', (event, arg) => {

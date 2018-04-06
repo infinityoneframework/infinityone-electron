@@ -1,24 +1,24 @@
 # User Guide
 
-> Welcome! This guide will walk you through the basics of using Zulip Desktop.
+> Welcome! This guide will walk you through the basics of using Infinity One Desktop.
 
 
-## Get Zulip Desktop
+## Get Infinity One Desktop
 
-
+Visit the [Releases page](https://github.com/infinityoneframework/infinityone-electron/releases) to download the the Infinity One Desktop Client.
 
 ## Connect to a Server
 
 ### Connect through a proxy
 
-It's possible to connect to your server through a proxy. 
-You can enter the proxy settings in the `Network` section of App Settings. 
+It's possible to connect to your server through a proxy.
+You can enter the proxy settings in the `Network` section of App Settings.
 There are three fields provided:
 * `PAC script` - The URL associated with the PAC file.
 * `Proxy rules` - Rules indicating which proxies to use.
 * `Proxy bypass rules` - Rules indicating which URLs should
     bypass the proxy settings.
-	
+
 For a typical setup where internet access is required to use an HTTP proxy,
 but URLs on the local network should be accessed directly, configure as follows:
 

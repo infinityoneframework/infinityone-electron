@@ -1,7 +1,7 @@
-# InfinityOne Desktop Client
+# Infinity One Desktop Client
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 
-Desktop client for InfinityOne. Available for Mac, Linux and Windows.
+Desktop client for Infinity One. Available for Mac, Linux and Windows.
 
 <img src="readme_hero.png"/>
 
@@ -11,7 +11,7 @@ Please see [installation guide](https://chat.spallen.com/help/desktop-app-instal
 # Features
 * Sign in to multiple servers
 * Desktop Notifications with inline reply support
-* Multilanguage SpellChecker
+* Multi-language SpellChecker
 * OSX/Win/Linux installers
 * Automatic Updates (macOS/Windows/Linux)
 * Keyboard shortcuts

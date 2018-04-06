@@ -133,7 +133,8 @@ class DomainUtil {
 				// If the domain contains following strings we just bypass the server
 				const whitelistDomains = [
 					'zulipdev.org',
-					'localhost'
+					'localhost',
+					'chat.spallen.com'
 				];
 
 				// make sure that error is a error or string not undefined
@@ -155,7 +156,7 @@ class DomainUtil {
 						});
 					} else {
 						const certErrorMessage = `Do you trust certificate from ${domain}? \n ${error}`;
-						const certErrorDetail = `The server you're connecting to is either someone impersonating the InfinityOne server you entered, or the server you're trying to connect to is configured in an insecure way.
+						const certErrorDetail = `The server you're connecting to is either someone impersonating the Infinity One server you entered, or the server you're trying to connect to is configured in an insecure way.
 						\n Unless you have a good reason to believe otherwise, you should not proceed.
 						\n You can click here if you'd like to proceed with the connection.`;
 
@@ -178,8 +179,8 @@ class DomainUtil {
 						});
 					}
 				} else {
-					const invalidOneServerError = `${domain} does not appear to be a valid InfinityOne server. Make sure that \
-					\n(1) you can connect to that URL in a web browser and \n (2) if you need a proxy to connect to the Internet, that you've configured your proxy in the Network settings \n (3) its a infinityone server`;
+					const invalidOneServerError = `${domain} does not appear to be a valid Infinity One server. Make sure that \
+					\n(1) you can connect to that URL in a web browser and \n (2) if you need a proxy to connect to the Internet, that you've configured your proxy in the Network settings \n (3) its an Infinity One server`;
 					reject(invalidOneServerError);
 				}
 			});
@@ -210,7 +211,7 @@ class DomainUtil {
 						});
 					}
 				} else {
-					reject('InfinityOne server invalid version.');
+					reject('Infinity One server invalid version.');
 				}
 			});
 		});

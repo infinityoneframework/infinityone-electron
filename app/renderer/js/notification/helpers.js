@@ -1,16 +1,10 @@
 const { remote } = require('electron');
 
-const Logger = require('../utils/logger-util');
 // Do not change this
 const appId = 'org.emetrotel.infinityone-electron';
 
 const botsList = [];
 let botsListLoaded = false;
-
-const logger = new Logger({
-	file: 'notifications.log',
-	timestamp: true
-});
 
 function setNotificationCallback(callback) {
 	const OldNotify = window.Notification;
@@ -21,8 +15,6 @@ function setNotificationCallback(callback) {
 	newNotify.requestPermission = OldNotify.requestPermission.bind(OldNotify);
 	Object.defineProperty(newNotify, 'permission', {
 		get: () => {
-			console.log('get permission........');
-			logger.info('get permission .......');
 			return OldNotify.permission && newNotify.permission;
 		}
 	});
@@ -32,12 +24,9 @@ function setNotificationCallback(callback) {
 
 function setNotificationCallback2(NewNotification) {
 	const OldNotify = window.Notification;
-	console.log('.................... setNotificationCallback2', NewNotification);
 
 	Object.defineProperty(NewNotification, 'permission', {
 		get: () => {
-			logger.info('get permission');
-			console.log('get permission');
 			return OldNotify.permission && NewNotification._permission;
 		}
 	});

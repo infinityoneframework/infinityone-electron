@@ -2,7 +2,7 @@
 
 const BaseComponent = require(__dirname + '/../../components/base.js');
 const DomainUtil = require(__dirname + '/../../utils/domain-util.js');
-const shell = require('electron').shell;
+// const shell = require('electron').shell;
 
 class NewServerForm extends BaseComponent {
 	constructor(props) {
@@ -13,9 +13,9 @@ class NewServerForm extends BaseComponent {
 	template() {
 		return `
 			<div class="server-input-container">
-				<div class="title">InfinityOne URL</div>
+				<div class="title">Infinity One URL</div>
 				<div class="add-server-info-row">
-					<input class="setting-input-value" autofocus placeholder="your-infinityone-server"/>
+					<input class="setting-input-value" autofocus placeholder="your-infinity-one-server"/>
 				</div>
 				<div class="server-center">
 					<div class="server-save-action">
@@ -54,14 +54,6 @@ class NewServerForm extends BaseComponent {
 		});
 	}
 
-	openCreateNewOrgExternalLink() {
-		const link = 'https://zulipchat.com/new/';
-		const externalCreateNewOrgEl = document.getElementById('open-create-org-link');
-		externalCreateNewOrgEl.addEventListener('click', () => {
-			shell.openExternal(link);
-		});
-	}
-
 	initActions() {
 		this.$saveServerButton.addEventListener('click', () => {
 			this.submitFormHandler();
@@ -73,8 +65,6 @@ class NewServerForm extends BaseComponent {
 				this.submitFormHandler();
 			}
 		});
-		// open create new org link in default browser
-		this.openCreateNewOrgExternalLink();
 	}
 }
 

@@ -61,7 +61,7 @@ function createMainWindow() {
 
 	const win = new electron.BrowserWindow({
 		// This settings needs to be saved in config
-		title: 'InfinityOne',
+		title: 'Infinity One',
 		icon: iconPath(),
 		x: mainWindowState.x,
 		y: mainWindowState.y,
@@ -103,7 +103,7 @@ function createMainWindow() {
 		}
 	});
 
-	win.setTitle('InfinityOne');
+	win.setTitle('Infinity One');
 
 	win.on('enter-full-screen', () => {
 		win.webContents.send('enter-fullscreen');

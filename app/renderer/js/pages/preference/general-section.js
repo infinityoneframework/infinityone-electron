@@ -43,7 +43,7 @@ class GeneralSection extends BaseSection {
 						<div class="setting-control"></div>
 					</div>
 					<div class="setting-row" id="silent-option">
-						<div class="setting-description">Mute all sounds from InfinityOne</div>
+						<div class="setting-description">Mute all sounds from Infinity One</div>
 						<div class="setting-control"></div>
 					</div>
 				</div>
@@ -236,7 +236,7 @@ class GeneralSection extends BaseSection {
 	}
 
 	clearAppDataDialog() {
-		const clearAppDataMessage = 'By clicking proceed you will be removing all added accounts and preferences from InfinityOne. When the application restarts, it will be as if you are starting InfinityOne for the first time.';
+		const clearAppDataMessage = 'By clicking proceed you will be removing all added accounts and preferences from Infinity One. When the application restarts, it will be as if you are starting Infinity One for the first time.';
 		const getAppPath = path.join(app.getPath('appData'), app.getName());
 
 		dialog.showMessageBox({

@@ -1,6 +1,6 @@
 # Development setup
 
-This is a guide to running the InfinityOne desktop app from a source tree,
+This is a guide to running the Infinity One desktop app from a source tree,
 in order to contribute to developing it.
 
 ## Prerequisites

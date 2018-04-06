@@ -29,7 +29,7 @@ function linuxUpdateNotification() {
 			if (semver.gt(latestVersion, app.getVersion())) {
 				const notified = LinuxUpdateUtil.getUpdateItem(latestVersion);
 				if (notified === null) {
-					new Notification({title: 'InfinityOne Update', body: 'A new version ' + latestVersion + ' is available. Please update using your package manager.'}).show();
+					new Notification({title: 'Infinity One Update', body: 'A new version ' + latestVersion + ' is available. Please update using your package manager.'}).show();
 					LinuxUpdateUtil.setUpdateItem(latestVersion, true);
 				}
 			}

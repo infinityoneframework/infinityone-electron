@@ -59,7 +59,6 @@ class DarwinNotification {
 
 	// Override default Notification permission
 	static get _permission() {
-		console.log('-------> darwin notification permission', ConfigUtil.getConfigItem('showNotification'));
 		return ConfigUtil.getConfigItem('showNotification') ? 'granted' : 'denied';
 	}
 
