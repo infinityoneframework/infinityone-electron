@@ -44,11 +44,35 @@ class ServerManagerView {
 
 	init() {
 		this.loadProxy().then(() => {
-			this.initSidebar();
-			this.initTabs();
-			this.initActions();
-			this.registerIpcs();
-			this.initDefaultSettings();
+			this.checkServers().then(() => {
+				this.completeInit();
+			});
+		});
+	}
+
+	completeInit() {
+		this.initSidebar();
+		this.initTabs();
+		this.initActions();
+		this.registerIpcs();
+		this.initDefaultSettings();
+
+		ipcRenderer.on('toggle-sidebar', (event, state) => {
+			this.toggleSidebar(state);
+		});
+
+		ipcRenderer.on('toggle-silent', (event, state) => {
+			const webviews = document.querySelectorAll('webview');
+			webviews.forEach(webview => {
+				try {
+					webview.setAudioMuted(state);
+				} catch (err) {
+					// webview is not ready yet
+					webview.addEventListener('dom-ready', () => {
+						webview.isAudioMuted();
+					});
+				}
+			});
 		});
 	}
 
@@ -124,6 +148,40 @@ class ServerManagerView {
 		} else {
 			this.openSettings('AddServer');
 		}
+	}
+
+	checkServers() {
+		return this.initServers(DomainUtil.getDomains());
+	}
+
+	initServers(servers) {
+		return new Promise(resolve => {
+			if (servers.length === 0) {
+				resolve(servers);
+			} else {
+				let cnt = servers.length;
+
+				for (let i = 0; i < servers.length; i++) {
+					const server = servers[i];
+
+					DomainUtil.checkDomain(server.url, true).then(
+						serverConfig => {
+							if (server.alias !== serverConfig.alias || server.iconUrl !== serverConfig.iconUrl) {
+								DomainUtil.updateDomain(i, serverConfig);
+							}
+							if (--cnt <= 0) {
+								resolve();
+							}
+						},
+						() => {
+							if (--cnt <= 0) {
+								resolve();
+							}
+						}
+					);
+				}
+			}
+		});
 	}
 
 	initServer(server, index) {
@@ -303,27 +361,6 @@ class ServerManagerView {
 			tabs: this.tabs,
 			activeTabIndex: this.activeTabIndex
 		});
-
-		ipcRenderer.on('toggle-sidebar', (event, state) => {
-			const selector = 'webview:not([class*=disabled])';
-			const webview = document.querySelector(selector);
-			const webContents = webview.getWebContents();
-			webContents.send('toggle-sidebar', state);
-		});
-
-		ipcRenderer.on('toggle-silent', (event, state) => {
-			const webviews = document.querySelectorAll('webview');
-			webviews.forEach(webview => {
-				try {
-					webview.setAudioMuted(state);
-				} catch (err) {
-					// webview is not ready yet
-					webview.addEventListener('dom-ready', () => {
-						webview.isAudioMuted();
-					});
-				}
-			});
-		});
 	}
 
 	destroyTab(name, index) {
@@ -502,7 +539,9 @@ class ServerManagerView {
 window.onload = () => {
 	const serverManagerView = new ServerManagerView();
 	const reconnectUtil = new ReconnectUtil(serverManagerView);
+
 	serverManagerView.init();
+
 	window.addEventListener('online', () => {
 		reconnectUtil.pollInternetAndReload();
 	});

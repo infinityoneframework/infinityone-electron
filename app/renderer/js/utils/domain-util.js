@@ -16,7 +16,7 @@ const logger = new Logger({
 
 let instance = null;
 
-let defaultIconUrl = '../renderer/img/icon.png';
+let defaultIconUrl = '../renderer/img/icon-server.png';
 
 if (process.platform === 'win32') {
 	defaultIconUrl = path.normalize(defaultIconUrl);
@@ -199,13 +199,14 @@ class DomainUtil {
 						if (data.realm_icon) {
 							realmIcon = data.realm_icon;
 						} else {
-							realmIcon = defaultRealmIcon;
+							realmIcon = defaultIconUrl;
 						}
 
 						resolve({
 							// Some InfinityOne Servers use absolute URL for server icon whereas others use relative URL
 							// Following check handles both the cases
 							icon: realmIcon.startsWith('/') ? data.realm_uri + realmIcon : realmIcon,
+							iconUrl: realmIcon,
 							url: data.realm_uri,
 							alias: data.realm_name
 						});
