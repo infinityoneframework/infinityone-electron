@@ -1,8 +1,9 @@
 'use strict';
-const os = require('os');
+// const os = require('os');
 const path = require('path');
 
-const { app, shell, BrowserWindow, Menu } = require('electron');
+// const { app, shell, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 
 const fs = require('fs-extra');
 
@@ -119,37 +120,44 @@ class AppMenu {
 			{
 				label: `${appName + ' Desktop-'} v${app.getVersion()}`,
 				enabled: false
-			},
-			{
-				label: `What's New...`,
-				click() {
-					shell.openExternal(`https://github.com/infinityoneframework/infinityone-electron/releases/tag/v${app.getVersion()}`);
-				}
-			},
-			{
-				label: `${appName} Help`,
-				click() {
-					shell.openExternal('https://chat.spallen.com/help/');
-				}
-			}, {
-				label: 'Show App Logs',
-				click() {
-					shell.openItem(app.getPath('userData'));
-				}
-			}, {
-				label: 'Report an Issue...',
-				click() {
-					const body = `
-					<!-- Please succinctly describe your issue and steps to reproduce it. -->
-					-
-					${app.getName()} ${app.getVersion()}
-					Electron ${process.versions.electron}
-					${process.platform} ${process.arch} ${os.release()}`;
-					shell.openExternal(`https://github.com/infinityoneframework/infinityone-electron/issues/new?body=${encodeURIComponent(body)}`);
-				}
 			}];
 	}
 
+	// getHelpSubmenu() {
+	// 	return [
+	// 		{
+	// 			label: `${appName + ' Desktop-'} v${app.getVersion()}`,
+	// 			enabled: false
+	// 		},
+			// {
+			// 	label: `What's New...`,
+			// 	click() {
+			// 		shell.openExternal(`https://github.com/infinityoneframework/infinityone-electron/releases/tag/v${app.getVersion()}`);
+			// 	}
+			// },
+			// {
+			// 	label: `${appName} Help`,
+			// 	click() {
+			// 		shell.openExternal('https://chat.spallen.com/help/');
+			// 	}
+			// }, {
+			// 	label: 'Show App Logs',
+			// 	click() {
+			// 		shell.openItem(app.getPath('userData'));
+			// 	}
+			// }, {
+			// 	label: 'Report an Issue...',
+			// 	click() {
+			// 		const body = `
+			// 		<!-- Please succinctly describe your issue and steps to reproduce it. -->
+			// 		-
+			// 		${app.getName()} ${app.getVersion()}
+			// 		Electron ${process.versions.electron}
+			// 		${process.platform} ${process.arch} ${os.release()}`;
+			// 		shell.openExternal(`https://github.com/infinityoneframework/infinityone-electron/issues/new?body=${encodeURIComponent(body)}`);
+			// 	}
+			// }
+	// }
 	getWindowSubmenu(tabs, activeTabIndex) {
 		const initialSubmenu = [{
 			role: 'minimize'
