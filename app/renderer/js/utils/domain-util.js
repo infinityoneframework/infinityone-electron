@@ -299,7 +299,7 @@ class DomainUtil {
 		if (link.match(/:\d+$/)) {
 			return link;
 		} else {
-			return link + ':4021';
+			return link + ':21326';
 		}
 	}
 }
