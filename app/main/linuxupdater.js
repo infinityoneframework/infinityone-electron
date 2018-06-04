@@ -7,8 +7,6 @@ const ConfigUtil = require('../renderer/js/utils/config-util');
 const LinuxUpdateUtil = require('../renderer/js/utils/linux-update-util');
 
 function linuxUpdateNotification() {
-	// let	url = 'http://repo.uc-x.org/infinityone/releases';
-	// let	url = 'https://api.github.com/repos/zulip/zulip-electron/releases';
 	let	url = 'https://api.github.com/repos/infinityoneframework/infinityone-electron/releases';
 	url = ConfigUtil.getConfigItem('betaUpdate') ? url : url + '/latest';
 

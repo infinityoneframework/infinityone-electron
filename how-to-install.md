@@ -10,15 +10,15 @@
 
 **DMG or zip**:
 
-1. Download [Zulip-x.x.x.dmg][LR] or [Zulip-x.x.x-mac.zip][LR]
+1. Download [InfinityOne-x.x.x.dmg][LR] or [InfinityOne-x.x.x-mac.zip][LR]
 2. Open or unzip the file and drag the app into the `Applications` folder
 3. Done! The app will update automatically
 
 **Using brew**:
 
-1. Run `brew cask install zulip` in your terminal
+1. Run `brew cask install infinity_one` in your terminal
 2. The app will be installed in your `Applications`
-3. Done! The app will update automatically (you can also use `brew update && brew upgrade zulip`)
+3. Done! The app will update automatically (you can also use `brew update && brew upgrade infinity_one`)
 
 ## Windows
 

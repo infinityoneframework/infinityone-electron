@@ -15,7 +15,7 @@ if [ $SUDO_USER ];
 	else getSudoUser=`whoami`;
 fi
 
-# Get the path for Zulip's desktop entry which is created by auto-launch script
+# Get the path for InfinityOne's desktop entry which is created by auto-launch script
 getDesktopEntry=/home/$getSudoUser/.config/autostart/infinityone.desktop;
 
 # Remove desktop entry if exists

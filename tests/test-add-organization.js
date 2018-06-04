@@ -7,7 +7,7 @@ test('add-organization', function (t) {
   const app = setup.createApp()
   setup.waitForLoad(app, t)
     .then(() => app.client.windowByIndex(1)) // focus on webview
-    .then(() => app.client.setValue('.setting-input-value', 'chat.zulip.org'))
+    .then(() => app.client.setValue('.setting-input-value', 'chat.infinityoneframework.org'))
     .then(() => app.client.click('.server-save-action'))
     .then(() => setup.wait(5000))
     .then(() => app.client.windowByIndex(0)) // Switch focus back to main win

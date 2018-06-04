@@ -29,9 +29,3 @@ cache:
 
 script:
 - npm run travis
-notifications:
-  webhooks:
-    urls:
-      - https://zulip.org/zulipbot/travis
-    on_success: always
-    on_failure: always
