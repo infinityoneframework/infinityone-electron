@@ -49,12 +49,16 @@ class WebView extends BaseComponent {
 			const { url } = event;
 			const domainPrefix = DomainUtil.getDomain(this.props.index).url;
 
-			if (LinkUtil.isInternal(domainPrefix, url) || url === (domainPrefix + '/')) {
-				event.preventDefault();
-				this.$el.loadURL(url);
-			} else {
-				event.preventDefault();
-				shell.openExternal(url);
+			try {
+				if (LinkUtil.isInternal(domainPrefix, url) || url === (domainPrefix + '/')) {
+					event.preventDefault();
+					this.$el.loadURL(url);
+				} else {
+					event.preventDefault();
+					shell.openExternal(url);
+				}
+			} catch (err) {
+				console.warn('error registering listeners');
 			}
 		});
 
@@ -92,6 +96,7 @@ class WebView extends BaseComponent {
 		});
 
 		this.$el.addEventListener('dom-ready', () => {
+			console.log('dom-ready');
 			if (this.props.role === 'server') {
 				this.$el.classList.add('onload');
 			}
@@ -101,6 +106,7 @@ class WebView extends BaseComponent {
 		this.$el.addEventListener('did-fail-load', event => {
 			const { errorDescription } = event;
 			const hasConnectivityErr = (SystemUtil.connectivityERR.indexOf(errorDescription) >= 0);
+			console.log('dom-fail-load', event, errorDescription, hasConnectivityErr);
 			if (hasConnectivityErr) {
 				console.error('error', errorDescription);
 				this.props.onNetworkError();
@@ -108,6 +114,7 @@ class WebView extends BaseComponent {
 		});
 
 		this.$el.addEventListener('did-start-loading', () => {
+			console.log('dom-start-loading');
 			let userAgent = SystemUtil.getUserAgent();
 			if (!userAgent) {
 				SystemUtil.setUserAgent(this.$el.getUserAgent());

@@ -121,10 +121,10 @@ class AppMenu {
 				label: `${appName + ' Desktop-'} v${app.getVersion()}`,
 				enabled: false
 			}, {
-			 	label: 'Show App Data',
-			 	click() {
-			 		shell.openItem(app.getPath('userData'));
-			 	}
+				label: 'Show App Data',
+				click() {
+					shell.openItem(app.getPath('userData'));
+				}
 			}
 		];
 	}

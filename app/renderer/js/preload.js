@@ -41,13 +41,17 @@ process.once('loaded', () => {
 // To prevent failing this script on linux we need to load it after the document loaded
 document.addEventListener('DOMContentLoaded', () => {
 	// Get the default language of the server
-	const serverLanguage = page_params.default_language; // eslint-disable-line no-undef, camelcase
+	if (typeof page_params === 'undefined') {
+		console.log('page_params is not defined');
+	} else {
+		const serverLanguage = page_params.default_language; // eslint-disable-line no-undef, camelcase
 
-	if (serverLanguage) {
-		// Set spellcheker language
-		ConfigUtil.setConfigItem('spellcheckerLanguage', serverLanguage);
-		// Init spellchecker
-		SetupSpellChecker.init();
+		if (serverLanguage) {
+			// Set spellcheker language
+			ConfigUtil.setConfigItem('spellcheckerLanguage', serverLanguage);
+			// Init spellchecker
+			SetupSpellChecker.init();
+		}
 	}
 
 	// redirect users to network troubleshooting page

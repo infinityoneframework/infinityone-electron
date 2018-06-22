@@ -23,7 +23,11 @@ if (process.platform === 'darwin') {
 window.addEventListener('load', () => {
 	setNotificationCallback2(Notification);
 
-	window.one_chat.notifier.audioEnabled = () => {
-		return !(ConfigUtil.getConfigItem('silent') || false);
-	};
+	if (typeof window.one_chat !== 'undefined' && typeof window.one_chat.notifier !== 'undefined') {
+		window.one_chat.notifier.audioEnabled = () => {
+			return !(ConfigUtil.getConfigItem('silent') || false);
+		};
+	} else {
+		console.warn('window.one_chat.notifier is not defined');
+	}
 });

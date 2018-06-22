@@ -213,8 +213,7 @@ class DomainUtil {
 								alias: data.realm_name
 							});
 						}
-					}
-					catch(err) {
+					} catch (err) {
 						reject('Infinity One server invalid response');
 					}
 				} else {
