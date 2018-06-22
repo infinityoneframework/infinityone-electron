@@ -3,7 +3,7 @@
 const path = require('path');
 
 // const { app, shell, BrowserWindow, Menu } = require('electron');
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, shell, BrowserWindow, Menu } = require('electron');
 
 const fs = require('fs-extra');
 
@@ -120,7 +120,13 @@ class AppMenu {
 			{
 				label: `${appName + ' Desktop-'} v${app.getVersion()}`,
 				enabled: false
-			}];
+			}, {
+			 	label: 'Show App Data',
+			 	click() {
+			 		shell.openItem(app.getPath('userData'));
+			 	}
+			}
+		];
 	}
 
 	// getHelpSubmenu() {

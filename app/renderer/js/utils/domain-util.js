@@ -34,6 +34,7 @@ class DomainUtil {
 		}
 
 		this.reloadDB();
+
 		// Migrate from old schema
 		if (this.db.getData('/').domain) {
 			this.addDomain({
@@ -192,24 +193,29 @@ class DomainUtil {
 		return new Promise((resolve, reject) => {
 			request(serverSettingsUrl, (error, response) => {
 				if (!error && response.statusCode === 200) {
-					const data = JSON.parse(response.body);
-					if (data.hasOwnProperty('realm_uri')) {
-						let realmIcon;
+					try {
+						const data = JSON.parse(response.body);
+						if (data.hasOwnProperty('realm_uri')) {
+							let realmIcon;
 
-						if (data.realm_icon) {
-							realmIcon = data.realm_icon;
-						} else {
-							realmIcon = defaultIconUrl;
+							if (data.realm_icon) {
+								realmIcon = data.realm_icon;
+							} else {
+								realmIcon = defaultIconUrl;
+							}
+
+							resolve({
+								// Some InfinityOne Servers use absolute URL for server icon whereas others use relative URL
+								// Following check handles both the cases
+								icon: realmIcon.startsWith('/') ? data.realm_uri + realmIcon : realmIcon,
+								iconUrl: realmIcon,
+								url: data.realm_uri,
+								alias: data.realm_name
+							});
 						}
-
-						resolve({
-							// Some InfinityOne Servers use absolute URL for server icon whereas others use relative URL
-							// Following check handles both the cases
-							icon: realmIcon.startsWith('/') ? data.realm_uri + realmIcon : realmIcon,
-							iconUrl: realmIcon,
-							url: data.realm_uri,
-							alias: data.realm_name
-						});
+					}
+					catch(err) {
+						reject('Infinity One server invalid response');
 					}
 				} else {
 					reject('Infinity One server invalid version.');

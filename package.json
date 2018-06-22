@@ -1,7 +1,7 @@
 {
   "name": "infinityone",
   "productName": "InfinityOne",
-  "version": "0.9.2",
+  "version": "1.0.0-rc",
   "main": "./app/main",
   "description": "Infinity One Desktop App",
   "license": "Apache-2.0",
@@ -115,7 +115,12 @@
     "electron-app",
     "electron",
     "Desktop app",
-    "InstantMessaging"
+    "InstantMessaging",
+    "WebRTC",
+    "E-MetroTel",
+    "Unified Communications",
+    "Collaboration",
+    "Telecommunications"
   ],
   "devDependencies": {
     "assert": "1.4.1",
