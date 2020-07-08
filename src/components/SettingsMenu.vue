@@ -1,7 +1,8 @@
 <template>
   <v-navigation-drawer 
-    style="background-color: #eee; min-height:100vh"
+    style="background-color: #f2f2f2; min-height:100vh;margin-left: 60px"
     permanent
+    app
   >
     <v-list dense>
       <v-list-item

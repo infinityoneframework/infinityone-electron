@@ -16,8 +16,13 @@
   "main": "background.js",
   "dependencies": {
     "@mdi/font": "^3.6.95",
+    "console": "^0.7.2",
     "core-js": "^3.6.5",
+    "electron-is-dev": "^1.2.0",
+    "electron-log": "^4.2.2",
+    "node-json-db": "^1.1.0",
     "roboto-fontface": "*",
+    "semver": "^7.3.2",
     "vue": "^2.6.11",
     "vue-i18n": "^8.17.3",
     "vue-router": "^3.2.0",

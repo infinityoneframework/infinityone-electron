@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <drawer />
-    <v-content>
+    <v-content class="main-content">
       <router-view />
     </v-content>
   </v-app>
@@ -24,3 +24,12 @@ export default {
   }),
 };
 </script>
+<style lang="sass">
+  .settings-page
+    margin-left: 60px
+    background-color: #eee
+
+  .main-content
+    background-color: #eee
+</style>
+
