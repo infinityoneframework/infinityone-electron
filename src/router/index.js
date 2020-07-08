@@ -1,6 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "../views/Home.vue"
+import Settings from '@/views/Settings'
+import Organizations from '@/views/Organizations'
+import OrganizationForm from '@/views/OrganizationForm'
 
 Vue.use(VueRouter);
 
@@ -18,13 +21,28 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
-  }
-];
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    component: Settings,
+  },
+  {
+    path: "/organizations",
+    name: "Organizations",
+    component: Organizations,
+  },
+  {
+    path: "/organization/new",
+    name: "OrganizationForm",
+    component: OrganizationForm,
+  },
+]
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
-});
+})
 
-export default router;
+export default router
