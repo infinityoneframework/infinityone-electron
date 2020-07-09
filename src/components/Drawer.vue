@@ -28,6 +28,7 @@
                 link
                 v-bind="attrs"
                 v-on="on"
+                @contextmenu.prevent="contextMenu(inx)"
               >
                 <v-list-item-icon 
                   class="d-flex flex-column"
@@ -96,6 +97,20 @@
         </template>
       </v-list>
     </v-layout>
+    <v-menu 
+      v-model="menu"
+      top
+    >
+      <v-list dense>
+        <v-list-item
+          v-for="item in menuItems"
+          :key="item.id"
+          @click="menuClick(item.id)"
+        >
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
   </v-navigation-drawer>
 </template>
 <script>
@@ -116,6 +131,13 @@
       ],
       userOSKey: userOSKey,
       tipColor: '#222',
+      menu: false,
+      menuItems: [
+        { id: 'openDevTools', title: 'Open Dev Tools' },
+        { id: 'reload', title: 'Reload' },
+      ],
+      selectedServer: null,
+      selectServerIndex: null,
     }),
 
     computed: {
@@ -129,7 +151,29 @@
         if (to === 'reload') {
           SystemUtil.reload()
         }
-      }
+      },
+
+      contextMenu (index) {
+        this.selectedServer = this.servers[index]
+        this.selectedServer.index = index
+        console.log('context menu for ', index, this.selectedServer.alias)
+        this.selectedServerIndex = index
+        this.menu = true
+      },
+
+      menuClick(id) {
+        console.log('menuclick', id, this.selectedServer)
+        const el = document.querySelector(`.server-view[data-tab-id="${this.selectedServerIndex}"]`)
+        console.log('el', el)
+        switch (id) {
+          case 'openDevTools':
+            el.openDevTools()
+            break
+          case 'reload':
+            el.reload()
+            break
+        }
+      },
     },
   }
 </script>

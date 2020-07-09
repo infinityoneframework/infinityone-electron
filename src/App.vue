@@ -7,14 +7,39 @@
       <keep-alive>
         <component :is="currentComponent" />
       </keep-alive>
+      <v-btn 
+        v-if="videoActive"
+        class="end-video-btn" 
+        dark 
+        fab 
+        small
+        color="error"
+        @click="endVideo"
+      >
+        <v-icon dark>
+          mdi-video-off
+        </v-icon>
+      </v-btn>
+      <v-btn 
+        v-if="videoActive"
+        class="video-btn" 
+        dark 
+        fab 
+        color="#a6d256"
+        @click="showVideo"
+      >
+        <v-icon dark>
+          mdi-video
+        </v-icon>
+      </v-btn>
     </v-content>
   </v-app>
 </template>
 
 <script>
   import Drawer from '@/components/Drawer'
-  import { get } from 'vuex-pathify'
   import DomainUtil from '@/utils/domain-util'
+  import { get, sync } from 'vuex-pathify'
 
   export default {
     name: 'App',
@@ -28,13 +53,18 @@
 
     computed: {
       serverId: get('settings/activeServerId'),
-      servers: get('settings/servers'),
-      activeServerIndex: get('settings/activeServerIndex'),
-      currentComponent: get('settings/currentComponent'),
-      settingsDrawer: get('settings/settingsDrawer'),
+      ...get('settings', ['currentComponent', 'settingsDrawer', 'servers', 'activeServerIndex']),
+      ...sync('settings', ['videoActive', 'lastServerId']),
     },
 
     watch: {
+      serverId (curr, past) {
+        console.log('serverId', curr, past)
+        if (curr) {
+          this.lastServerId = curr
+        }
+      },
+
       activeServerIndex (index, previous) {
         if (index !== previous && index !== undefined) {
           console.debug('activeServerIndex changed', index, previous)
@@ -47,6 +77,17 @@
           console.debug('servers changed')
           DomainUtil.updateMenu(servers, this.activeServerIndex)
         }
+      },
+    },
+
+    methods: {
+      showVideo () {
+        console.log('showVideo')
+        this.$router.push({ path: '/video' })
+      },
+
+      endVideo () {
+        this.videoActive = false
       },
     },
   }
@@ -74,5 +115,13 @@
     padding: 0.3em 0.8em !important
     text-shadow: 0 1px 0 #fff
     line-height: 1.4
+  .video-btn
+    position: absolute
+    bottom: 20px
+    right: 20px
+  .end-video-btn
+    position: absolute
+    bottom: 20px
+    right: 90px
 </style>
 

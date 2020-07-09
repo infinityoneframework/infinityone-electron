@@ -6,6 +6,7 @@ import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 import windowStateKeeper from 'electron-window-state'
 import appMenu from '@/main/menu'
 import ConfigUtil from '@/utils/config-util'
+import path from 'path'
 
 // const appMenu = require('@/main/menu');
 
@@ -47,6 +48,7 @@ function createWindow() {
       nodeIntegration: true,
       webviewTag: true,
       enableRemoteModule: true,
+      preload: path.join(__dirname, 'preload.js'),
     }
   });
 
@@ -57,7 +59,7 @@ function createWindow() {
   } else {
     createProtocol("app");
     // Load the index.html when not in development
-    win.loadURL("app://./index.html");
+    win.loadURL("app://./index.html")
   }
 
   win.on("closed", () => {

@@ -11,8 +11,11 @@ const state = {
   nextServerId: 0,
   serverIds: {},
   activeServerId: null,
+  lastServerId: null,
   currentComponent: null,
   settingsDrawer: false,
+  videoActive: false,
+  videoUrl: null,
 }
 
 const mutations = {

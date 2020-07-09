@@ -8,6 +8,7 @@ module.exports = {
     },
     electronBuilder: {
       nodeIntegration: true,
+      preload: 'src/preload.js',
     }
   },
   transpileDependencies: [

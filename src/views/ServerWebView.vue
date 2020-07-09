@@ -14,6 +14,7 @@
         :data-tab-id="inx"
         :src="server.url"
         :node-integration="nodeIntegration"
+        preload="file://./preload.js"
         disablewebsecurity
         remote-module
         partition="persist:webviewsession"
@@ -23,7 +24,7 @@
   </v-main>
 </template>
 <script>
-  import { get } from 'vuex-pathify'
+  import { get, sync } from 'vuex-pathify'
 
   export default {
     name: 'ServerWebView',
@@ -33,15 +34,38 @@
       nodeIntegration: true,
       tabIndex: 0,
       preload: false,
+      $elList: [],
     }),
 
     computed: {
       serverIds: get('settings/serverIds'),
       ...get('settings', ['servers', 'activeServerId']),
+      ...sync('settings', ['videoUrl', 'videoActive']),
     },
   
     mounted () {
       console.debug('View mounted')
+      const $elList = document.querySelectorAll('webview.server-view')
+      this.$elList = $elList
+      
+      setTimeout(() => {
+        $elList.forEach(item => {
+          item.executeJavaScript('window.isElectron = true')
+          item.addEventListener('dom-ready', () => {
+            item.executeJavaScript('window.isElectron = true')
+          })
+          item.addEventListener('new-window', (e) => {
+            // const parsed = require('url').parse(e.url)
+            const protocol = require('url').parse(e.url).protocol
+            console.log('new-window', protocol, e)
+            if (e.url.match(/video\?/)) {
+              this.videoUrl = e.url
+              this.videoActive = true
+              this.$router.push({ path: '/video' })
+            }
+          })
+        })
+      }, 1000)
     },
 
     updated () {

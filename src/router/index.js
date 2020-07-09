@@ -6,6 +6,7 @@ import Servers from '@/views/settings/Servers'
 import General from '@/views/settings/General'
 import OrganizationForm from '@/views/OrganizationForm'
 import ServerWebView from '@/views/ServerWebView'
+import VideoWindow from '@/views/VideoWindow'
 import store from '@/store'
 
 Vue.use(VueRouter);
@@ -56,6 +57,11 @@ const routes = [
       return { serverId }
     },
   },
+  {
+    path: "/video",
+    name: "VideoWindow",
+    component: VideoWindow,
+  },
 ]
 
 const router = new VueRouter({
@@ -78,6 +84,8 @@ const getComponent = ({ name }) => {
       return Settings
     case 'OrganizationForm':
       return OrganizationForm
+    case 'VideoWindow':
+      return VideoWindow
     default: 
       return name
   }
