@@ -12,7 +12,7 @@ const { app, dialog } = require('electron').remote
 // });
 let instance = null
 
-let defaultIconUrl = '../renderer/img/icon-server.png'
+let defaultIconUrl = './assets/icon-server.png'
 
 if (process.platform === 'win32') {
 	defaultIconUrl = path.normalize(defaultIconUrl)

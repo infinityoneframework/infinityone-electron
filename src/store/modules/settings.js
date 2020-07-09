@@ -9,6 +9,7 @@ const state = {
   serverIds: {},
   activeServerId: null,
   currentComponent: null,
+  settingsDrawer: false,
 }
 
 const mutations = {

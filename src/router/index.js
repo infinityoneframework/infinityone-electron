@@ -2,7 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue"
 import Settings from '@/views/Settings'
-import Organizations from '@/views/Organizations'
+import Servers from '@/views/settings/Servers'
+import General from '@/views/settings/General'
 import OrganizationForm from '@/views/OrganizationForm'
 import ServerWebView from '@/views/ServerWebView'
 import store from '@/store'
@@ -28,11 +29,13 @@ const routes = [
     path: "/settings",
     name: "Settings",
     component: Settings,
+    meta: { settings: true, component: General },
   },
   {
-    path: "/organizations",
-    name: "Organizations",
-    component: Organizations,
+    path: "/servers",
+    name: "Servers",
+    component: Settings,
+    meta: { settings: true, component: Servers},
   },
   {
     path: "/organization/new",
@@ -64,6 +67,10 @@ const getComponent = ({ name }) => {
       return Settings
     case 'Home':
       return Home
+    case 'Organizations':
+      return Settings
+    case 'OrganizationForm':
+      return OrganizationForm
     default: 
       return name
   }
@@ -80,6 +87,8 @@ router.beforeEach((to, from, next) => {
   const component = getComponent(to)
   console.log('component', component)
   store.set('settings/currentComponent', component)
+
+  store.set('settings/settingsDrawer', !!to.meta.settings)
   next()
 })
 

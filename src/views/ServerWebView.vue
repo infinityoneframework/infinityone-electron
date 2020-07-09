@@ -27,39 +27,29 @@
 
   export default {
     name: 'ServerWebView',
-    props: {
-      // serverId: {
-      //   type: Number,
-      //   required: true,
-      // },
-    },
+
     data: () => ({
       date: new Date(),
       nodeIntegration: true,
       tabIndex: 0,
       preload: false,
     }),
+
     computed: {
       serverIds: get('settings/serverIds'),
-      // server () {
-      //   return get(`settings/servers@[${this.index}]`)
-      // },
-      // index () {
-      //   return this.serverIds[this.serverId]
-      // },
       ...get('settings', ['servers', 'activeServerId']),
     },
   
     mounted () {
-      console.log('View mounted')
+      console.debug('View mounted')
     },
 
     updated () {
-      console.log('View updated')
+      console.debug('View updated')
     },
 
     beforeDestroy () {
-      console.log('View beforeDestroy')
+      console.debug('View beforeDestroy')
     },
     
     methods: {
@@ -75,7 +65,7 @@
   //
   .server-view
     // margin-left: 60px
-    padding-left: 60px
+    // padding-left: 60px
     &.disabled
       display: none
 </style>

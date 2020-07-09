@@ -1,0 +1,78 @@
+<template>
+  <div>
+    <v-card
+      class="servers-card"
+      height="100%"
+      width="100%"
+      flat
+    >
+      <v-card-title class="servers-card">
+        Connected Organizations
+      </v-card-title>
+      <v-card-text>
+        <v-list
+          class="servers-card"
+          two-line
+          subheader
+        >
+          <v-list-item
+            v-for="(item, inx) in list"
+            :key="inx"
+            class="server-item"
+          >
+            <v-list-item-avatar>
+              <v-img
+                :src="require('@/assets/icon-server.png')"
+                height="40"
+                width="40"
+              />
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.alias" />
+              <v-list-item-subtitle v-text="item.url" />
+            </v-list-item-content>
+            <v-list-item-action>
+              <v-btn 
+                outlined
+                color="error"
+                @click="disconnect(inx)"
+              >
+                Disconnect
+              </v-btn>
+            </v-list-item-action>
+          </v-list-item>
+        </v-list>
+      </v-card-text>
+    </v-card>
+  </div>
+</template>
+<script>
+  import { get } from 'vuex-pathify'
+
+  export default {
+    name: 'ServersSettings',
+
+    computed: {
+      list: get('settings/servers'),
+    },
+
+    methods: {
+      async disconnect (index) {
+        const res = await this.$confirm(`Remove <b>${this.list[index].url}</b>?`, { title: 'Are you sure?' })
+        if (res) {
+          this.$store.dispatch('settings/removeServer', index)
+        }
+      },
+    },
+  }
+</script>
+<style lang="sass" scoped>
+  .servers-card
+    background-color: #eee
+    .server-item
+      background-color: white
+      margin-bottom: 10px
+
+  
+</style>
+  

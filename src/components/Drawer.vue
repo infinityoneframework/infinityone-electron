@@ -21,7 +21,7 @@
         >
           <v-list-item-icon>
             <v-img
-              :src="require('../assets/icon-server.png')"
+              :src="require('@/assets/icon-server.png')"
               height="30"
               width="30"
             />
