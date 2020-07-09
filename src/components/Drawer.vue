@@ -14,8 +14,9 @@
     >
       <v-list dense>
         <v-list-item
-          v-for="(item, inx) in list"
+          v-for="(item, inx) in servers"
           :key="inx"
+          :to="`/server/${item.serverId}`"
           link
         >
           <v-list-item-icon>
@@ -43,6 +44,7 @@
           :key="item.title"
           :to="item.to"
           link
+          @click="click(item.id)"
         >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
@@ -53,22 +55,32 @@
   </v-navigation-drawer>
 </template>
 <script>
-import { sync } from "vuex-pathify"
+  import { get } from "vuex-pathify"
+  import SystemUtil from '@/utils/system-util'
 
-export default {
-  name: 'Drawer',
+  export default {
+    name: 'Drawer',
 
-  data: () => ({
-    items: [
-      { icon: 'mdi-reload', title: 'Reload', to: '' },
-      { icon: 'mdi-settings', title: 'Settings', to: '/settings' },
-    ],
-  }),
+    data: () => ({
+      items: [
+        { icon: 'mdi-reload', title: 'Reload', to: '', id: 'reload' },
+        { icon: 'mdi-settings', title: 'Settings', to: '/settings' },
+      ],
+    }),
 
-  computed: {
-    list: sync('organizations/list'),
-  },
-}
+    computed: {
+      servers: get('settings/servers'),
+    },
+
+    methods: {
+      click (to) {
+        console.log('chicked', to)
+        if (to === 'reload') {
+          SystemUtil.reload()
+        }
+      }
+    },
+  }
 </script>
 <style lang="sass" scoped>
   //

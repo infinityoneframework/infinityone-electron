@@ -53,26 +53,29 @@
   </div>
 </template>
 <script>
-import SettingsMenu from '@/components/SettingsMenu'
-import { get } from 'vuex-pathify'
+  import SettingsMenu from '@/components/SettingsMenu'
+  import { get } from 'vuex-pathify'
 
-export default {
-  name: 'Organizations',
+  export default {
+    name: 'Organizations',
 
-  components: {
-    SettingsMenu,
-  }, 
+    components: {
+      SettingsMenu,
+    }, 
 
-  computed: {
-    list: get('settings/servers'),
-  },
-
-  methods: {
-    disconnect (index) {
-      this.$store.dispatch('settings/removeServer', index)
+    computed: {
+      list: get('settings/servers'),
     },
-  },
-}
+
+    methods: {
+      async disconnect (index) {
+        const res = await this.$confirm(`Remove <b>${this.list[index].url}</b>?`, { title: 'Are you sure?' })
+        if (res) {
+          this.$store.dispatch('settings/removeServer', index)
+        }
+      },
+    },
+  }
 </script>
 <style lang="sass" scoped>
   .servers-card

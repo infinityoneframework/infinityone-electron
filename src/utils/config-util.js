@@ -15,12 +15,10 @@ let app = null
 
 /* To make the util runnable in both main and renderer process */
 if (process.type === 'renderer') {
-  console.log('.... renderere')
 	const remote = require('electron').remote
 	dialog = remote.dialog
 	app = remote.app
 } else {
-  console.log('.... main')
 	const electron = require('electron')
 	dialog = electron.dialog
 	app = electron.app
@@ -65,7 +63,6 @@ class ConfigUtil {
 		try {
 			const file = fs.readFileSync(settingsJsonPath, 'utf8')
       const json = JSON.parse(file)
-      console.log('config', json, file)
       store.commit('settings/SET_CONFIG', json)
 		} catch (err) {
 			if (test && fs.existsSync(settingsJsonPath)) {
@@ -81,7 +78,6 @@ class ConfigUtil {
         return
 			}
     }
-    console.log('settingsJsonPath', settingsJsonPath)
     // this.db = new JsonDB(new Config(settingsJsonPath, true, true))
     // window.myDb = this.db
 	}

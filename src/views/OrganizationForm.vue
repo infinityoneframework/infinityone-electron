@@ -1,5 +1,5 @@
 <template>
-  <v-main class="pl-0">
+  <v-main class="settings-page pl-0">
     <v-container 
       class="fill-height px-0 pl-0"
       style="padding-top: 100px"
@@ -40,30 +40,30 @@
   </v-main>
 </template>
 <script>
-import { sync } from 'vuex-pathify'
+  import { sync } from 'vuex-pathify'
 
-export default {
-  name: 'OrganizationForm',
-  data: () => ({
-    valid: true,
-    url: '',
-    urlRules: [
-      v => !!v || 'InfinityOne URL is required',
-      v => /https?:\/\/[a-zA-Z0-9\-_]+\..*/.test(v) || 'Name must be less than 10 characters',
-    ],
-  }),
+  export default {
+    name: 'OrganizationForm',
+    data: () => ({
+      valid: true,
+      url: '',
+      urlRules: [
+        v => !!v || 'InfinityOne URL is required',
+        v => /https?:\/\/[a-zA-Z0-9\-_]+\..*/.test(v) || 'Name must be less than 10 characters',
+      ],
+    }),
 
-  computed: {
-    list: sync('organizations/list'),
-  },
-
-  methods: {
-    validate () {
-      // this.$refs.form.validate()
-      this.list.push({ url: this.url })
+    computed: {
+      list: sync('organizations/list'),
     },
+
+    methods: {
+      validate () {
+        // this.$refs.form.validate()
+        this.list.push({ url: this.url })
+      },
+    }
   }
-}
 </script>
 <style lang="sass" scoped>
   #new-orginization

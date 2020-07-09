@@ -42,8 +42,7 @@ class DomainUtil {
 		try {
 			const file = fs.readFileSync(domainJsonPath, 'utf8')
       const json = JSON.parse(file)
-      console.log('config', json, file)
-      store.commit('settings/SET_SERVERS', json['domains'] || [])
+      store.dispatch('settings/putServers', json['domains'] || [])
 		} catch (err) {
 			if (test && fs.existsSync(domainJsonPath)) {
 				fs.unlinkSync(domainJsonPath);

@@ -18,17 +18,17 @@
   </v-navigation-drawer>
 </template>
 <script>
-export default {
-  name: 'Empty',
-  data: () => ({
-    items: [
-      { name: "general", title: "General", to: "/settings" },
-      { name: "network", title: "Network", to: "/network" },
-      { name: "organizations", title: "Organizations", to: "/organizations" },
-      { name: "shortcuts", title: "Shortcuts", to: "/shortcuts"},
-    ],
-  }),
-}
+  export default {
+    name: 'Empty',
+    data: () => ({
+      items: [
+        { name: "general", title: "General", to: "/settings" },
+        { name: "network", title: "Network", to: "/network" },
+        { name: "organizations", title: "Organizations", to: "/organizations" },
+        { name: "shortcuts", title: "Shortcuts", to: "/shortcuts"},
+      ],
+    }),
+  }
 </script>
 <style lang="sass" scoped>
   //

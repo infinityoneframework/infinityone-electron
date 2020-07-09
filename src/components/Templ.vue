@@ -4,9 +4,9 @@
   </div>
 </template>
 <script>
-export default {
-  name: 'Empty',
-}
+  export default {
+    name: 'Empty',
+  }
 </script>
 <style lang="sass" scoped>
   //

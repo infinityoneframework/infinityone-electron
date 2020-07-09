@@ -1,6 +1,6 @@
 "use strict";
 
-import { app, protocol, BrowserWindow } from "electron";
+import { app, protocol, BrowserWindow, ipcMain } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -22,7 +22,10 @@ function createWindow() {
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION
+      // nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+      nodeIntegration: true,
+      webviewTag: true,
+      enableRemoteModule: true,
     }
   });
 
@@ -53,6 +56,7 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
+  console.log('activate', win)
   if (win === null) {
     createWindow();
   }
@@ -72,6 +76,12 @@ app.on("ready", async () => {
   }
   createWindow();
 });
+
+ipcMain.on('reload-app', () => {
+  console.log('reload-app')
+  app.relaunch()
+  app.quit()
+})
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
