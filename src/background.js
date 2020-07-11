@@ -3,6 +3,8 @@
 import { app, protocol, BrowserWindow, ipcMain } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
+import windowStateKeeper from 'electron-window-state'
+
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -15,10 +17,22 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 function createWindow() {
+  const mainWindowState = windowStateKeeper({
+		defaultWidth: 1100,
+		defaultHeight: 720
+  })
+
+	// Let's keep the window position global so that we can access it in other process
+  global.mainWindowState = mainWindowState;
+
   // Create the browser window.
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
+    minWidth: 300,
+    minHeight: 400,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
@@ -42,6 +56,9 @@ function createWindow() {
   win.on("closed", () => {
     win = null;
   });
+
+  mainWindowState.manage(win)
+  return win
 }
 
 // Quit when all windows are closed.
