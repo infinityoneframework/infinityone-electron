@@ -3,13 +3,13 @@ import "./plugins"
 import 'path'
 import App from "./App.vue"
 import router from "./router"
+import domain from '@/utils/domain-util'
 import store from "./store"
 import i18n from "./i18n"
 import vuetify from './plugins/vuetify'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
 import config from '@/utils/config-util'
-import domain from '@/utils/domain-util'
 import VuetifyConfirm from 'vuetify-confirm'
 
 Vue.use(VuetifyConfirm, { vuetify })
@@ -17,6 +17,7 @@ Vue.use(VuetifyConfirm, { vuetify })
 Vue.config.productionTip = false
 Vue.config.devtools = process.env.NODE_ENV === 'development'
 
+domain.setStore(store)
 config.reloadDB()
 domain.reloadDB()
 

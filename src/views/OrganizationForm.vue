@@ -13,17 +13,27 @@
         <v-card-title>
           Add an InfinityOne server
         </v-card-title>
-        <v-card-body>
+        <v-card-text>
           <v-form
             ref="form"
             v-model="valid"
           >
-            <v-text-field
-              v-model="url"
-              :rules="urlRules"
-              label="InfinityOne URL"
-              required
-            />
+            <span>
+              <v-select
+                v-model="scheme"
+                :items="schemeList"
+                style="width: 75px; display: inline-block"
+                class="scheme-select"
+                required
+              />
+              <v-text-field
+                v-model="domain"
+                :rules="urlRules"
+                label="InfinityOne URL"
+                required
+                style="margin-left: 10px;width: calc(100% - 85px); display: inline-block"
+              />
+            </span>
             <v-btn
               :disabled="!valid"
               color="success"
@@ -31,43 +41,77 @@
               style="width: 100%"
               @click="validate"
             >
-              Connect
+              {{ connect }}
             </v-btn>
           </v-form>
-        </v-card-body>
+        </v-card-text>
       </v-card>
     </v-container>
   </v-main>
 </template>
 <script>
-  import { sync } from 'vuex-pathify'
+  import { get } from 'vuex-pathify'
+  import DomainUtil from '@/utils/domain-util'
+
+  const schemes = ['https://', 'http://']
 
   export default {
     name: 'OrganizationForm',
     data: () => ({
       valid: true,
-      url: '',
+      domain: '',
+      scheme: schemes[0],
+      schemeList: schemes,
       urlRules: [
         v => !!v || 'InfinityOne URL is required',
-        v => /https?:\/\/[a-zA-Z0-9\-_]+\..*/.test(v) || 'Name must be less than 10 characters',
+        v => v.length > 2 || 'InfinityOne URL must be at least 3 characters long',
+        v => /(https?:\/\/)?([a-zA-Z0-9\-_]+\..*)|(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/.test(v) || 'InfinityOne URL must be a IP address or a domain name!',
+        v => !DomainUtil.duplicateDomain(v) || "Server already exists",
       ],
+      connect: 'Connect',
     }),
 
     computed: {
-      list: sync('organizations/list'),
+      list: get('settings/servers'),
+      url () { return this.scheme + this.domain },
     },
 
     methods: {
       validate () {
-        // this.$refs.form.validate()
-        this.list.push({ url: this.url })
+        this.connect = 'Connecting...'
+        DomainUtil.checkDomain(this.url).then(serverConf => {
+          DomainUtil.addDomain(serverConf).then(() => {
+            const timeout = () => {
+              const servers = this.list
+              const newServer = servers[servers.length - 1]
+              this.resetForm()
+              this.$router.push({ path: `/server/${newServer.serverId}` })
+            }
+            setTimeout(timeout, 1)
+          });
+        }, errorMessage => {
+          this.connect = 'Connect';
+          alert(errorMessage)
+        });
       },
+
+      resetForm () {
+        this.domain = ''
+        this.scheme = schemes[0]
+        this.connect = 'Connect'
+        this.valid = true
+      }
     }
   }
 </script>
-<style lang="sass" scoped>
+<style lang="sass">
   #new-orginization
     padding-left: 50px
     padding-right: 50px
     padding-bottom: 50px
+  .scheme-select
+    .v-select__selection--comma
+      margin: 7px 0 !important
+      overflow: visible !important
+    
 </style>
