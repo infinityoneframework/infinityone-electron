@@ -4,14 +4,18 @@
     <!-- <settings-menu :show="!!settingsDrawer" /> -->
     <!-- <settings-menu /> -->
     <v-content class="main-content pl-0">
-      <keep-alive>
+      <!-- <keep-alive>
         <component :is="currentComponent" />
-      </keep-alive>
-      <v-btn 
+      </keep-alive> -->
+      <video-window />
+      <settings />
+      <server-web-view />
+      <organization-form />
+      <!-- <v-btn
         v-if="videoActive"
-        class="end-video-btn" 
-        dark 
-        fab 
+        class="end-video-btn"
+        dark
+        fab
         small
         color="error"
         @click="endVideo"
@@ -19,12 +23,12 @@
         <v-icon dark>
           mdi-video-off
         </v-icon>
-      </v-btn>
-      <v-btn 
+      </v-btn> -->
+      <v-btn
         v-if="videoActive"
-        class="video-btn" 
-        dark 
-        fab 
+        class="video-btn"
+        dark
+        fab
         color="#a6d256"
         @click="showVideo"
       >
@@ -40,12 +44,22 @@
   import Drawer from '@/components/Drawer'
   import DomainUtil from '@/utils/domain-util'
   import { get, sync } from 'vuex-pathify'
+  import Settings from '@/views/Settings'
+  // import Servers from '@/views/settings/Servers'
+  // import General from '@/views/settings/General'
+  import OrganizationForm from '@/views/OrganizationForm'
+  import ServerWebView from '@/views/ServerWebView'
+  import VideoWindow from '@/views/VideoWindow'
 
   export default {
     name: 'App',
 
     components: {
       Drawer,
+      Settings,
+      OrganizationForm,
+      ServerWebView,
+      VideoWindow,
     },
 
     data: () => ({
@@ -93,6 +107,9 @@
   }
 </script>
 <style lang="sass">
+  .app-panel.inactive
+    display: none
+
   .settings-page
     background-color: #eee
     width: 100%
@@ -101,7 +118,7 @@
   .main-content
     background-color: #eee
 
-  kbd 
+  kbd
     display: inline-block
     border: 1px solid #ccc !important
     border-radius: 3px

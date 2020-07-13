@@ -92,7 +92,7 @@ const getComponent = ({ name }) => {
 }
 
 router.beforeEach((to, from, next) => {
-  console.log('beforeEach', to, from)
+  console.log('beforeEach', to, from, next)
   // console.log('store', store)
   const id = to.params.serverId
   const serverId = typeof id === 'string' ? parseInt(id) : id
@@ -100,11 +100,11 @@ router.beforeEach((to, from, next) => {
   store.set('settings/activeServerId', serverId)
 
   const component = getComponent(to)
-  console.log('component', component)
+  console.warn('component', component)
   store.set('settings/currentComponent', component)
 
   store.set('settings/settingsDrawer', !!to.meta.settings)
-  next()
+  // next(new Error(''))
 })
 
 export default router

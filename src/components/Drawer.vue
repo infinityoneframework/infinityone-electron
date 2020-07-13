@@ -12,11 +12,14 @@
       column
       fill-height
     >
-      <v-list dense>
-        <template 
+      <v-list
+        class="servers-nav-block"
+        dense
+      >
+        <template
           v-for="(item, inx) in servers"
         >
-          <v-tooltip 
+          <v-tooltip
             :key="inx"
             right
             :color="tipColor"
@@ -25,12 +28,13 @@
               <v-list-item
                 :key="inx"
                 :to="`/server/${item.serverId}`"
+                :class="`nav-tab ${serverTabActive(item.serverId)}`"
                 link
                 v-bind="attrs"
                 v-on="on"
                 @contextmenu.prevent="contextMenu(inx)"
               >
-                <v-list-item-icon 
+                <v-list-item-icon
                   class="d-flex flex-column"
                   style="height: 50px"
                 >
@@ -48,13 +52,14 @@
             <span v-text="item.alias" />
           </v-tooltip>
         </template>
-        <v-tooltip 
+        <v-tooltip
           right
           :color="tipColor"
         >
           <template v-slot:activator="{ on, attrs }">
             <v-list-item
               to="/organization/new"
+              :class="`nav-tab ${tabActive('add-server')}`"
               v-bind="attrs"
               v-on="on"
             >
@@ -66,7 +71,8 @@
           <span>Add Organization</span>
         </v-tooltip>
       </v-list>
-      <v-list 
+      <v-list
+        class="bottom-nav-block"
         justify-end
         dense
       >
@@ -82,6 +88,7 @@
               <v-list-item
                 :key="item.title"
                 :to="item.to"
+                :class="`nav-tab ${item.name || ''} ${tabActive(item.name)}`"
                 link
                 v-bind="attrs"
                 @click="click(item.id)"
@@ -97,7 +104,7 @@
         </template>
       </v-list>
     </v-layout>
-    <v-menu 
+    <v-menu
       v-model="menu"
       top
     >
@@ -127,7 +134,10 @@
       items: [
         { icon: 'mdi-reload', title: 'Reload', to: '', id: 'reload' },
         { icon: 'mdi-arrow-left', title: 'Go Back', to: '', id: 'back' },
-        { icon: 'mdi-settings', title: 'Settings', to: '/settings' },
+        { icon: 'mdi-settings', title: 'Settings', to: '/settings', name: 'settings' },
+      ],
+      topItems: [
+        { icon: 'mdi-plus', title: 'Add Organization', to: '/servers/new', name: 'new-server' },
       ],
       userOSKey: userOSKey,
       tipColor: '#222',
@@ -141,8 +151,22 @@
     }),
 
     computed: {
-      servers: get('settings/servers'),
+      ...get('settings', ['servers', 'currentComponent', 'activeServerId']),
       showSidebar: sync('settings/config@showSidebar'),
+      serverTabActive() {
+        return serverId => this.currentComponent && this.currentComponent.name === 'ServerWebView' && serverId === this.activeServerId ? 'active' : ''
+      },
+      tabActive() {
+        return name => {
+          switch (name) {
+            case 'add-server':
+              return this.currentComponent && this.currentComponent.name === 'OrganizationForm' ? 'active' : ''
+            case 'settings':
+              return this.currentComponent && this.currentComponent.name === 'Settings' ? 'active' : ''
+          }
+          return ''
+        }
+      },
     },
 
     methods: {
@@ -178,5 +202,20 @@
   }
 </script>
 <style lang="sass" scoped>
-  //
+  .nav-tab
+    padding-top: 5px
+    padding-bottom: 5px
+    &.settings
+      // padding-top: 5px
+      // padding-bottom: 5px
+      &.active
+        background-color: #ddd
+        i.v-icon
+          color: black
+    &.active
+      background-color: #666
+  .bottom-nav-block
+    padding-bottom: 0 !important
+  .servers-nav-block, .bottom-nav-block
+    width: 60px
 </style>

@@ -1,6 +1,8 @@
 <template>
-  <v-main class="server-view">
-    <v-container 
+  <v-main
+    :class="`app-panel server-view ${show}`"
+  >
+    <v-container
       fluid
       style="height: 100vh; width: 100%"
       class="ma-0 pa-0"
@@ -25,8 +27,10 @@
 <script>
   import { get, sync } from 'vuex-pathify'
 
+  const name = 'VideoWindow'
+
   export default {
-    name: 'VideoWindow',
+    name: name,
 
     data: () => ({
       nodeIntegration: true,
@@ -34,12 +38,11 @@
     }),
 
     computed: {
-      ...get('settings', ['videoUrl', 'lastServerId']),
+      ...get('settings', ['videoUrl', 'lastServerId', 'currentComponent']),
       videoActive: sync('settings/videoActive'),
-    },
-
-    watch: {
-
+      show () {
+        return this.currentComponent && this.currentComponent.name === name ? '' : 'inactive'
+      },
     },
 
     beforeDestroy () {
@@ -57,7 +60,7 @@
           this.$router.push({ path: `/server/${this.lastServerId}` })
         }
       }
-      
+
       setTimeout(() => {
         $el.addEventListener('close', () => {
           console.log('video closed...')

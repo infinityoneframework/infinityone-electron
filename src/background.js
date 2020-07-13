@@ -160,7 +160,7 @@ app.on("ready", async () => {
   ipcMain.on('focus-app', () => {
     mainWindow.show()
   })
-  
+
   ipcMain.on('quit-app', () => {
     app.quit()
   })

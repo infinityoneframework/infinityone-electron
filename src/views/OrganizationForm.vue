@@ -1,6 +1,9 @@
 <template>
-  <v-main class="settings-page pl-0">
-    <v-container 
+  <v-main
+    id="add-server-view"
+    :class="`app-panel settings-page pl-0 ${show}`"
+  >
+    <v-container
       class="fill-height px-0 pl-0"
       style="padding-top: 100px"
       fluid
@@ -54,9 +57,10 @@
   import DomainUtil from '@/utils/domain-util'
 
   const schemes = ['https://', 'http://']
+  const name = 'OrganizationForm'
 
   export default {
-    name: 'OrganizationForm',
+    name: name,
     data: () => ({
       valid: true,
       domain: '',
@@ -73,7 +77,16 @@
 
     computed: {
       list: get('settings/servers'),
+      currentComponent: get('settings/currentComponent'),
       url () { return this.scheme + this.domain },
+      show () {
+        console.warn('this.currentComponent', this.currentComponent)
+        return this.currentComponent && this.currentComponent.name === name ? '' : 'inactive'
+      },
+    },
+
+    mounted () {
+      console.warn('OrganizationForm mounted', this)
     },
 
     methods: {
@@ -113,5 +126,5 @@
     .v-select__selection--comma
       margin: 7px 0 !important
       overflow: visible !important
-    
+
 </style>

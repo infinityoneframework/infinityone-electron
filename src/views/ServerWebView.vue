@@ -1,6 +1,9 @@
 <template>
-  <v-main class="server-view">
-    <v-container 
+  <v-main
+    :class="`app-panel server-view ${show}`"
+    :data-show="show"
+  >
+    <v-container
       fluid
       style="height: 100vh; width: 100%"
       class="ma-0 pa-0"
@@ -26,8 +29,10 @@
 <script>
   import { get, sync } from 'vuex-pathify'
 
+  const name = 'ServerWebView'
+
   export default {
-    name: 'ServerWebView',
+    name: name,
 
     data: () => ({
       date: new Date(),
@@ -39,15 +44,18 @@
 
     computed: {
       serverIds: get('settings/serverIds'),
-      ...get('settings', ['servers', 'activeServerId']),
+      ...get('settings', ['servers', 'activeServerId', 'currentComponent']),
       ...sync('settings', ['videoUrl', 'videoActive']),
+      show () {
+        return this.currentComponent && this.currentComponent.name === name ? '' : 'inactive'
+      },
     },
-  
+
     mounted () {
       console.debug('View mounted')
       const $elList = document.querySelectorAll('webview.server-view')
       this.$elList = $elList
-      
+
       setTimeout(() => {
         $elList.forEach(item => {
           item.executeJavaScript('window.isElectron = true')
@@ -75,7 +83,7 @@
     beforeDestroy () {
       console.debug('View beforeDestroy')
     },
-    
+
     methods: {
       test () {
         const ctl = document.getElementById('server-view')
