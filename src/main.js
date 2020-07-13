@@ -11,6 +11,7 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
 import config from '@/utils/config-util'
 import VuetifyConfirm from 'vuetify-confirm'
+require('./server-manager')
 
 Vue.use(VuetifyConfirm, { vuetify })
 

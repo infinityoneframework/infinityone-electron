@@ -14,6 +14,7 @@
 <script>
   import Drawer from '@/components/Drawer'
   import { get } from 'vuex-pathify'
+  import DomainUtil from '@/utils/domain-util'
 
   export default {
     name: 'App',
@@ -27,8 +28,26 @@
 
     computed: {
       serverId: get('settings/activeServerId'),
+      servers: get('settings/servers'),
+      activeServerIndex: get('settings/activeServerIndex'),
       currentComponent: get('settings/currentComponent'),
       settingsDrawer: get('settings/settingsDrawer'),
+    },
+
+    watch: {
+      activeServerIndex (index, previous) {
+        if (index !== previous && index !== undefined) {
+          console.debug('activeServerIndex changed', index, previous)
+          DomainUtil.updateMenu(this.servers, index)
+        }
+      },
+
+      servers (servers) {
+        if (servers) {
+          console.debug('servers changed')
+          DomainUtil.updateMenu(servers, this.activeServerIndex)
+        }
+      },
     },
   }
 </script>

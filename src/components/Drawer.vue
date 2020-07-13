@@ -1,8 +1,8 @@
 <template>
   <v-navigation-drawer
+    v-model="showSidebar"
     mini-variant
     mini-variant-width="60"
-    permanent
     dark
     app
   >
@@ -39,7 +39,7 @@
                     width="30"
                   />
                   <span class="caption text-center mt-1">
-                    {{ `${userOSKey} ${inx}` }}
+                    {{ `${userOSKey} ${inx + 1}` }}
                   </span>
                 </v-list-item-icon>
               </v-list-item>
@@ -99,7 +99,7 @@
   </v-navigation-drawer>
 </template>
 <script>
-  import { get } from "vuex-pathify"
+  import { get, sync } from "vuex-pathify"
   import SystemUtil from '@/utils/system-util'
 
   const mac = process.platform === 'darwin'
@@ -120,6 +120,7 @@
 
     computed: {
       servers: get('settings/servers'),
+      showSidebar: sync('settings/config@showSidebar'),
     },
 
     methods: {

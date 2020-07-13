@@ -1,7 +1,9 @@
 import fs from 'fs'
 import path from 'path'
 import process from 'process'
-import store from '../store'
+import store from '@/store'
+import PersistPlugin from '@/store/persist-plugin'
+import Utils from '@/utils/index'
 // import Logger from './logger-util'
 
 // const logger = new Logger({
@@ -10,8 +12,14 @@ import store from '../store'
 // });
 
 let instance = null
+// let rendererInstance = null
+// let mainInstance = null
 let dialog = null
 let app = null
+
+const	userDataPath = () => {
+	return path.join(app.getPath('userData'), '/settings.json')
+}
 
 /* To make the util runnable in both main and renderer process */
 if (process.type === 'renderer') {
@@ -24,6 +32,13 @@ if (process.type === 'renderer') {
 	app = electron.app
 }
 
+// const getInstance = () => {
+//   if (process.type === 'renderer') {
+// 		return rendererInstance
+// 	}
+// 	return mainInstance
+// }
+
 class ConfigUtil {
 	constructor() {
 		if (instance) {
@@ -32,13 +47,14 @@ class ConfigUtil {
 			instance = this
 		}
 
-		this.reloadDB()
+		PersistPlugin.addPlugin('config', this.saveUserData)
+
 		return instance
 	}
 
 	getConfigItem(key, defaultValue = null) {
-		this.reloadDB()
-		const value = this.db.getData('/')[key]
+		console.log('getConfigItem', key)
+		const value = store.get(`settings/config@${key}`)
 		if (value === undefined) {
 			this.setConfigItem(key, defaultValue)
 			return defaultValue
@@ -47,39 +63,38 @@ class ConfigUtil {
 		}
 	}
 
+	toggleConfigItem(key) {
+		store.set(`settings/toggleConfig`, key)
+	}
+
+	// TODO: Fix the reactivity issue below. Can't set an unknown prop
+
 	setConfigItem(key, value) {
-		this.db.push(`/${key}`, value, true)
-		this.reloadDB()
+		store.set(`settings/config@${key}`, value)
 	}
 
 	removeConfigItem(key) {
-		this.db.delete(`/${key}`)
-		this.reloadDB()
+		store.set('settings/deleteConfig', key)
 	}
 
 	reloadDB() {
-    const settingsJsonPath = path.join(app.getPath('userData'), '/settings.json')
-    const test = false
+    const settingsJsonPath = userDataPath()
 		try {
-			const file = fs.readFileSync(settingsJsonPath, 'utf8')
-      const json = JSON.parse(file)
-      store.commit('settings/SET_CONFIG', json)
-		} catch (err) {
-			if (test && fs.existsSync(settingsJsonPath)) {
-				fs.unlinkSync(settingsJsonPath)
-				dialog.showErrorBox(
-					'Error saving settings',
-					'We encountered error while saving current settings.'
-				)
-				// logger.error('Error while JSON parsing settings.json: ')
-				// logger.error(err)
-				console.error('Error while JSON parsing settings.json: ')
-        console.error(err)
-        return
+			const json = Utils.verifyUserData(settingsJsonPath, 'settings', dialog)
+			if (typeof json == 'object') {
+				console.info('got json back', json)
+				return store.set('settings/config', json)
 			}
-    }
-    // this.db = new JsonDB(new Config(settingsJsonPath, true, true))
-    // window.myDb = this.db
+			console.warn('was not able to verify userData')
+		} catch (err) {
+			console.warn('store.dispatch error', err)
+		} 
+
+		store.set('settings/config', Utils.defaultSettings)
+	}
+
+	saveUserData(config) {
+		fs.writeFileSync(userDataPath(), JSON.stringify(config, null, '\t'), { encoding: 'utf-8' })
 	}
 }
 

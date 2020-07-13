@@ -1,10 +1,12 @@
 import { make } from 'vuex-pathify'
-import domainUtil from '@/utils/domain-util'
+import Utils from '@/utils/index'
+// import domainUtil from '@/utils/domain-util'
 
-const saveUserData = list => domainUtil.saveUserDataDomains(list)
+// const saveUserData = list => list
+// const saveUserData = list => domainUtil.saveUserDataDomains(list)
 
 const state = {
-  config: {},
+  config: Utils.defaultSettings,
   servers: [],
   nextServerId: 0,
   serverIds: {},
@@ -15,6 +17,17 @@ const state = {
 
 const mutations = {
   ...make.mutations(state),
+
+  SET_DELETE_CONFIG: (state, key) => {
+    const newConfig = { ...state.config }
+    delete newConfig[key]
+    state.config = newConfig
+  },
+
+  SET_TOGGLE_CONFIG: (state, key) => {
+    state.config[key] = !state.config[key]
+  },
+
   SET_REMOVE_SERVER: (state, index) => {
     const servers = state.servers.filter((item, i) => i !== index)
     state.servers = servers
@@ -23,14 +36,12 @@ const mutations = {
       serverIds[item.serverId] = inx
     })
     state.serverIds = serverIds
-    saveUserData(state.servers)
   },
 
   SET_REMOVE_SERVERS: state => {
     state.servers = []
     state.nextServerId = 0
     state.serverIds = {}
-    saveUserData(state.servers)
   },
 
   SET_UPDATE_SERVER: (state, { index, server }) => {
@@ -40,7 +51,6 @@ const mutations = {
       }
       return { ...server, serverId: item.serverId }
     })
-    saveUserData(state.servers)
   },
 
   SET_ADD_SERVER: (state, server) => {
@@ -49,7 +59,6 @@ const mutations = {
     tmp[serverId] = state.servers.length
     state.serverIds = { ...state.serverIds, ...tmp }
     state.servers.push({ ...server, serverId })
-    saveUserData(state.servers)
   },
 }
 
@@ -77,11 +86,12 @@ const actions = {
     commit('SET_SERVERS', list)
     commit('SET_NEXT_SERVER_ID', nextId)
     commit('SET_SERVER_IDS', serverIds)
-    saveUserData(list)
   },
 }
 
-const getters = {}
+const getters = {
+  activeServerIndex: (state) => state.serverIds[state.activeServerId],
+}
 
 export default {
   namespaced: true,

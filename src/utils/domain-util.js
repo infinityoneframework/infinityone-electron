@@ -2,13 +2,27 @@ import fs from 'fs'
 import path from 'path'
 import process from 'process'
 import request from 'request'
+import PersistPlugin from '@/store/persist-plugin'
+import Utils from './index.js'
 // import { deleteProp } from '../utils'
 // import { deleteProp, range } from '../utils'
 // import Logger from './logger-util'
 
-const { app, dialog } = require('electron').remote
+// const { app, dialog } = require('electron').remote
 
 const defaultRealmIcon = '/images/notification_logo.png';
+
+const	userDataPath = (filename = '/domain.json') => {
+	return path.join(app.getPath('userData'), filename)
+}
+
+const	updateMenu = (tabs, activeTabIndex) => {
+	if (process.type === 'renderer') {
+		const { ipcRenderer } = require('electron')
+		// const activeTabIndex = store.get('settings/activeServerIndex')
+		ipcRenderer.send('update-menu', { tabs, activeTabIndex })
+	}
+}
 
 // const logger = new Logger({
 // 	file: 'config-util.log',
@@ -17,6 +31,19 @@ const defaultRealmIcon = '/images/notification_logo.png';
 
 let store = null
 let instance = null
+let dialog = null
+let app = null
+
+/* To make the util runnable in both main and renderer process */
+if (process.type === 'renderer') {
+	const remote = require('electron').remote
+	dialog = remote.dialog
+	app = remote.app
+} else {
+	const electron = require('electron')
+	dialog = electron.dialog
+	app = electron.app
+}
 
 let defaultIconUrl = './assets/icon-server.png'
 
@@ -37,6 +64,8 @@ class DomainUtil {
 			instance = this
 		}
 
+		PersistPlugin.addPlugin('servers', this.saveUserDataDomains)
+
 		// this.reloadDB()
 
 		return instance
@@ -56,6 +85,10 @@ class DomainUtil {
 
 	updateDomain(index, server) {
 		store.set('settings/updateServer', { index, server })
+	}
+
+	updateMenu(servers, index) {
+		updateMenu(servers, index)
 	}
 
 	addDomain(server) {
@@ -247,9 +280,9 @@ class DomainUtil {
 	}
 
 	reloadDB() {
-    const domainJsonPath = this.userDataPath()
+    const domainJsonPath = userDataPath()
 		try {
-			const json = this.verifyUserData(domainJsonPath)
+			const json = Utils.verifyUserData(domainJsonPath, 'domain', dialog)
 			if (typeof json == 'object') {
 				console.info('got json back', json)
 				return store.dispatch('settings/putServers', json['domains'] || [])
@@ -260,33 +293,10 @@ class DomainUtil {
 		} 
 
 		store.set('settings/servers', [])
-		this.saveUserDataDomains([])
-	}
-
-	verifyUserData(path) {
-		try {
-			const file = fs.readFileSync(path, 'utf8')
-			return JSON.parse(file)
-		} catch (err) {
-			if (fs.existsSync(path)) {
-				fs.unlinkSync(path);
-				dialog.showErrorBox(
-					'Error saving new server',
-					'There seems to be error while saving new server, ' +
-					'you may have to re-add your previous servers back.'
-				);
-				console.error('Error while JSON parsing domain.json: ', err);
-			}
-			return false
-		}
-	}
-
-	userDataPath(filename = '/domain.json') {
-    return path.join(app.getPath('userData'), filename)
 	}
 
 	generateFilePath(url) {
-		const dir = this.userDataPath('/server-icons')
+		const dir = userDataPath('/server-icons')
 		const extension = path.extname(url).split('?')[0];
 
 		let hash = 5381;
@@ -316,6 +326,8 @@ class DomainUtil {
 		let domains = []
 		const len = servers.length
 
+		updateMenu(servers)
+
 		if (len > 0) {
 			const rg = range(0, len - 1) 
 			rg.forEach(i => { domains.push(servers[i]) })
@@ -325,7 +337,7 @@ class DomainUtil {
 				return newItem
 			})
 		}
-		fs.writeFileSync(this.userDataPath(), JSON.stringify({ domains }, null, '\t'), { encoding: 'utf-8' })
+		fs.writeFileSync(userDataPath(), JSON.stringify({ domains }, null, '\t'), { encoding: 'utf-8' })
 	}
 }
   

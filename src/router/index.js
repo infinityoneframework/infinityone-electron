@@ -32,6 +32,11 @@ const routes = [
     meta: { settings: true, component: General },
   },
   {
+    path: '/servers/new',
+    name: 'AddServer',
+    component: OrganizationForm,
+  },
+  {
     path: "/servers",
     name: "Servers",
     component: Settings,
@@ -67,6 +72,8 @@ const getComponent = ({ name }) => {
       return Settings
     case 'Home':
       return Home
+    case 'AddServer':
+      return OrganizationForm
     case 'Organizations':
       return Settings
     case 'OrganizationForm':
