@@ -72,7 +72,7 @@ const actions = {
 
   putServers: ({ commit, state }, servers) => {
     let nextId = state.nextServerId
-    let serverIds = { ...state.serverIds }  
+    let serverIds = { ...state.serverIds }
 
     const list = servers.map((item, inx) => {
       const current = state.servers.length === 0 ? null : state.servers.find(elem => elem.url === item.url)
@@ -94,6 +94,7 @@ const actions = {
 
 const getters = {
   activeServerIndex: (state) => state.serverIds[state.activeServerId],
+  activeServerWebviewSelector: (state) => `webview[data-server-id="${state.lastServerId}"]`,
 }
 
 export default {

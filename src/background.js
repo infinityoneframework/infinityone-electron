@@ -7,6 +7,7 @@ import windowStateKeeper from 'electron-window-state'
 import appMenu from '@/main/menu'
 import ConfigUtil from '@/utils/config-util'
 import path from 'path'
+import store from '@/store'
 
 // const appMenu = require('@/main/menu');
 
@@ -14,6 +15,7 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
+global.mainPage = null
 let mainWindow;
 let badgeCount
 
@@ -52,6 +54,7 @@ function createWindow() {
     }
   });
 
+
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
@@ -65,6 +68,7 @@ function createWindow() {
   win.on("closed", () => {
     // win = null;
     mainWindow = null
+    global.mainPage = null
   });
 
   win.on('close', event => {
@@ -117,6 +121,7 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
+  console.warn('activate callback', store.state.settings)
   if (mainWindow === null) {
     mainWindow = createWindow();
   }
@@ -142,6 +147,7 @@ app.on("ready", async () => {
   mainWindow = createWindow();
 
   const page = mainWindow.webContents
+  global.mainPage = page
 
   page.on('dom-ready', () => {
     if (ConfigUtil.getConfigItem('startMinimized')) {
@@ -149,6 +155,14 @@ app.on("ready", async () => {
     } else {
       mainWindow.show()
     }
+  })
+
+  page.on('open-dev-tools', () => {
+    console.warn('page on open-dev-tools')
+  })
+
+  ipcMain.on('open-dev-tools', () => {
+    console.warn('ipcMain.on open-dev-tools')
   })
 
   ipcMain.on('reload-app', () => {
@@ -206,7 +220,13 @@ app.on("ready", async () => {
   })
 
   ipcMain.on('update-menu', (event, props) => {
+    // console.warn('... update-menu', store.get('settings/activeServerId'))
     appMenu.setMenu(props)
+  })
+
+  ipcMain.on('vuex-mutation', (e, mutation) => {
+    // console.log('vuex-mutation', mutation)
+    store.commit(mutation.type, mutation.payload)
   })
 
   // ipcMain.on('toggleAudoLauncher', (event, AutoLaunchValue) => {

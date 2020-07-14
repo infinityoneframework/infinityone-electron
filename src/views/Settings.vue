@@ -65,8 +65,5 @@
 <style lang="sass">
   .settings-card, .settings-card .v-card__title, .settings-card .v-card__text
     background-color: #eee
-  #settings-view
-
-
 </style>
 

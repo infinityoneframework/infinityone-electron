@@ -15,6 +15,7 @@
         :class="`server-view ${server.serverId === activeServerId ? '' : 'disabled'}`"
         style="height: 100%; width: 100%"
         :data-tab-id="inx"
+        :data-server-id="server.serverId"
         :src="server.url"
         :node-integration="nodeIntegration"
         preload="file://./preload.js"

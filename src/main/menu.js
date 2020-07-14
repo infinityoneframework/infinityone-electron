@@ -1,5 +1,7 @@
 'use strict';
 import ConfigUtil from '@/utils/config-util'
+import process from 'process'
+
 // const os = require('os');
 const path = require('path');
 
@@ -111,6 +113,10 @@ class AppMenu {
 			accelerator: process.platform === 'darwin' ? 'Alt+Command+U' : 'Ctrl+Shift+U',
 			click(item, focusedWindow) {
 				if (focusedWindow) {
+					// console.warn('process', process.type, global.mainPage)
+					// global.mainPage.send('open-dev-tools', {})
+					focusedWindow.webContents.send('open-dev-tools')
+					// webContents.send('open-dev-tools')
 					AppMenu.sendAction('tab-devtools');
 				}
 			}

@@ -2,6 +2,7 @@ import { ipcRenderer } from 'electron'
 import router from './router'
 import ConfigUtil from '@/utils/config-util'
 import DomainUtil from '@/utils/domain-util'
+import store from '@/store'
 
 let instance = null
 
@@ -26,6 +27,27 @@ class ServerManager {
       console.log('toggle-sidebar')
 			this.toggleSidebar()
 		});
+
+		ipcRenderer.on('open-dev-tools', () => {
+			console.warn('got open-dev-tools')
+			const currentComponent = store.get('settings/currentComponent')
+			let $el
+			if (currentComponent) {
+				if (currentComponent.name === 'ServerWebView') {
+					const serverId = store.get('settings/activeServerId')
+					$el = document.querySelector(`webview[data-server-id="${serverId}"]`)
+				} else if (currentComponent.name === 'VideoWindow') {
+					$el = document.querySelector(`webview[data-tab-id="video"]`)
+				}
+				if ($el) {
+					if ($el.isDevToolsOpened()) {
+						$el.closeDevTools()
+					} else {
+						$el.openDevTools()
+					}
+				}
+			}
+		})
   }
 
   toggleSidebar() {
@@ -127,7 +149,8 @@ class ServerManager {
 
 		ipcRenderer.on('clear-app-data', () => {
 			ipcRenderer.send('clear-app-settings');
-    });
+		});
+
   }
 
   openSettings(nav = 'settings') {

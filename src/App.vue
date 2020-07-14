@@ -11,7 +11,7 @@
       <settings />
       <server-web-view />
       <organization-form />
-      <!-- <v-btn
+      <v-btn
         v-if="videoActive"
         class="end-video-btn"
         dark
@@ -23,7 +23,7 @@
         <v-icon dark>
           mdi-video-off
         </v-icon>
-      </v-btn> -->
+      </v-btn>
       <v-btn
         v-if="videoActive"
         class="video-btn"
