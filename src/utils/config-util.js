@@ -73,6 +73,13 @@ class ConfigUtil {
 		store.set(`settings/config@${key}`, value)
 	}
 
+	saveConfigItems(items = {}) {
+		Object.keys(items).forEach(key => {
+			this.setConfigItem(key, items[key])
+		})
+		this.saveUserData(store.get('settings/config'))
+	}
+
 	removeConfigItem(key) {
 		store.set('settings/deleteConfig', key)
 	}
@@ -88,7 +95,7 @@ class ConfigUtil {
 			console.warn('was not able to verify userData')
 		} catch (err) {
 			console.warn('store.dispatch error', err)
-		} 
+		}
 
 		store.set('settings/config', Utils.defaultSettings)
 	}
