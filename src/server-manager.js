@@ -29,15 +29,16 @@ class ServerManager {
 		});
 
 		ipcRenderer.on('open-dev-tools', () => {
-			console.warn('got open-dev-tools')
+			console.debug('got open-dev-tools')
 			const currentComponent = store.get('settings/currentComponent')
 			let $el
 			if (currentComponent) {
+				console.debug('currentComponent', currentComponent)
 				if (currentComponent.name === 'ServerWebView') {
 					const serverId = store.get('settings/activeServerId')
 					$el = document.querySelector(`webview[data-server-id="${serverId}"]`)
-				} else if (currentComponent.name === 'VideoWindow') {
-					$el = document.querySelector(`webview[data-tab-id="video"]`)
+				} else if (currentComponent.name === 'VideoConference') {
+					$el = document.getElementById('video-container')
 				}
 				if ($el) {
 					if ($el.isDevToolsOpened()) {

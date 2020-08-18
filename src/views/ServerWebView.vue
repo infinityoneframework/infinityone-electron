@@ -8,7 +8,6 @@
       style="height: 100vh; width: 100%"
       class="ma-0 pa-0"
     >
-      <!-- <v-btn @click="test">Test</v-btn> -->
       <webview
         v-for="(server, inx) in servers"
         :key="server.serverId"
@@ -23,6 +22,7 @@
         remote-module
         partition="persist:webviewsession"
         webpreferences="allowRunningInsecureContent, javascript=yes"
+        @new-window="newWindow"
       />
     </v-container>
   </v-main>
@@ -45,51 +45,20 @@
 
     computed: {
       serverIds: get('settings/serverIds'),
+      url: sync('video/url'),
       ...get('settings', ['servers', 'activeServerId', 'currentComponent']),
-      ...sync('settings', ['videoUrl', 'videoActive']),
       show () {
         return this.currentComponent && this.currentComponent.name === name ? '' : 'inactive'
       },
     },
 
-    mounted () {
-      console.debug('View mounted')
-      const $elList = document.querySelectorAll('webview.server-view')
-      this.$elList = $elList
-
-      setTimeout(() => {
-        $elList.forEach(item => {
-          item.executeJavaScript('window.isElectron = true')
-          item.addEventListener('dom-ready', () => {
-            item.executeJavaScript('window.isElectron = true')
-          })
-          item.addEventListener('new-window', (e) => {
-            // const parsed = require('url').parse(e.url)
-            const protocol = require('url').parse(e.url).protocol
-            console.log('new-window', protocol, e)
-            if (e.url.match(/video\?/)) {
-              this.videoUrl = e.url
-              this.videoActive = true
-              this.$router.push({ path: '/video' })
-            }
-          })
-        })
-      }, 1000)
-    },
-
-    updated () {
-      console.debug('View updated')
-    },
-
-    beforeDestroy () {
-      console.debug('View beforeDestroy')
-    },
-
     methods: {
-      test () {
-        const ctl = document.getElementById('server-view')
-        console.log('web view', ctl)
-        // console.log('server', this.server())
+      newWindow (e) {
+        console.debug('newWindow', e)
+        if (e.url.match(/video\?/)) {
+          this.url = e.url.replace('video', 'desktop')
+          this.$router.push({ path: '/video' })
+        }
       },
     },
   }

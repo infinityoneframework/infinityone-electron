@@ -1,4 +1,5 @@
 import Vue from "vue";
+import store from '@/store'
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue"
 import Settings from '@/views/Settings'
@@ -6,8 +7,7 @@ import Servers from '@/views/settings/Servers'
 import General from '@/views/settings/General'
 import OrganizationForm from '@/views/OrganizationForm'
 import ServerWebView from '@/views/ServerWebView'
-import VideoWindow from '@/views/VideoWindow'
-import store from '@/store'
+import VideoConference from '@/views/video-conference'
 
 Vue.use(VueRouter);
 
@@ -59,8 +59,8 @@ const routes = [
   },
   {
     path: "/video",
-    name: "VideoWindow",
-    component: VideoWindow,
+    name: "VideoConference",
+    component: VideoConference,
   },
 ]
 
@@ -72,7 +72,7 @@ const router = new VueRouter({
 
 const getComponent = ({ name }) => {
   switch (name) {
-    case 'server': 
+    case 'server':
       return ServerWebView
     case 'Settings':
       return Settings
@@ -84,27 +84,23 @@ const getComponent = ({ name }) => {
       return Settings
     case 'OrganizationForm':
       return OrganizationForm
-    case 'VideoWindow':
-      return VideoWindow
-    default: 
+    case 'VideoConference':
+      return VideoConference
+    default:
       return name
   }
 }
 
 router.beforeEach((to, from, next) => {
-  console.log('beforeEach', to, from, next)
-  // console.log('store', store)
+  console.debug('beforeEach', to, from, next)
   const id = to.params.serverId
   const serverId = typeof id === 'string' ? parseInt(id) : id
-  console.log('id, serverId', id, serverId)
   store.set('settings/activeServerId', serverId)
 
   const component = getComponent(to)
-  console.warn('component', component)
   store.set('settings/currentComponent', component)
 
   store.set('settings/settingsDrawer', !!to.meta.settings)
-  // next(new Error(''))
 })
 
 export default router

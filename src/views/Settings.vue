@@ -30,8 +30,6 @@
   import Shortcuts from '@/views/settings/Shortcuts'
   import { get } from 'vuex-pathify'
 
-  // const components = [General, Servers, Network, Shortcuts]
-
   export default {
     name: 'Settings',
     components: {
@@ -52,12 +50,6 @@
       currentComponent: get('settings/currentComponent'),
       show () {
         return this.currentComponent && this.currentComponent.name === 'Settings' ? '' : 'inactive'
-      },
-    },
-
-    watch: {
-      currentComponent (curr, prev) {
-        console.warn('curr', curr, prev)
       },
     },
   }

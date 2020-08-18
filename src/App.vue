@@ -1,42 +1,13 @@
 <template>
   <v-app>
     <drawer />
-    <!-- <settings-menu :show="!!settingsDrawer" /> -->
-    <!-- <settings-menu /> -->
-    <v-content class="main-content pl-0">
-      <!-- <keep-alive>
-        <component :is="currentComponent" />
-      </keep-alive> -->
-      <video-window />
+    <v-main class="main-content pl-0">
+      <video-conference />
       <settings />
       <server-web-view />
       <organization-form />
-      <v-btn
-        v-if="videoActive"
-        class="end-video-btn"
-        dark
-        fab
-        small
-        color="error"
-        @click="endVideo"
-      >
-        <v-icon dark>
-          mdi-video-off
-        </v-icon>
-      </v-btn>
-      <v-btn
-        v-if="videoActive"
-        class="video-btn"
-        dark
-        fab
-        color="#a6d256"
-        @click="showVideo"
-      >
-        <v-icon dark>
-          mdi-video
-        </v-icon>
-      </v-btn>
-    </v-content>
+      <video-fab />
+    </v-main>
   </v-app>
 </template>
 
@@ -45,11 +16,10 @@
   import DomainUtil from '@/utils/domain-util'
   import { get, sync } from 'vuex-pathify'
   import Settings from '@/views/Settings'
-  // import Servers from '@/views/settings/Servers'
-  // import General from '@/views/settings/General'
   import OrganizationForm from '@/views/OrganizationForm'
   import ServerWebView from '@/views/ServerWebView'
-  import VideoWindow from '@/views/VideoWindow'
+  import VideoConference from '@/views/video-conference'
+  import VideoFab from '@/components/VideoFab'
 
   export default {
     name: 'App',
@@ -59,7 +29,8 @@
       Settings,
       OrganizationForm,
       ServerWebView,
-      VideoWindow,
+      VideoConference,
+      VideoFab,
     },
 
     data: () => ({
@@ -73,7 +44,7 @@
 
     watch: {
       serverId (curr, past) {
-        console.log('serverId', curr, past)
+        console.debug('serverId', curr, past)
         if (curr) {
           this.lastServerId = curr
         }
@@ -91,17 +62,6 @@
           console.debug('servers changed')
           DomainUtil.updateMenu(servers, this.activeServerIndex)
         }
-      },
-    },
-
-    methods: {
-      showVideo () {
-        console.log('showVideo')
-        this.$router.push({ path: '/video' })
-      },
-
-      endVideo () {
-        this.videoActive = false
       },
     },
   }

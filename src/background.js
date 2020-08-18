@@ -13,6 +13,19 @@ import store from '@/store'
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
+// We need this because of https://github.com/electron/electron/issues/18214
+app.commandLine.appendSwitch('disable-site-isolation-trials');
+
+// https://bugs.chromium.org/p/chromium/issues/detail?id=1086373
+app.commandLine.appendSwitch('disable-webrtc-hw-encoding');
+app.commandLine.appendSwitch('disable-webrtc-hw-decoding');
+
+app.commandLine.appendSwitch('disable-web-security');
+app.commandLine.appendSwitch('user-data-dir');
+
+// Needed until robot.js is fixed: https://github.com/octalmage/robotjs/issues/580
+app.allowRendererProcessReuse = false;
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 global.mainPage = null
@@ -47,17 +60,21 @@ function createWindow() {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       // nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+      'web-security': false,
       nodeIntegration: true,
+      experimentalFeatures: true, // Insertable streams, for E2EE.
+      // nativeWindowOpen: true,
       webviewTag: true,
       enableRemoteModule: true,
       preload: path.join(__dirname, 'preload.js'),
+      allowRunningInsecureContent: true,
     }
   });
-
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
+
     if (!process.env.IS_TEST) win.webContents.openDevTools();
   } else {
     createProtocol("app");
@@ -101,6 +118,10 @@ function createWindow() {
 
   mainWindowState.manage(win)
 
+  win.webContents.on('new-window', (event, url, frameName) => {
+    console.debug('win new-window', event, url, frameName)
+  })
+
   return win
 }
 
@@ -131,8 +152,16 @@ app.on("activate", () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", async () => {
+  console.log('...ready isDevelopment', isDevelopment)
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
+    console.log('installing vuejs_devtools')
+    // require('vue-devtools').install().then(resp => {
+    //   console.log('vue install', resp)
+    // })
+    // .catch(error => {
+    //   console.warn('vue install errror', error)
+    // })
     try {
       await installExtension(VUEJS_DEVTOOLS);
     } catch (e) {
@@ -150,12 +179,20 @@ app.on("ready", async () => {
   global.mainPage = page
 
   page.on('dom-ready', () => {
+    // session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    //   callback({ responseHeaders: Object.assign({
+    //       // "Content-Security-Policy": [ "default-src 'self' http://localhost:8080" ]
+    //       "Content-Security-Policy": [ "frame-src *" ]
+    //   }, details.responseHeaders)});
+    // });
+
     if (ConfigUtil.getConfigItem('startMinimized')) {
       mainWindow.minimize()
     } else {
       mainWindow.show()
     }
   })
+
 
   page.on('open-dev-tools', () => {
     console.warn('page on open-dev-tools')

@@ -80,13 +80,8 @@
       currentComponent: get('settings/currentComponent'),
       url () { return this.scheme + this.domain },
       show () {
-        console.warn('this.currentComponent', this.currentComponent)
         return this.currentComponent && this.currentComponent.name === name ? '' : 'inactive'
       },
-    },
-
-    mounted () {
-      console.warn('OrganizationForm mounted', this)
     },
 
     methods: {

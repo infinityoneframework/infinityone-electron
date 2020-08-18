@@ -16,6 +16,7 @@ const state = {
   settingsDrawer: false,
   videoActive: false,
   videoUrl: null,
+  videoClose: false,
 }
 
 const mutations = {

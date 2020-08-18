@@ -1,10 +1,10 @@
 import Vue from "vue"
 import "./plugins"
 import 'path'
+import store from "./store"
 import App from "./App.vue"
 import router from "./router"
 import domain from '@/utils/domain-util'
-import store from "./store"
 import i18n from "./i18n"
 import vuetify from './plugins/vuetify'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
@@ -23,8 +23,8 @@ config.reloadDB()
 domain.reloadDB()
 
 new Vue({
-  router,
   store,
+  router,
   i18n,
   vuetify,
   render: h => h(App)
