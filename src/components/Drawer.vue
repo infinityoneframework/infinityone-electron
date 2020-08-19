@@ -122,7 +122,6 @@
 </template>
 <script>
   import { get, sync } from "vuex-pathify"
-  import SystemUtil from '@/utils/system-util'
 
   const mac = process.platform === 'darwin'
   const userOSKey = mac ? '⌘' : 'Ctrl'
@@ -170,10 +169,14 @@
     },
 
     methods: {
-      click (to) {
-        console.log('chicked', to)
-        if (to === 'reload') {
-          SystemUtil.reload()
+      click (id) {
+        const el = document.querySelector('webview.enabled')
+        if (el) {
+          if (id === 'reload') {
+            el.reload()
+          } else if (id === 'back') {
+            el.canGoBack() && el.goBack()
+          }
         }
       },
 
@@ -194,7 +197,6 @@
             el.openDevTools()
             break
           case 'reload':
-            el.reload()
             break
         }
       },

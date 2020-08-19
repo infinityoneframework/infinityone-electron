@@ -11,7 +11,7 @@
       <webview
         v-for="(server, inx) in servers"
         :key="server.serverId"
-        :class="`server-view ${server.serverId === activeServerId ? '' : 'disabled'}`"
+        :class="`server-view ${server.serverId === activeServerId ? 'enabled' : 'disabled'}`"
         style="height: 100%; width: 100%"
         :data-tab-id="inx"
         :data-server-id="server.serverId"

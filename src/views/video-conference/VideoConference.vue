@@ -9,6 +9,7 @@
     >
       <webview
         id="video-container"
+        :class="enabledClass"
         style="height: 100%; width: 100%"
         :src="url"
         preload="file://./preload.js"
@@ -36,6 +37,9 @@
       ...get('settings', ['lastServerId', 'currentComponent', 'activeServerWebviewSelector']),
       show () {
         return this.currentComponent && this.currentComponent.name === name ? '' : 'inactive'
+      },
+      enabledClass () {
+        return this.currentComponent && this.currentComponent.name === name ? 'enabled' : 'disabled'
       },
     },
 
