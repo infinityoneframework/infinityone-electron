@@ -7,6 +7,7 @@
       <server-web-view />
       <organization-form />
       <video-fab />
+      <about />
     </v-main>
   </v-app>
 </template>
@@ -20,6 +21,7 @@
   import ServerWebView from '@/views/ServerWebView'
   import VideoConference from '@/views/video-conference'
   import VideoFab from '@/components/VideoFab'
+  import About from '@/views/About'
 
   export default {
     name: 'App',
@@ -31,6 +33,7 @@
       ServerWebView,
       VideoConference,
       VideoFab,
+      About,
     },
 
     data: () => ({

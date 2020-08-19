@@ -12,6 +12,7 @@ import '@mdi/font/css/materialdesignicons.css'
 import config from '@/utils/config-util'
 import VuetifyConfirm from 'vuetify-confirm'
 require('./server-manager')
+require('./tray')
 
 Vue.use(VuetifyConfirm, { vuetify })
 

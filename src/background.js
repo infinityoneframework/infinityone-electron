@@ -1,4 +1,5 @@
 "use strict";
+/* global __static */
 
 import { app, protocol, BrowserWindow, ipcMain } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
@@ -56,6 +57,7 @@ function createWindow() {
     height: mainWindowState.height,
     minWidth: 300,
     minHeight: 400,
+    icon: path.join(__static, 'icon.png'),
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info

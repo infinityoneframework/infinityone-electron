@@ -1,8 +1,10 @@
-const { ipcRenderer, remote } = require('electron');
-const os = require('os');
-const jitsiMeetElectronUtils = require('jitsi-meet-electron-utils');
+const { ipcRenderer, remote } = require('electron')
+const os = require('os')
+const jitsiMeetElectronUtils = require('jitsi-meet-electron-utils')
 
-const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready' ];
+const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready' ]
+
+// require('@/notification')
 
 window.jitsiNodeAPI = {
     osUserInfo: os.userInfo,
@@ -11,24 +13,24 @@ window.jitsiNodeAPI = {
     ipc: {
         on: (channel, listener) => {
             if (!whitelistedIpcChannels.includes(channel)) {
-                return;
+                return
             }
 
-            return ipcRenderer.on(channel, listener);
+            return ipcRenderer.on(channel, listener)
         },
         send: channel => {
             if (!whitelistedIpcChannels.includes(channel)) {
-                return;
+                return
             }
 
-            return ipcRenderer.send(channel);
+            return ipcRenderer.send(channel)
         },
         removeListener: (channel, listener) => {
             if (!whitelistedIpcChannels.includes(channel)) {
-                return;
+                return
             }
 
-            return ipcRenderer.removeListener(channel, listener);
+            return ipcRenderer.removeListener(channel, listener)
         }
     }
-};
+}

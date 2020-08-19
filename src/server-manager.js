@@ -23,6 +23,8 @@ class ServerManager {
   completeInit() {
     this.initTabs()
 
+		this.registerIpcs()
+
 		ipcRenderer.on('toggle-sidebar', () => {
       console.log('toggle-sidebar')
 			this.toggleSidebar()
@@ -138,7 +140,11 @@ class ServerManager {
 			this.openSettings(settingNav);
 		});
 
-		ipcRenderer.on('open-about', () => this.openAbout());
+		console.warn('registring open-about')
+		ipcRenderer.on('open-about', () => {
+			console.warn('open-about event...')
+			return this.openAbout()
+    })
 
 		// ipcRenderer.on('reload-viewer', this.reloadView.bind(this, this.tabs[this.activeTabIndex].props.index));
 
@@ -159,6 +165,7 @@ class ServerManager {
   }
 
   openAbout() {
+		console.warn('openAbout...')
     router.push({ path: '/about' })
   }
 

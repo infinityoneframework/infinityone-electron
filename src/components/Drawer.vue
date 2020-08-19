@@ -52,6 +52,28 @@
             <span v-text="item.alias" />
           </v-tooltip>
         </template>
+
+        <v-list-item
+          v-if="showAbout"
+          to="/about"
+          :class="`nav-tab about ${tabActive('About')}`"
+          @mouseover="aboutHover=true"
+          @mouseleave="aboutHover=false"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-information-outline</v-icon>
+            <v-icon
+              v-if="aboutHover"
+              style="position:absolute;top:0;right:0"
+              color="error"
+              size="20"
+              @click.prevent="closeAbout"
+            >
+              mdi-close-circle
+            </v-icon>
+          </v-list-item-icon>
+        </v-list-item>
+
         <v-tooltip
           right
           :color="tipColor"
@@ -147,27 +169,41 @@
       ],
       selectedServer: null,
       selectServerIndex: null,
+      aboutHover: false,
     }),
 
     computed: {
-      ...get('settings', ['servers', 'currentComponent', 'activeServerId']),
+      ...get('settings', ['servers', 'currentComponent', 'activeServerId', 'lastServerId']),
+      aboutOpen: sync('settings/aboutOpen'),
       showSidebar: sync('settings/config@showSidebar'),
-      serverTabActive() {
+      serverTabActive () {
         return serverId => this.currentComponent && this.currentComponent.name === 'ServerWebView' && serverId === this.activeServerId ? 'active' : ''
       },
-      tabActive() {
+      tabActive () {
         return name => {
           switch (name) {
             case 'add-server':
               return this.currentComponent && this.currentComponent.name === 'OrganizationForm' ? 'active' : ''
             case 'settings':
               return this.currentComponent && this.currentComponent.name === 'Settings' ? 'active' : ''
+            case 'About':
+              console.log('comp', this.currentComponent.name)
+              return this.currentComponent && this.currentComponent.name === 'About' ? 'active' : ''
           }
           return ''
         }
       },
+      showAbout () {
+        return (this.currentComponent && this.currentComponent.name === 'About') || this.aboutOpen
+      },
     },
 
+
+    beforeUpdate () {
+      if (this.currentComponent && this.currentComponent.name == 'About') {
+        this.aboutOpen = true
+      }
+    },
     methods: {
       click (id) {
         const el = document.querySelector('webview.enabled')
@@ -200,6 +236,13 @@
             break
         }
       },
+
+      closeAbout () {
+        const serverId = this.lastServerId || this.servers[0].serverId
+        this.aboutOpen = false
+        this.aboutHover = false
+        this.$router.push({ path: `/server/${serverId}`})
+      }
     },
   }
 </script>
