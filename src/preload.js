@@ -4,7 +4,7 @@ const jitsiMeetElectronUtils = require('jitsi-meet-electron-utils')
 
 const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready' ]
 
-// require('@/notification')
+require('@/notification')
 
 window.jitsiNodeAPI = {
     osUserInfo: os.userInfo,

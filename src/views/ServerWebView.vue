@@ -23,11 +23,13 @@
         partition="persist:webviewsession"
         webpreferences="allowRunningInsecureContent, javascript=yes"
         @new-window="newWindow"
+        @page-title-updated="pageTitleUpdate"
       />
     </v-container>
   </v-main>
 </template>
 <script>
+  import { ipcRenderer} from 'electron'
   import { get, sync } from 'vuex-pathify'
 
   const name = 'ServerWebView'
@@ -41,11 +43,14 @@
       tabIndex: 0,
       preload: false,
       $elList: [],
+      badges: {},
+      badgeCount: 0,
     }),
 
     computed: {
       serverIds: get('settings/serverIds'),
       url: sync('video/url'),
+      badgeCounts: sync('settings/badgeCounts'),
       ...get('settings', ['servers', 'activeServerId', 'currentComponent']),
       show () {
         return this.currentComponent && this.currentComponent.name === name ? '' : 'inactive'
@@ -58,6 +63,37 @@
         if (e.url.match(/video\?/)) {
           this.url = e.url.replace('video', 'desktop')
           this.$router.push({ path: '/video' })
+        }
+      },
+
+      updateBadgeCount () {
+        this.badgeCounts = { ...this.badges }
+        const oldCount = this.badgeCount
+        const totalCount = Object.values(this.badges).reduce((a, b) => a + b, 0)
+        this.badgeCount = totalCount
+        if (oldCount !== totalCount) {
+          // notify of a count change
+          ipcRenderer.send('update-badge', totalCount)
+        }
+      },
+
+      pageTitleUpdate (e) {
+        if (e.title && e.title !== '') {
+          const serverId = e.target.getAttribute('data-server-id')
+          // console.warn('pageTitleUpdate', e.title, serverId)
+          const match = e.title.match(/\((\d+)\)/)
+          let count = 0
+          if (match) {
+            // console.warn('match', match)
+            count = parseInt(match[1])
+          } else {
+            // console.warn('no match')
+          }
+          // console.log('count', serverId, count)
+          const badges = { ...this.badges }
+          badges[serverId] = count
+          this.badges = badges
+          this.updateBadgeCount()
         }
       },
     },

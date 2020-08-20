@@ -3,7 +3,7 @@
 import { remote } from 'electron'
 
 
-import ConfigUtil from '@/utils/config-util'
+// import ConfigUtil from '@/utils/config-util'
 import DefaultNotification from './default-notification'
 // import { appId, setNotificationCallback2 } from './helpers'
 import Helpers from './helpers'
@@ -17,17 +17,23 @@ app.setAppUserModelId(Helpers.appId)
 
 let Notification = DefaultNotification
 
-if (process.platform === 'darwin') {
-	const DarwinNotification = require('./darwin-notifications')
-	Notification = DarwinNotification
-}
+// TODO: The node-mac-notifiction package is broken. It raises an exception
+//       when imported. Disabling mac specific notifications for now
+// if (process.platform === 'darwin') {
+//   console.warn('darwin')
+//   const DarwinNotification = require('./darwin-notifications')
+//   console.warn('after requrie ')
+// 	Notification = DarwinNotification
+// }
 
 window.addEventListener('load', () => {
 	Helpers.setNotificationCallback2(Notification)
 
-	if (typeof window.one_chat !== 'undefined' && typeof window.one_chat.notifier !== 'undefined') {
+	// if (typeof window.one_chat !== 'undefined' && typeof window.one_chat.notifier !== 'undefined') {
+  if (window.one_chat && window.one_chat.notifier) {
 		window.one_chat.notifier.audioEnabled = () => {
-			return !(ConfigUtil.getConfigItem('silent') || false)
+      // return !(ConfigUtil.getConfigItem('silent') || false)
+      return true
 		}
 	} else {
 		console.warn('window.one_chat.notifier is not defined')

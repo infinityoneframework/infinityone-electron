@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import Drawer from '@/components/Drawer'
+  import Drawer from '@/components/drawer'
   import DomainUtil from '@/utils/domain-util'
   import { get, sync } from 'vuex-pathify'
   import Settings from '@/views/Settings'

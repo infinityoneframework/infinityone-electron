@@ -2,22 +2,25 @@
 
 import { ipcRenderer } from 'electron'
 import url from 'url'
-import MacNotifier from 'node-mac-notifier'
-import Logger from '@/utils/logger-util'
+// import Logger from '@/utils/logger-util'
 import ConfigUtil from '@/utils/config-util'
 // import {appId, customReply, focusCurrentServer, parseReply, setupReply} from './helpers'
 import Helpers from './helpers'
 
-const logger = new Logger({
-	file: 'notifications.log',
-	timestamp: true
-})
+console.warn('before node-mac-notifier')
+const MacNotifier = require('node-mac-notifier')
+console.log('MacNotifier', MacNotifier)
+// const logger = new Logger({
+// 	file: 'notifications.log',
+// 	timestamp: true
+// })
 
 let replyHandler
 let clickHandler
 
 class DarwinNotification {
 	constructor(title, opts) {
+		console.warn('DarwinNotification constructor')
 		if (DarwinNotification.permission === 'denied') {
 			return
 		}
@@ -27,8 +30,10 @@ class DarwinNotification {
 		const { icon } = opts
 		const profilePic = url.resolve(`${protocol}//${host}`, icon)
 
+		console.log('profilePic', profilePic)
+
     console.log('permission: ', DarwinNotification.permission)
-    logger.info('permission: ', DarwinNotification.permission)
+    // logger.info('permission: ', DarwinNotification.permission)
 
 		this.tag = opts.tag
 		const notification = new MacNotifier(title, Object.assign(opts, {

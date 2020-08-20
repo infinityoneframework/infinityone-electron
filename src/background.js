@@ -9,6 +9,7 @@ import appMenu from '@/main/menu'
 import ConfigUtil from '@/utils/config-util'
 import path from 'path'
 import store from '@/store'
+import BadgeSettings from '@/components/badge-settings'
 
 // const appMenu = require('@/main/menu');
 
@@ -245,8 +246,8 @@ app.on("ready", async () => {
 
   ipcMain.on('update-badge', (event, messageCount) => {
     badgeCount = messageCount
-    // BadgeSettings.updateBadge(badgeCount, win)
-    console.log('badgeCount', badgeCount)
+    BadgeSettings.updateBadge(badgeCount, mainWindow)
+    console.debug('badgeCount', badgeCount, messageCount)
     page.send('tray', messageCount)
   })
 

@@ -18,6 +18,7 @@ const state = {
   videoUrl: null,
   videoClose: false,
   aboutOpen: false,
+  badgeCounts: {},
 }
 
 const mutations = {
