@@ -32,7 +32,7 @@
                   cols="9"
                   style="padding-top: 6px"
                 >
-                  <label 
+                  <label
                     :for="item.field"
                     v-html="item.title"
                   />
@@ -69,7 +69,8 @@
 </template>
 <script>
   import { sync } from 'vuex-pathify'
-  
+  import config from '@/config'
+
   export default {
     name: 'GeneralSettings',
 
@@ -78,7 +79,7 @@
       items: [
         { title: 'Appearance', items: [
           { title: 'Show app icon in system tray', field: 'trayIcon' },
-          { title: 'Show sidebar (<span class="shortcut">Cmd Or Ctrl+S</span>)', field: 'showSidebar' },
+          { title: `Show sidebar (<span class="shortcut">${config.cmdKey}+S</span>)`, field: 'showSidebar' },
           { title: 'Show app unread badge', field: 'badgeOption' },
         ]},
         { title: 'Desktop Notification', items: [
@@ -91,7 +92,7 @@
         { title: 'Functionality', items: [
           { title: 'Start app at login', field: 'startAtLogin'},
           { title: 'Always start minimized', field: 'startminimized'},
-          { title: 'Enable Spellchecker (requires restart', field: 'enableSpellchecker'},
+          { title: 'Enable Spellchecker (requires restart)', field: 'enableSpellchecker'},
         ]},
         // { title: 'Add custom CSS', items: [
         //   { title: 'This will inject the selected css stylesheet in all the added accounts', button: 'Add', method: 'add' },
@@ -121,10 +122,10 @@
 
       method (action) {
         switch (action) {
-          case 'reset': 
+          case 'reset':
             console.log('reset clicked')
             break
-          case 'add': 
+          case 'add':
             console.log('add clicked')
             break
         }
@@ -133,6 +134,6 @@
   }
 </script>
 <style lang="sass" scoped>
-    
+
 </style>
 

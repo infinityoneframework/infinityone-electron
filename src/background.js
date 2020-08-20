@@ -113,6 +113,16 @@ function createWindow() {
     win.webContents.send('leave-fullscreen')
   })
 
+  win.once('ready-to-show', () => {
+		if (ConfigUtil.getConfigItem('startMinimized')) {
+      console.log('[background] start minimized')
+			win.minimize()
+		} else {
+      console.log('[background] start showing')
+			win.show()
+		}
+  })
+
   win.webContents.on('will-navigate', e => {
     if (e) {
       win.webContents.send('destroytray')
@@ -122,7 +132,7 @@ function createWindow() {
   mainWindowState.manage(win)
 
   win.webContents.on('new-window', (event, url, frameName) => {
-    console.debug('win new-window', event, url, frameName)
+    console.debug('[background] win new-window', event, url, frameName)
   })
 
   return win
@@ -145,7 +155,7 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  console.warn('activate callback', store.state.settings)
+  console.warn('[background] activate callback', store.state.settings)
   if (mainWindow === null) {
     mainWindow = createWindow();
   }
@@ -155,10 +165,10 @@ app.on("activate", () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", async () => {
-  console.log('...ready isDevelopment', isDevelopment)
+  console.log('[background] ...ready isDevelopment', isDevelopment)
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
-    console.log('installing vuejs_devtools')
+    console.log('[background] installing vuejs_devtools')
     // require('vue-devtools').install().then(resp => {
     //   console.log('vue install', resp)
     // })
@@ -168,7 +178,7 @@ app.on("ready", async () => {
     try {
       await installExtension(VUEJS_DEVTOOLS);
     } catch (e) {
-      console.error("Vue Devtools failed to install:", e.toString());
+      console.error("[background] Vue Devtools failed to install:", e.toString());
     }
   }
 
@@ -189,29 +199,30 @@ app.on("ready", async () => {
     //   }, details.responseHeaders)});
     // });
 
-    if (ConfigUtil.getConfigItem('startMinimized')) {
-      mainWindow.minimize()
-    } else {
-      mainWindow.show()
-    }
+    // if (ConfigUtil.getConfigItem('startMinimized')) {
+    //   mainWindow.minimize()
+    // } else {
+    //   mainWindow.show()
+    // }
   })
 
 
   page.on('open-dev-tools', () => {
-    console.warn('page on open-dev-tools')
+    console.warn('[background] page on open-dev-tools')
   })
 
   ipcMain.on('open-dev-tools', () => {
-    console.warn('ipcMain.on open-dev-tools')
+    console.warn('[background] ipcMain.on open-dev-tools')
   })
 
   ipcMain.on('reload-app', () => {
-    console.log('reload-app')
+    console.log('[background] reload-app')
     app.relaunch()
     app.quit()
   })
 
   ipcMain.on('focus-app', () => {
+    console.log('[background] focus..')
     mainWindow.show()
   })
 
@@ -220,7 +231,7 @@ app.on("ready", async () => {
   })
 
   ipcMain.on('reload-full-app', () => {
-    console.log('reload-full-app')
+    console.log('[background] reload-full-app')
     mainWindow.reload()
     page.send('destroytray')
   })
@@ -232,10 +243,11 @@ app.on("ready", async () => {
   })
 
   ipcMain.on('toggle-app', () => {
-    console.log('toggle-app')
+    console.log('[background] toggle-app')
     if (mainWindow.isVisible()) {
       mainWindow.hide()
     } else {
+      console.log('[background] show')
       mainWindow.show()
     }
   })
@@ -247,7 +259,7 @@ app.on("ready", async () => {
   ipcMain.on('update-badge', (event, messageCount) => {
     badgeCount = messageCount
     BadgeSettings.updateBadge(badgeCount, mainWindow)
-    console.debug('badgeCount', badgeCount, messageCount)
+    console.debug('[background] badgeCount', badgeCount, messageCount)
     page.send('tray', messageCount)
   })
 

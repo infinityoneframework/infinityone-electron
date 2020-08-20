@@ -40,8 +40,7 @@
   import { get } from 'vuex-pathify'
   import config from '@/config'
 
-  const mac = process.platform === 'darwin'
-  const userOSKey = mac ? '⌘' : 'Ctrl'
+  const userOSKey = config.cmdKey
   const name = 'ServerTab'
 
   export default {

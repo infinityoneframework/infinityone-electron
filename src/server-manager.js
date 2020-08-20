@@ -140,9 +140,7 @@ class ServerManager {
 			this.openSettings(settingNav);
 		});
 
-		console.warn('registring open-about')
 		ipcRenderer.on('open-about', () => {
-			console.warn('open-about event...')
 			return this.openAbout()
     })
 
@@ -158,6 +156,9 @@ class ServerManager {
 			ipcRenderer.send('clear-app-settings');
 		});
 
+		ipcRenderer.on('switch-server-tab', (event, index) => {
+			this.activateTab(index);
+		})
   }
 
   openSettings(nav = 'settings') {
@@ -165,7 +166,6 @@ class ServerManager {
   }
 
   openAbout() {
-		console.warn('openAbout...')
     router.push({ path: '/about' })
   }
 

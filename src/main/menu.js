@@ -131,47 +131,12 @@ class AppMenu {
 			}, {
 				label: 'Show App Data',
 				click() {
-					shell.openItem(app.getPath('userData'));
+					shell.openPath(app.getPath('userData'));
 				}
 			}
 		];
 	}
 
-	// getHelpSubmenu() {
-	// 	return [
-	// 		{
-	// 			label: `${appName + ' Desktop-'} v${app.getVersion()}`,
-	// 			enabled: false
-	// 		},
-			// {
-			// 	label: `What's New...`,
-			// 	click() {
-			// 		shell.openExternal(`https://github.com/infinityoneframework/infinityone-electron/releases/tag/v${app.getVersion()}`);
-			// 	}
-			// },
-			// {
-			// 	label: `${appName} Help`,
-			// 	click() {
-			// 		shell.openExternal('https://chat.spallen.com/help/');
-			// 	}
-			// }, {
-			// 	label: 'Show App Logs',
-			// 	click() {
-			// 		shell.openItem(app.getPath('userData'));
-			// 	}
-			// }, {
-			// 	label: 'Report an Issue...',
-			// 	click() {
-			// 		const body = `
-			// 		<!-- Please succinctly describe your issue and steps to reproduce it. -->
-			// 		-
-			// 		${app.getName()} ${app.getVersion()}
-			// 		Electron ${process.versions.electron}
-			// 		${process.platform} ${process.arch} ${os.release()}`;
-			// 		shell.openExternal(`https://github.com/infinityoneframework/infinityone-electron/issues/new?body=${encodeURIComponent(body)}`);
-			// 	}
-			// }
-	// }
 	getWindowSubmenu(tabs, activeTabIndex) {
 		const initialSubmenu = [{
 			role: 'minimize'
@@ -180,14 +145,13 @@ class AppMenu {
 		}];
 
 		if (tabs.length > 0) {
-			const ShortcutKey = process.platform === 'darwin' ? 'Cmd' : 'Ctrl';
 			initialSubmenu.push({
 				type: 'separator'
 			});
 			for (let i = 0; i < tabs.length; i++) {
 				initialSubmenu.push({
 					label: tabs[i].alias,
-					accelerator: `${ShortcutKey} + ${i + 1}`,
+					accelerator: `CommandOrControl+${i + 1}`,
 					checked: i === activeTabIndex,
 					click(item, focusedWindow) {
 						if (focusedWindow) {

@@ -22,6 +22,7 @@
   import VideoConference from '@/views/video-conference'
   import VideoFab from '@/components/VideoFab'
   import About from '@/views/About'
+  import ConfigUtil from '@/utils/config-util'
 
   export default {
     name: 'App',
@@ -47,9 +48,12 @@
 
     watch: {
       serverId (curr, past) {
-        console.debug('serverId', curr, past)
-        if (curr) {
+        if (curr || curr === 0) {
+
           this.lastServerId = curr
+          ConfigUtil.setConfigItem('lastActiveTab', curr)
+        } else {
+          console.debug('watach serverId', curr, past)
         }
       },
 
