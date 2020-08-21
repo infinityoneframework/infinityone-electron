@@ -10,7 +10,7 @@ import ConfigUtil from '@/utils/config-util'
 import path from 'path'
 import store from '@/store'
 import BadgeSettings from '@/components/badge-settings'
-
+import { setAutoLaunch } from '@/main/startup'
 // const appMenu = require('@/main/menu');
 
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -281,11 +281,10 @@ app.on("ready", async () => {
     store.commit(mutation.type, mutation.payload)
   })
 
-  // ipcMain.on('toggleAudoLauncher', (event, AutoLaunchValue) => {
-  //   setAutoLaunch(AutoLaunchValue)
-  // })
-
-});
+  ipcMain.on('toggleAudoLauncher', (event, AutoLaunchValue) => {
+    setAutoLaunch(AutoLaunchValue)
+  })
+})
 
 app.on('before-quit', () => {
   isQuitting = true
