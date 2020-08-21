@@ -208,12 +208,78 @@ class DomainUtil {
 	}
 
 	getServerSettings(domain) {
+		const items = ["realm_icon","Site_Url","Site_Name", "Server_Version"]
+		const queryParams = JSON.stringify({ id: { "$in": items } })
+		const query = `?fields={"type":1}&query=${queryParams}`
+
+		const serverSettingsUrl = domain + '/api/v1/settings.public' + query
+		return new Promise((resolve, reject) => {
+			request(serverSettingsUrl, (error, response) => {
+				if (!error && response.statusCode === 200) {
+					try {
+						const resp = JSON.parse(response.body)
+
+						let data = {}
+
+						if (resp.settings) {
+							resp.settings.forEach(item => {
+								data[item.id] = item.value
+							})
+						}
+
+						console.debug('server settings', resp)
+						// eslint-disable-next-line no-prototype-builtins
+						if (data.hasOwnProperty('Site_Url')) {
+							let realmIcon
+
+							if (data.realm_icon) {
+								realmIcon = data.realm_icon
+							} else {
+								realmIcon = defaultIconUrl
+							}
+
+							resolve({
+								// Some InfinityOne Servers use absolute URL for server icon whereas others use relative URL
+								// Following check handles both the cases
+								icon: realmIcon.startsWith('/') ? data.Site_Url + realmIcon : realmIcon,
+								iconUrl: realmIcon,
+								url: data.Site_Url,
+								alias: data.Site_Name,
+								serverVersion: data.Server_Version
+							})
+						} else {
+							console.debug('invaild response', response)
+							this.attempt_legacy_settings(domain, resolve, reject)
+						}
+					} catch (err) {
+						console.debug('err', err)
+						this.attempt_legacy_settings(domain, resolve, reject)
+					}
+				} else {
+					this.attempt_legacy_settings(domain, resolve, reject)
+				}
+			})
+		})
+	}
+
+	attempt_legacy_settings(domain, resolve, reject) {
+		this.getServerSettingsLegacy(domain)
+			.then(resp => {
+				resolve(resp)
+			})
+			.catch(error  => {
+				reject(error)
+			})
+	}
+
+	getServerSettingsLegacy(domain) {
 		const serverSettingsUrl = domain + '/api/v1/server_settings'
 		return new Promise((resolve, reject) => {
 			request(serverSettingsUrl, (error, response) => {
 				if (!error && response.statusCode === 200) {
 					try {
 						const data = JSON.parse(response.body)
+						console.debug('server settings legacy', data)
 						// eslint-disable-next-line no-prototype-builtins
 						if (data.hasOwnProperty('realm_uri')) {
 							let realmIcon
@@ -290,7 +356,7 @@ class DomainUtil {
 			console.warn('was not able to verify userData')
 		} catch (err) {
 			console.warn('store.dispatch error', err)
-		} 
+		}
 
 		store.set('settings/servers', [])
 	}
@@ -329,7 +395,7 @@ class DomainUtil {
 		updateMenu(servers)
 
 		if (len > 0) {
-			const rg = range(0, len - 1) 
+			const rg = range(0, len - 1)
 			rg.forEach(i => { domains.push(servers[i]) })
 			domains = domains.map(item => {
 				const newItem = { ...item }
@@ -340,5 +406,5 @@ class DomainUtil {
 		fs.writeFileSync(userDataPath(), JSON.stringify({ domains }, null, '\t'), { encoding: 'utf-8' })
 	}
 }
-  
+
 export default new DomainUtil()

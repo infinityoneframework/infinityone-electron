@@ -28,11 +28,18 @@
               />
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title v-text="item.alias" />
+              <v-list-item-title>
+                {{ item.alias }}
+                <span
+                  v-if="item.serverVersion"
+                  class="version"
+                  v-text="'v' + item.serverVersion"
+                />
+              </v-list-item-title>
               <v-list-item-subtitle v-text="item.url" />
             </v-list-item-content>
             <v-list-item-action>
-              <v-btn 
+              <v-btn
                 outlined
                 color="error"
                 @click="disconnect(inx)"
@@ -72,7 +79,10 @@
     .server-item
       background-color: white
       margin-bottom: 10px
+      .version
+        margin-left: 10px
+        font-size: smaller
+        font-style: italic
 
-  
+
 </style>
-  
