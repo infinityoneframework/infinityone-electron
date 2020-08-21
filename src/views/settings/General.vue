@@ -92,7 +92,8 @@
         { title: 'Functionality', items: [
           { title: 'Start app at login', field: 'startAtLogin'},
           { title: 'Always start minimized', field: 'startminimized'},
-          { title: 'Enable Spellchecker (requires restart)', field: 'enableSpellchecker'},
+          // can't get the spell checking compiling. Disabling for now
+          // { title: 'Enable Spellchecker (requires restart)', field: 'enableSpellchecker'},
         ]},
         // { title: 'Add custom CSS', items: [
         //   { title: 'This will inject the selected css stylesheet in all the added accounts', button: 'Add', method: 'add' },
