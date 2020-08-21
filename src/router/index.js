@@ -5,6 +5,7 @@ import Home from "../views/Home"
 import Settings from '@/views/Settings'
 import Servers from '@/views/settings/Servers'
 import General from '@/views/settings/General'
+import Shortcuts from '@/views/settings/Shortcuts'
 import OrganizationForm from '@/views/OrganizationForm'
 import ServerWebView from '@/views/ServerWebView'
 import VideoConference from '@/views/video-conference'
@@ -32,6 +33,12 @@ const routes = [
     name: "Settings",
     component: Settings,
     meta: { settings: true, component: General },
+  },
+  {
+    path: "/shortcuts",
+    name: "Shortcuts",
+    component: Settings,
+    meta: { settings: true, component: Shortcuts },
   },
   {
     path: '/servers/new',
@@ -89,6 +96,8 @@ const getComponent = ({ name }) => {
       return VideoConference
     case 'About':
       return About
+    case 'Shortcuts':
+      return Settings
     default:
       return name
   }

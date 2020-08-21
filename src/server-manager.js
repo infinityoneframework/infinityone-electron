@@ -123,7 +123,6 @@ class ServerManager {
 			zoomOut: 'zoomOut',
 			zoomActualSize: 'zoomActualSize',
 			'log-out': 'logOut',
-			shortcut: 'showShortcut',
 			'tab-devtools': 'openDevTools'
 		};
 
@@ -142,7 +141,11 @@ class ServerManager {
 
 		ipcRenderer.on('open-about', () => {
 			return this.openAbout()
-    })
+		})
+
+		ipcRenderer.on('open-shortcuts', () => {
+			return this.openSettings('shortcuts')
+		})
 
 		// ipcRenderer.on('reload-viewer', this.reloadView.bind(this, this.tabs[this.activeTabIndex].props.index));
 
@@ -162,6 +165,7 @@ class ServerManager {
   }
 
   openSettings(nav = 'settings') {
+		console.warn('openSettings', nav)
     router.push({ path: `/${nav}` })
   }
 
@@ -170,7 +174,7 @@ class ServerManager {
   }
 
   activateTab(serverId) {
-    router.push( { path: `/server/${serverId}` })
+    router.push({ path: `/server/${serverId}` })
   }
 }
 

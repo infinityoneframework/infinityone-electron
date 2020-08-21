@@ -13,7 +13,8 @@
         <v-tab
           v-for="item in tabs"
           :key="item.name"
-          @click.stop="component = item.component"
+          :value="item.component.name"
+          @click.stop="setComponent(item.component)"
           v-text="item.title"
         />
       </v-tabs>
@@ -44,12 +45,47 @@
       ],
       tab: 'general',
       component: General,
+      value: General.name,
+      change: false,
     }),
 
     computed: {
       currentComponent: get('settings/currentComponent'),
       show () {
         return this.currentComponent && this.currentComponent.name === 'Settings' ? '' : 'inactive'
+      },
+    },
+
+    watch: {
+      $route (to, from) {
+        console.log('route change', to, from)
+      },
+      component (curr, prev) {
+        console.log('component change', curr && curr.name, prev && prev.name, this.value)
+      }
+    },
+
+    beforeUpdate () {
+      // this functionality is a little confusing. The following allows the required tab to be
+      // shown when coming from a direct route. However, this function is interacting with the
+      // correct functionality when a tab is clicked. So, this.value is true when a tab is clicked,
+      // but not when we navigate from a route.
+      // Furthermore, this.value is used to ensure that the corret tab is marked active when
+      // coming from a route.
+      const history = this.$router.history
+      const meta = history && history.pending && history.pending.meta
+      if (meta && meta.settings && !this.change) {
+        this.component = meta.component || General
+        this.value = this.component.name
+      }
+      this.change = false
+    },
+
+    methods: {
+      setComponent (component) {
+        this.component = component
+        this.value = component.name
+        this.change = true
       },
     },
   }

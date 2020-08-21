@@ -193,7 +193,7 @@ class AppMenu {
 				accelerator: 'Cmd+Shift+K',
 				click(item, focusedWindow) {
 					if (focusedWindow) {
-						AppMenu.sendAction('shortcut');
+						AppMenu.sendAction('open-shortcuts');
 					}
 				}
 			}, {
