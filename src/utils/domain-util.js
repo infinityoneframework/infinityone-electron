@@ -4,6 +4,8 @@ import process from 'process'
 import request from 'request'
 import PersistPlugin from '@/store/persist-plugin'
 import Utils from './index.js'
+import router from '@/router'
+import config from '@/config'
 // import { deleteProp } from '../utils'
 // import { deleteProp, range } from '../utils'
 // import Logger from './logger-util'
@@ -23,6 +25,17 @@ const	updateMenu = (tabs, activeTabIndex) => {
 		ipcRenderer.send('update-menu', { tabs, activeTabIndex })
 	}
 }
+
+const certsError = [
+	'Error: self signed certificate',
+	'Error: unable to verify the first certificate',
+	'Error: unable to get local issuer certificate'
+]
+
+// If the domain contains following strings we just bypass the server
+const whitelistDomains = [
+	'localhost',
+]
 
 // const logger = new Logger({
 // 	file: 'config-util.log',
@@ -62,6 +75,7 @@ class DomainUtil {
 			return instance
 		} else {
 			instance = this
+      window.DomainUtil = this
 		}
 
 		PersistPlugin.addPlugin('servers', this.saveUserDataDomains)
@@ -89,6 +103,24 @@ class DomainUtil {
 
 	updateMenu(servers, index) {
 		updateMenu(servers, index)
+	}
+
+	openDomain() {
+		const serverId = store.get('settings/lastServerId') || store.get('settings/servers@[0].serverId')
+		router.push({ path: `/server/${serverId}`})
+	}
+
+	serverRetryTicks(count) {
+		if (count <= config.serverRetryThreshould1) {
+			return config.serverRetryTime1
+		}
+		if (count <= config.serverRetryThreshould2) {
+			return config.serverRetryTime2
+		}
+		if (count <= config.serverRetryThreshould3) {
+			return config.serverRetryTime3
+		}
+		return config.serverRetryTime4
 	}
 
 	addDomain(server) {
@@ -125,6 +157,51 @@ class DomainUtil {
 		return  !!this.getDomains().find(item => item.url === domain)
 	}
 
+	checkDisabled() {
+		const errors = store.get('settings/networkErrors')
+		const servers = store.get('settings/servers')
+		Object.keys(errors).forEach(serverId => {
+			const server = servers.find(s => s.serverId === parseInt(serverId))
+			if (!server) {
+				console.warn("invalid serverId", serverId)
+				return
+			}
+			this.pingDomain(server.url)
+				.then(() => {
+					const errors = { ...store.get('settings/networkErrors') }
+					delete errors[server.serverId]
+					store.set('settings/networkErrors', errors)
+
+					this.checkDomain(server.url, true)
+				})
+				.catch(() => {})
+		})
+	}
+
+	pingDomain (url) {
+		const domain = this.formatUrl(url)
+		const checkDomain = domain + defaultRealmIcon;
+		console.warn('pingDomain url', url, domain, checkDomain)
+
+		return new Promise((resolve, reject) => {
+			request(checkDomain, (error, response) => {
+				// make sure that error is a error or string not undefined
+				// so validation does not throw error.
+				error = error || '';
+				const certsCheck = domain.indexOf(whitelistDomains) >= 0 || certsError.indexOf(error.toString()) >= 0
+				if (!error && response.statusCode < 400 || certsCheck) {
+					// Correct
+					this.getServerSettings(domain).then(serverSettings => {
+						console.debug('ping settings', serverSettings)
+						resolve()
+					}, () => {
+						reject()
+					});
+				}
+			})
+		})
+	}
+
 	checkDomain(domain, silent = false) {
 		if (!silent && this.duplicateDomain(domain)) {
 			// Do not check duplicate in silent mode
@@ -143,19 +220,6 @@ class DomainUtil {
 
 		return new Promise((resolve, reject) => {
 			request(checkDomain, (error, response) => {
-				const certsError =
-					[
-						'Error: self signed certificate',
-						'Error: unable to verify the first certificate',
-						'Error: unable to get local issuer certificate'
-					];
-
-				// If the domain contains following strings we just bypass the server
-				const whitelistDomains = [
-					'zulipdev.org',
-					'localhost',
-					'chat.spallen.com'
-				];
 
 				// make sure that error is a error or string not undefined
 				// so validation does not throw error.
@@ -208,7 +272,15 @@ class DomainUtil {
 	}
 
 	getServerSettings(domain) {
-		const items = ["realm_icon","Site_Url","Site_Name", "Server_Version"]
+		const items = [
+			"realm_icon",
+			"Site_Url",
+			"Site_Name",
+			"Server_Version",
+			"Local_Site_Host",
+			"Local_Site_Port",
+		]
+
 		const queryParams = JSON.stringify({ id: { "$in": items } })
 		const query = `?fields={"type":1}&query=${queryParams}`
 
@@ -227,7 +299,6 @@ class DomainUtil {
 							})
 						}
 
-						console.debug('server settings', resp)
 						// eslint-disable-next-line no-prototype-builtins
 						if (data.hasOwnProperty('Site_Url')) {
 							let realmIcon
@@ -238,6 +309,8 @@ class DomainUtil {
 								realmIcon = defaultIconUrl
 							}
 
+							const localUrl = data.Local_Site_Host ? `https://${data.Local_Site_Host}@${data.Local_Site_Port}` : null
+
 							resolve({
 								// Some InfinityOne Servers use absolute URL for server icon whereas others use relative URL
 								// Following check handles both the cases
@@ -245,7 +318,8 @@ class DomainUtil {
 								iconUrl: realmIcon,
 								url: data.Site_Url,
 								alias: data.Site_Name,
-								serverVersion: data.Server_Version
+								serverVersion: data.Server_Version,
+								localUrl: localUrl,
 							})
 						} else {
 							console.debug('invaild response', response)

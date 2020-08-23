@@ -8,29 +8,41 @@
       style="height: 100vh; width: 100%"
       class="ma-0 pa-0"
     >
-      <webview
-        v-for="(server, inx) in servers"
-        :key="server.serverId"
-        :class="`server-view ${server.serverId === activeServerId ? 'enabled' : 'disabled'}`"
-        style="height: 100%; width: 100%"
-        :data-tab-id="inx"
-        :data-server-id="server.serverId"
-        :src="server.url"
-        :node-integration="nodeIntegration"
-        preload="file://./preload.js"
-        disablewebsecurity
-        remote-module
-        partition="persist:webviewsession"
-        webpreferences="allowRunningInsecureContent, javascript=yes"
-        @new-window="newWindow"
-        @page-title-updated="pageTitleUpdate"
-      />
+      <template v-for="(server, inx) in servers">
+        <div
+          :key="`${inx}-0`"
+          :class="`spinner ${showSpinner(server.serverId) ? 'show' : ''}`"
+          :style="`background: #fff url(${require('@/assets/ic_loading.gif')}) no-repeat`"
+        />
+
+        <webview
+          :key="server.serverId"
+          :class="`server-view ${serverClass(server)}`"
+          style="height: 100%; width: 100%"
+          :data-tab-id="inx"
+          :data-server-id="server.serverId"
+          :src="server.url"
+          :node-integration="nodeIntegration"
+          preload="file://./preload.js"
+          disablewebsecurity
+          remote-module
+          partition="persist:webviewsession"
+          webpreferences="allowRunningInsecureContent, javascript=yes"
+          @new-window="newWindow"
+          @page-title-updated="pageTitleUpdate"
+          @did-fail-load="didFailLoad($event, server.serverId)"
+          @did-finish-load="didFinishLoad($event, server.serverId)"
+          @did-start-loading="didStartLoading(server.serverId)"
+          @did-stop-loading="didFinishLoad($event, server.serverId)"
+        />
+      </template>
     </v-container>
   </v-main>
 </template>
 <script>
   import { ipcRenderer} from 'electron'
   import { get, sync } from 'vuex-pathify'
+  import SystemUtil from '@/utils/system-util'
 
   const name = 'ServerWebView'
 
@@ -45,15 +57,51 @@
       $elList: [],
       badges: {},
       badgeCount: 0,
+      loaded: {},
     }),
 
     computed: {
       serverIds: get('settings/serverIds'),
       url: sync('video/url'),
       badgeCounts: sync('settings/badgeCounts'),
-      ...get('settings', ['servers', 'activeServerId', 'currentComponent']),
+      ...get('settings', ['activeServerId', 'currentComponent']),
+      servers: get('settings/enabledServers'),
+      networkErrors: sync('settings/networkErrors'),
       show () {
-        return this.currentComponent && this.currentComponent.name === name ? '' : 'inactive'
+        return this.isCurrentComponent ? '' : 'inactive'
+      },
+      isCurrentComponent () {
+        return this.currentComponent && this.currentComponent.name === name
+      },
+      isNetworkError () {
+        return !!this.getNetworkError
+      },
+      getNetworkError () {
+        return this.networkErrors[this.activeServerId]
+      },
+      serverClass () {
+        return server => {
+          const serverId = server ? server.serverId : -1
+          const onload = this.loaded[serverId] ? '' : ' onload'
+          return serverId === this.activeServerId ? `enabled${onload}` : `disabled${onload}`
+        }
+      },
+      showSpinner () {
+        return id => !this.loaded[id] && this.activeServerId === id
+      },
+    },
+
+    watch: {
+      networkErrors (curr, prev) {
+        curr = Object.keys(curr)
+        prev = Object.keys(prev)
+
+        prev.forEach(id => {
+          if (!curr.includes(id)) {
+            console.debug('found a cleared id', id)
+            this.loadServer(id, $el => $el.reload())
+          }
+        })
       },
     },
 
@@ -84,27 +132,86 @@
           const match = e.title.match(/\((\d+)\)/)
           let count = 0
           if (match) {
-            // console.warn('match', match)
             count = parseInt(match[1])
-          } else {
-            // console.warn('no match')
           }
-          // console.log('count', serverId, count)
           const badges = { ...this.badges }
           badges[serverId] = count
           this.badges = badges
           this.updateBadgeCount()
         }
       },
+
+      didFinishLoad (event, serverId) {
+        if (this.networkErrors[serverId]) {
+          console.debug('network errors')
+          return
+        }
+        this.setLoaded(serverId)
+      },
+
+      didFailLoad (event, serverId) {
+        const { errorDescription } = event
+        const hasConnectivityErr = (SystemUtil.connectivityERR.indexOf(errorDescription) >= 0)
+        console.warn('dom-fail-load', event, errorDescription, hasConnectivityErr)
+        if (hasConnectivityErr) {
+          this.setNetworkError(serverId, errorDescription)
+          setTimeout(() => {
+            this.$router.push({ path: "/network_error" })
+          }, 1000)
+        }
+      },
+
+      didStartLoading (serverId) {
+        const loaded = { ...this.loaded }
+        delete loaded[serverId]
+        this.loaded = { ...loaded }
+      },
+
+      setNetworkError (serverId, description) {
+        const errors = { ...this.networkErrors }
+        errors[serverId] = description
+
+        this.networkErrors = errors
+      },
+
+      loadServer (serverId, callback) {
+        const $el = this.setLoaded(serverId)
+        if ($el && callback) {
+          callback($el)
+        }
+      },
+
+      setLoaded (serverId) {
+        const $el = document.querySelector(`webview[data-server-id="${serverId}"]`)
+        if ($el) {
+          $el.classList.remove('onload')
+          const loaded = { ...this.loaded }
+          loaded[serverId] = true
+          this.loaded = loaded
+        }
+        return $el
+      }
     },
   }
 </script>
 <style lang="sass" scoped>
-  //
   .server-view
-    // margin-left: 60px
-    // padding-left: 60px
     &.disabled
       display: none
+        display: flex
+    webview.onload
+      opacity: 0
+    .spinner
+      display: none
+      &.show
+        display: block
+        position: absolute
+        top: 0
+        bottom: 0
+        right: 0
+        left: 0
+        background-size: 60px 60px !important
+        background-position: center !important
+        z-index: 100
 </style>
 

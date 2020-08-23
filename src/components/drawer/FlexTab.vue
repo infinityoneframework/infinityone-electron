@@ -22,6 +22,7 @@
 <script>
   import { get } from 'vuex-pathify'
   import config from '@/config'
+  import DomainUtil from '@/utils/domain-util'
 
   const name = 'FlexTab'
   export default {
@@ -66,8 +67,7 @@
           if (el) {
             el.canGoBack() && el.goBack()
           } else {
-            const serverId = this.lastServerId || this.firstServer.serverId
-            this.$router.push({ path: `/server/${serverId}`})
+            DomainUtil.openDomain()
           }
         } else if (item.to) {
           this.$router.push({ path: item.to })

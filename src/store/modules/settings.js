@@ -19,6 +19,8 @@ const state = {
   videoClose: false,
   aboutOpen: false,
   badgeCounts: {},
+  networkErrors: {},
+  networkErrorTab: false,
 }
 
 const mutations = {
@@ -66,6 +68,23 @@ const mutations = {
     state.serverIds = { ...state.serverIds, ...tmp }
     state.servers.push({ ...server, serverId })
   },
+
+  SET_ENABLE_SERVER: (state, { server, enable }) => {
+    state.servers = state.servers.map(item => {
+      if (item.serverId !== server.serverId) {
+        return item
+      }
+      server.disabled = !enable
+      return { ...server  }
+    })
+  },
+
+  SET_NETWORK_ERRORS: (state, value) => {
+    state.networkErrors = value
+    if (Object.keys(value).length === 0) {
+      state.networkErrorTab = false
+    }
+  },
 }
 
 const actions = {
@@ -98,6 +117,8 @@ const actions = {
 const getters = {
   activeServerIndex: (state) => state.serverIds[state.activeServerId],
   activeServerWebviewSelector: (state) => `webview[data-server-id="${state.lastServerId}"]`,
+  enabledServers: (state) => state.servers.filter(s => !s.disabled),
+  disabledServers: (state) => state.servers.filter(s => s.disabled),
 }
 
 export default {

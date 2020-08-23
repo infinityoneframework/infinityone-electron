@@ -41,7 +41,7 @@ protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } }
 ]);
 
-function createWindow() {
+async function createWindow() {
   const mainWindowState = windowStateKeeper({
 		defaultWidth: 1100,
 		defaultHeight: 720
@@ -76,9 +76,9 @@ function createWindow() {
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
-    win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
+    await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
+    if (!process.env.IS_TEST) win.webContents.openDevTools()
 
-    if (!process.env.IS_TEST) win.webContents.openDevTools();
   } else {
     createProtocol("app");
     // Load the index.html when not in development
@@ -186,7 +186,7 @@ app.on("ready", async () => {
 		tabs: []
   });
 
-  mainWindow = createWindow();
+  mainWindow = await createWindow();
 
   const page = mainWindow.webContents
   global.mainPage = page

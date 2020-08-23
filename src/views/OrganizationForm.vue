@@ -35,6 +35,7 @@
                 label="InfinityOne URL"
                 required
                 style="margin-left: 10px;width: calc(100% - 85px); display: inline-block"
+                @keyup.enter="validate"
               />
             </span>
             <v-btn

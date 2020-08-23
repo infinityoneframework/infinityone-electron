@@ -25,6 +25,7 @@
         />
 
         <about-tab />
+        <network-error-tab />
 
         <flex-tab
           v-for="item in topItems"
@@ -56,6 +57,7 @@
   import AboutTab from './AboutTab'
   import FlexTab from './FlexTab'
   import ContextMenu from './ContextMenu'
+  import NetworkErrorTab from './NetworkErrorTab'
 
   export default {
     name: 'Drawer',
@@ -65,6 +67,7 @@
       AboutTab,
       FlexTab,
       ContextMenu,
+      NetworkErrorTab,
     },
 
     data: () => ({
@@ -81,7 +84,7 @@
     }),
 
     computed: {
-      ...get('settings', ['servers']),
+      servers: get('settings/servers'),
       showSidebar: sync('settings/config@showSidebar'),
     },
 

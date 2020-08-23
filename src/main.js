@@ -22,6 +22,7 @@ Vue.config.devtools = process.env.NODE_ENV === 'development'
 domain.setStore(store)
 config.reloadDB()
 domain.reloadDB()
+window.store = store
 
 new Vue({
   store,

@@ -10,6 +10,7 @@ import OrganizationForm from '@/views/OrganizationForm'
 import ServerWebView from '@/views/ServerWebView'
 import VideoConference from '@/views/video-conference'
 import About from '@/views/About'
+import NetworkError from '@/views/NetworkError'
 
 Vue.use(VueRouter);
 
@@ -22,10 +23,6 @@ const routes = [
   {
     path: "/about",
     name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    // component: () => import(/* webpackChunkName: "about" */ "../views/About.vue")
     component: About
   },
   {
@@ -70,6 +67,11 @@ const routes = [
     name: "VideoConference",
     component: VideoConference,
   },
+  {
+    path: '/network_error',
+    name: 'NetworkError',
+    component: NetworkError
+  },
 ]
 
 const router = new VueRouter({
@@ -98,6 +100,8 @@ const getComponent = ({ name }) => {
       return About
     case 'Shortcuts':
       return Settings
+    case 'NetworkError':
+      return NetworkError
     default:
       return name
   }

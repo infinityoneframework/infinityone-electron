@@ -22,6 +22,7 @@
 </template>
 <script>
   import { get, sync } from 'vuex-pathify'
+  import DomainUtil from '@/utils/domain-util'
 
   const name = 'About'
 
@@ -57,10 +58,9 @@
 
     methods: {
       closeAbout () {
-        const serverId = this.lastServerId || this.firstServer.serverId
         this.aboutOpen = false
         this.aboutHover = false
-        this.$router.push({ path: `/server/${serverId}`})
+        DomainUtil.openDomain()
       }
     },
   }

@@ -62,12 +62,12 @@ class ServerManager {
 		if (servers.length > 0) {
 			for (let i = 0; i < servers.length; i++) {
         const server = servers[i]
-				this.initServer(server, server.serverId);
-				DomainUtil.updateSavedServer(server.url, i);
-				this.activateTab(server.serverId);
+				this.initServer(server, i)
 			}
 			// Open last active tab
-			this.activateTab(ConfigUtil.getConfigItem('lastActiveTab'));
+			if (store.get('settings/networkErrors') == {}) {
+				this.activateTab(ConfigUtil.getConfigItem('lastActiveTab'))
+			}
 			// Remove focus from the settings icon at sidebar bottom
 			// this.$settingsButton.classList.remove('active');
 		} else {
@@ -75,8 +75,10 @@ class ServerManager {
 		}
 	}
 
-  initServer(server, serverId) {
-    console.log('initServer', serverId, server)
+  initServer(server, inx) {
+		store.set('settings/enableServer', { server, enable: true })
+		DomainUtil.updateSavedServer(server.url, inx)
+		this.activateTab(server.serverId)
   }
 
 	checkServers() {
@@ -162,6 +164,10 @@ class ServerManager {
 		ipcRenderer.on('switch-server-tab', (event, index) => {
 			this.activateTab(index);
 		})
+
+		ipcRenderer.on('reload-viewer', (event, servers) => {
+			this.reloadView(servers)
+		})
   }
 
   openSettings(nav = 'settings') {
@@ -175,7 +181,19 @@ class ServerManager {
 
   activateTab(serverId) {
     router.push({ path: `/server/${serverId}` })
-  }
+	}
+
+	reloadView(servers) {
+		const serverList = store.get('settings/servers')
+		servers.forEach(serverId => {
+			const id = parseInt(serverId)
+			const server = serverList.find(s => s.serverId === id)
+			store.set('settings/enableServer', { server, enable: false })
+		})
+		setTimeout(() => {
+			this.initTabs()
+		}, 1000)
+	}
 }
 
 window.onload = () => {

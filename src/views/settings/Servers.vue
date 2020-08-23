@@ -36,7 +36,15 @@
                   v-text="'v' + item.serverVersion"
                 />
               </v-list-item-title>
-              <v-list-item-subtitle v-text="item.url" />
+              <v-list-item-subtitle>
+                {{ item.url }}
+                <span
+                  v-if="item.localUrl"
+                  class="local-url"
+                >
+                  (Local LAN: {{ item.localUrl }})
+                </span>
+              </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
               <v-btn
@@ -83,6 +91,7 @@
         margin-left: 10px
         font-size: smaller
         font-style: italic
-
-
+      .local-url
+        margin-left: 10px
+        font-style: italic
 </style>

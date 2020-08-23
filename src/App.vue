@@ -8,6 +8,7 @@
       <organization-form />
       <video-fab />
       <about />
+      <network-error />
     </v-main>
   </v-app>
 </template>
@@ -23,6 +24,7 @@
   import VideoFab from '@/components/VideoFab'
   import About from '@/views/About'
   import ConfigUtil from '@/utils/config-util'
+  import NetworkError from '@/views/NetworkError'
 
   export default {
     name: 'App',
@@ -35,6 +37,7 @@
       VideoConference,
       VideoFab,
       About,
+      NetworkError,
     },
 
     data: () => ({
@@ -42,14 +45,13 @@
 
     computed: {
       serverId: get('settings/activeServerId'),
-      ...get('settings', ['currentComponent', 'settingsDrawer', 'servers', 'activeServerIndex']),
+      ...get('settings', ['currentComponent', 'settingsDrawer', 'servers', 'activeServerIndex', 'networkErrors']),
       ...sync('settings', ['videoActive', 'lastServerId']),
     },
 
     watch: {
       serverId (curr, past) {
         if (curr || curr === 0) {
-
           this.lastServerId = curr
           ConfigUtil.setConfigItem('lastActiveTab', curr)
         } else {
