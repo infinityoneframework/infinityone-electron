@@ -11,6 +11,7 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
 import config from '@/utils/config-util'
 import VuetifyConfirm from 'vuetify-confirm'
+import Logger from '@/utils/logger-util'
 require('./server-manager')
 require('./tray')
 
@@ -19,6 +20,7 @@ Vue.use(VuetifyConfirm, { vuetify })
 Vue.config.productionTip = false
 Vue.config.devtools = process.env.NODE_ENV === 'development'
 
+window.myLogger = Logger
 domain.setStore(store)
 config.reloadDB()
 domain.reloadDB()

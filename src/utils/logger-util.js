@@ -1,5 +1,5 @@
 import fs from 'fs'
-const Console = require('console').Console
+const NodeConsole = require('console').Console
 const isDev = require('electron-is-dev')
 const { initSetUp } = require('./default-util')
 
@@ -20,7 +20,7 @@ class Logger {
 			timestamp = true,
 			file = 'console.log',
 			level = true,
-			logInDevMode = false
+			logInDevMode = false,
 		} = opts
 
 		file = `${logDir}/${file}`
@@ -29,7 +29,7 @@ class Logger {
 		}
 
 		const fileStream = fs.createWriteStream(file, { flags: 'a' })
-		const nodeConsole = new Console(fileStream)
+		const nodeConsole = new NodeConsole(fileStream)
 		// const nodeConsole = new NodeConsole(fileStream)
 
 		this.nodeConsole = nodeConsole
@@ -48,10 +48,10 @@ class Logger {
 		/* eslint-disable no-fallthrough */
 		switch (true) {
 			case typeof timestamp === 'function':
-				args.unshift(timestamp() + ' |\t')
+				args.unshift(timestamp() + ' |')
 
 			case (level !== false):
-				args.unshift(type.toUpperCase() + ' |')
+				args.unshift(type.toUpperCase().padEnd(5, ' ') + ' |')
 
 			case isDev || logInDevMode:
 				nodeConsoleLog = nodeConsole[type] || nodeConsole.log
@@ -78,11 +78,8 @@ class Logger {
 
 	getTimestamp() {
 		const date = new Date()
-		const timestamp =
-			`${date.getMonth()}/${date.getDate()} ` +
-			`${date.getMinutes()}:${date.getSeconds()}`
+		const timestamp = date.toLocaleString('en-US', {hour12: false}).replace(',','')
 		return timestamp
 	}
 }
-
 export default Logger

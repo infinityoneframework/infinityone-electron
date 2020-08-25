@@ -26,7 +26,7 @@
         <a
           @click="linkInBrowser('license')"
         >
-          Apache 2.0 License
+          MIT License
         </a>
       </p>
     </div>
@@ -36,7 +36,9 @@
   import { get } from 'vuex-pathify'
   const { app } = require('electron').remote
   const { shell } = require('electron')
+  const isDev = require('electron-is-dev')
   const name = "About"
+
   export default {
     name: name,
 
@@ -66,7 +68,8 @@
         shell.openExternal(url)
       },
       version () {
-        return 'v' + app.getVersion()
+        const env = isDev ? ' (Dev)'  : ''
+        return 'v' + app.getVersion() + env
       },
     },
   }

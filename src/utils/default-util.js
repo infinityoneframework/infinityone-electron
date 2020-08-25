@@ -10,7 +10,7 @@ if (process.type === 'renderer') {
 
 const oneDir = app.getPath('userData')
 const logDir = `${oneDir}/Logs/`
-const initSetUp = () => {
+export const initSetUp = () => {
 	// if it is the first time the app is running
 	// create InfinityOne dir in userData folder to
 	// avoid errors
@@ -25,5 +25,3 @@ const initSetUp = () => {
 		setupCompleted = true
 	}
 }
-
-export default { initSetUp }

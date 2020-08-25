@@ -11,6 +11,8 @@ import path from 'path'
 import store from '@/store'
 import BadgeSettings from '@/components/badge-settings'
 import { setAutoLaunch } from '@/main/startup'
+import { appUpdater } from '@/main/autoupdater'
+import Logger from '@/utils/logger-util'
 // const appMenu = require('@/main/menu');
 
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -35,6 +37,8 @@ let mainWindow;
 let badgeCount
 
 let isQuitting = false
+
+const logger = new Logger({ file: 'crash-log.log' })
 
 const registerLocalResourceProtocol = () => {
   protocol.registerFileProtocol('local-resource', (request, callback) => {
@@ -202,7 +206,7 @@ app.on("ready", async () => {
 		tabs: []
   });
 
-  mainWindow = await createWindow();
+  mainWindow = await createWindow()
 
   const page = mainWindow.webContents
   global.mainPage = page
@@ -222,6 +226,10 @@ app.on("ready", async () => {
     // }
   })
 
+  page.once('did-frame-finish-load', () => {
+		// Initate auto-updates on MacOS and Windows
+		appUpdater()
+	})
 
   page.on('open-dev-tools', () => {
     console.warn('[background] page on open-dev-tools')
@@ -304,6 +312,11 @@ app.on("ready", async () => {
 
 app.on('before-quit', () => {
   isQuitting = true
+})
+
+process.on('uncaughtException', err => {
+	logger.error(err)
+	logger.error(err.stack)
 })
 
 // Exit cleanly on request from parent process in development mode.

@@ -1,7 +1,7 @@
 import { remote } from 'electron'
 
 // Do not change this
-const appId = 'org.emetrotel.infinityone-electron-vue'
+const appId = 'org.emetrotel.infinityone-electron'
 
 const botsList = []
 let botsListLoaded = false
