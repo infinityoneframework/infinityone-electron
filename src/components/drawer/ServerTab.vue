@@ -19,7 +19,7 @@
           style="height: 50px"
         >
           <v-img
-            :src="require('@/assets/icon-server.png')"
+            :src="icon(item.icon)"
             height="30"
             width="30"
           />
@@ -77,6 +77,13 @@
     methods: {
       contextMenu (index) {
         this.$emit('contextmenu', index)
+      },
+
+      icon (src) {
+        if (src.startsWith('/')) {
+          return `local-resource://${src}`
+        }
+        return src
       },
     },
   }

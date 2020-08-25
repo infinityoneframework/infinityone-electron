@@ -1,3 +1,3 @@
 import './axios'
 import './vuetify'
-// import 'vuetify-confirm'
+import './vuenotification'

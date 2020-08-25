@@ -39,21 +39,28 @@
               <v-list-item-subtitle>
                 {{ item.url }}
                 <span
-                  v-if="item.localUrl"
+                  v-if="item.local && item.local.url"
                   class="local-url"
                 >
-                  (Local LAN: {{ item.localUrl }})
+                  (Local LAN: {{ item.local.url }})
                 </span>
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
-              <v-btn
-                outlined
-                color="error"
-                @click="disconnect(inx)"
-              >
-                Disconnect
-              </v-btn>
+              <v-row>
+                <v-col>
+                  <server-info :server="item" />
+                </v-col>
+                <v-col>
+                  <v-btn
+                    outlined
+                    color="error"
+                    @click="disconnect(inx)"
+                  >
+                    Disconnect
+                  </v-btn>
+                </v-col>
+              </v-row>
             </v-list-item-action>
           </v-list-item>
         </v-list>
@@ -63,9 +70,14 @@
 </template>
 <script>
   import { get } from 'vuex-pathify'
+  import ServerInfo from '@/components/server-info'
 
   export default {
     name: 'ServersSettings',
+
+    components: {
+      ServerInfo,
+    },
 
     computed: {
       list: get('settings/servers'),
