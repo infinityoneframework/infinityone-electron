@@ -1,5 +1,6 @@
 require('dotenv').config()
 const { notarize } = require('electron-notarize')
+const debug = false
 
 exports.default = async function notarizing(context) {
   const { electronPlatformName, appOutDir } = context
@@ -10,10 +11,13 @@ exports.default = async function notarizing(context) {
   const timer = setInterval(() => {
     process.stdout.write('.')
   }, 15000)
+
   const appName = context.packager.appInfo.productFilename
   const appPath = `${appOutDir}/${appName}.app`
 
-  console.info('notarize', appPath, process.env.APPLEID, process.env.APPLEIDPASS)
+  if (debug) {
+    console.info('notarize', appPath, process.env.APPLEID, process.env.APPLEIDPASS)
+  }
 
   return new Promise((resolve, reject) => {
     notarize({
