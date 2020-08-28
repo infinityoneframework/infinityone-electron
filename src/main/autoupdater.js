@@ -40,7 +40,8 @@ export function appUpdater() {
       defaultId: 0,
       message: `A new update ${event.version} has been downloaded`,
       detail: 'It will be installed the next time you restart the application'
-    }, response => {
+    })
+    .then(({ response = 1 })  => {
       if (response === 0) {
         log.log('preparing to quit and install')
         setTimeout(() => {
@@ -52,7 +53,11 @@ export function appUpdater() {
         log.log('user canceled prearing to quit and install', response)
       }
     })
+    .catch(error => {
+      console.warn('showDialog response error', error)
+    })
   })
+
   // Init for updates
   autoUpdater.checkForUpdates()
     .then(result => {

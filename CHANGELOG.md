@@ -1,5 +1,18 @@
 # InfinityOne Desktop Client Changelog
 
+## 2.0.0-alpha5 (2020-08-28)
+
+### Bug Fixes
+
+* Fix Update dialog response handler
+
+### Known Issues
+
+* Windows and Linux not yet supported
+* Video window may lockup
+* Spell checker not working
+* localization not supported
+
 ## 2.0.0-alpha4 (2020-08-28)
 
 ### Bug Fixes
