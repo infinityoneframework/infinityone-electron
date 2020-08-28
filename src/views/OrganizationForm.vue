@@ -70,7 +70,7 @@
       urlRules: [
         v => !!v || 'InfinityOne URL is required',
         v => v.length > 2 || 'InfinityOne URL must be at least 3 characters long',
-        v => /(https?:\/\/)?([a-zA-Z0-9\-_]+\..*)|(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/.test(v) || 'InfinityOne URL must be a IP address or a domain name!',
+        v => /^(([a-z][a-z0-9\-_]+\.[a-z0-9\-_]+(\.[a-z0-9\-_]+)*)|(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}))(:\d+)?$/i.test(v) || 'InfinityOne URL must be a IP address or a domain name!',
         v => !DomainUtil.duplicateDomain(v) || "Server already exists",
       ],
       connect: 'Connect',
