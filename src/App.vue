@@ -26,6 +26,8 @@
   import ConfigUtil from '@/utils/config-util'
   import NetworkError from '@/views/NetworkError'
 
+  const debug = false
+
   export default {
     name: 'App',
 
@@ -55,20 +57,22 @@
           this.lastServerId = curr
           ConfigUtil.setConfigItem('lastActiveTab', curr)
         } else {
-          console.debug('watach serverId', curr, past)
+          if (debug) { console.debug('watach serverId', curr, past) }
         }
       },
 
       activeServerIndex (index, previous) {
         if (index !== previous && index !== undefined) {
-          console.debug('activeServerIndex changed', index, previous)
+          if (debug) { console.debug('activeServerIndex changed', index, previous) }
+
           DomainUtil.updateMenu(this.servers, index)
         }
       },
 
       servers (servers) {
         if (servers) {
-          console.debug('servers changed')
+          if (debug) { console.debug('servers changed') }
+
           DomainUtil.updateMenu(servers, this.activeServerIndex)
         }
       },

@@ -14,6 +14,8 @@ import NetworkError from '@/views/NetworkError'
 
 Vue.use(VueRouter);
 
+const debug = false
+
 const routes = [
   {
     path: "/",
@@ -108,7 +110,7 @@ const getComponent = ({ name }) => {
 }
 
 router.beforeEach((to, from, next) => {
-  console.debug('beforeEach', to, from, next)
+  if (debug) { console.debug('beforeEach', to, from, next) }
   const id = to.params.serverId
   const serverId = typeof id === 'string' ? parseInt(id) : id
   store.set('settings/activeServerId', serverId)

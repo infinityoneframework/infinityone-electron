@@ -4,6 +4,7 @@ import Utils from '@/utils/index'
 
 // const saveUserData = list => list
 // const saveUserData = list => domainUtil.saveUserDataDomains(list)
+const debug = false
 
 const state = {
   config: Utils.defaultSettings,
@@ -107,7 +108,8 @@ const actions = {
       serverIds[item.serverId] = inx
       return item
     })
-    console.log('putServer', [...list], list)
+    if (debug) { console.log('putServer', [...list], list) }
+
     commit('SET_SERVERS', list)
     commit('SET_NEXT_SERVER_ID', nextId)
     commit('SET_SERVER_IDS', serverIds)

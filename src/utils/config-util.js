@@ -10,7 +10,7 @@ import Utils from '@/utils/index'
 // 	file: 'config-util.log',
 // 	timestamp: true
 // });
-
+const DEBUG = false
 let instance = null
 // let rendererInstance = null
 // let mainInstance = null
@@ -46,6 +46,7 @@ class ConfigUtil {
 		} else {
 			instance = this
 		}
+		this.debug = DEBUG
 
 		PersistPlugin.addPlugin('config', this.saveUserData)
 
@@ -53,7 +54,8 @@ class ConfigUtil {
 	}
 
 	getConfigItem(key, defaultValue = null) {
-		console.log('getConfigItem', key)
+		if (this.debug) { console.log('getConfigItem', key) }
+
 		const value = store.get(`settings/config@${key}`)
 		if (value === undefined) {
 			this.setConfigItem(key, defaultValue)
@@ -89,10 +91,12 @@ class ConfigUtil {
 		try {
 			const json = Utils.verifyUserData(settingsJsonPath, 'settings', dialog)
 			if (typeof json == 'object') {
-				console.info('got json back', json)
+				if (this.debug) { console.info('got json back', json) }
+
 				return store.set('settings/config', json)
 			}
 			console.warn('was not able to verify userData')
+
 		} catch (err) {
 			console.warn('store.dispatch error', err)
 		}

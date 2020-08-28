@@ -5,6 +5,7 @@ import DomainUtil from '@/utils/domain-util'
 import store from '@/store'
 
 const { session } = remote
+const DEBUG = false
 
 let instance = null
 
@@ -13,6 +14,7 @@ class ServerManager {
     if (instance) {
       return instance
     }
+    this.debug = DEBUG
 
     instance = this
     return instance
@@ -32,16 +34,19 @@ class ServerManager {
     this.registerIpcs()
 
     ipcRenderer.on('toggle-sidebar', () => {
-      console.log('toggle-sidebar')
+      if (this.debug) { console.log('toggle-sidebar') }
+
       this.toggleSidebar()
     });
 
     ipcRenderer.on('open-dev-tools', () => {
-      console.debug('got open-dev-tools')
+      if (this.debug) { console.debug('got open-dev-tools') }
       const currentComponent = store.get('settings/currentComponent')
       let $el
+
       if (currentComponent) {
-        console.debug('currentComponent', currentComponent)
+        if (this.debug) { console.debug('currentComponent', currentComponent) }
+
         if (currentComponent.name === 'ServerWebView') {
           const serverId = store.get('settings/activeServerId')
           $el = document.querySelector(`webview[data-server-id="${serverId}"]`)
@@ -111,7 +116,8 @@ class ServerManager {
   }
 
   initServers(servers) {
-    console.warn('initServers', servers)
+    if (this.debug) { console.warn('initServers', servers) }
+
     return new Promise(resolve => {
       if (servers.length === 0) {
         resolve(servers);
@@ -123,12 +129,15 @@ class ServerManager {
 
           DomainUtil.verifyServer(server).then(
             serverConfig => {
-              console.warn('same?', server.url, this.isServerChanged(server, serverConfig))
-              console.warn('serverConfig', serverConfig)
+              if (this.debug) {
+                console.warn('same?', server.url, this.isServerChanged(server, serverConfig))
+                console.warn('serverConfig', serverConfig)
+              }
+
               // if (server.alias !== serverConfig.alias || server.iconUrl !== serverConfig.iconUrl) {
               if (this.isServerChanged(server, serverConfig)) {
                 DomainUtil.updateDomain(i, serverConfig)
-                console.warn('updated server', i, store.get(`settings/servers`)[i])
+                if (this.debug) { console.warn('updated server', i, store.get(`settings/servers`)[i]) }
               }
               if (--cnt <= 0) {
                 resolve();
@@ -207,7 +216,8 @@ class ServerManager {
   }
 
   openSettings(nav = 'settings') {
-    console.warn('openSettings', nav)
+    if (this.debug) { console.warn('openSettings', nav) }
+
     router.push({ path: `/${nav}` })
   }
 

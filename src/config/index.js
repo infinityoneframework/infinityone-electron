@@ -4,6 +4,7 @@ export default {
   defaultServerURL: 'https://meet.jit.si',
   defaultServerTimeout: 30,
   appName: 'InfinityOne',
+  appId: 'com.emetrotel.infinityone-electron',
   toolTipColor: '#222',
   cmdKey,
   serverRetryTime1: 15000,

@@ -12,6 +12,8 @@ import Helpers from './helpers'
 // From https://github.com/felixrieseberg/electron-windows-notifications#appusermodelid
 // On windows 8 we have to explicitly set the appUserModelId otherwise notification won't work.
 
+const debug = false
+
 const { app } = remote
 app.setAppUserModelId(Helpers.appId)
 
@@ -36,6 +38,6 @@ window.addEventListener('load', () => {
       return true
 		}
 	} else {
-		console.warn('window.one_chat.notifier is not defined')
+		if (debug) { console.warn('window.one_chat.notifier is not defined') }
 	}
 })

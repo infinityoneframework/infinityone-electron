@@ -3,29 +3,32 @@ const plugins = {
   config: null,
   servers: null,
 }
+const debug = false
 
 const addPlugin = (name, handler) => {
   plugins[name] = handler
-  console.log('addPlugin', name, plugins)
+  if (debug) { console.debug('addPlugin', name, plugins) }
 }
 
 const plugin = store => {
   store.subscribe((mutation, state) => {
     if (process.type === 'renderer') {
       if (/^settings\/SET_.*CONFIG$/.test(mutation.type)) {
-        console.log('persistSettings config', mutation.payload, state.settings.config)
+        if (debug) { console.debug('persistSettings config', mutation.payload, state.settings.config) }
+
         if (plugins.config) {
           plugins.config(state.settings.config)
         }
       }
       else if (/^settings\/SET_.*_SERVERS?$/.test(mutation.type)) {
-        console.log('persistSettings servers', mutation.type, mutation.payload, state.settings.servers)
+        if (debug) { console.debug('persistSettings servers', mutation.type, mutation.payload, state.settings.servers) }
+
         if (plugins.servers) {
           plugins.servers(state.settings.servers)
         }
       }
       else {
-        console.log('persist other', mutation.type, mutation.payload)
+        if (debug) { console.debug('persist other', mutation.type, mutation.payload) }
       }
     }
   })

@@ -15,6 +15,7 @@ import { appUpdater } from '@/main/autoupdater'
 import Logger from '@/utils/logger-util'
 // const appMenu = require('@/main/menu');
 
+const debug = false
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 // We need this because of https://github.com/electron/electron/issues/18214
@@ -39,6 +40,7 @@ let badgeCount
 let isQuitting = false
 
 const logger = new Logger({ file: 'crash-log.log' })
+const console = new Logger({ file: 'console.log' })
 
 const registerLocalResourceProtocol = () => {
   protocol.registerFileProtocol('local-resource', (request, callback) => {
@@ -101,6 +103,16 @@ async function createWindow() {
     createProtocol("app");
     // Load the index.html when not in development
     win.loadURL("app://./index.html")
+
+    appUpdater()
+
+		if (ConfigUtil.getConfigItem('startMinimized')) {
+      if (debug) { console.log('[background] start minimized') }
+			win.minimize()
+		} else {
+      if (debug) { console.log('[background] start showing') }
+			win.show()
+		}
   }
 
   win.on("closed", () => {
@@ -132,11 +144,12 @@ async function createWindow() {
   })
 
   win.once('ready-to-show', () => {
+    if (debug) { console.log('ready-to-show') }
 		if (ConfigUtil.getConfigItem('startMinimized')) {
-      console.log('[background] start minimized')
+      if (debug) { console.log('[background] start minimized') }
 			win.minimize()
 		} else {
-      console.log('[background] start showing')
+      if (debug) { console.log('[background] start showing') }
 			win.show()
 		}
   })
@@ -152,6 +165,33 @@ async function createWindow() {
   win.webContents.on('new-window', (event, url, frameName) => {
     console.debug('[background] win new-window', event, url, frameName)
   })
+
+  win.webContents.on('dom-ready', () => {
+    if (debug) { console.log('dom-ready') }
+    // session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    //   callback({ responseHeaders: Object.assign({
+    //       // "Content-Security-Policy": [ "default-src 'self' http://localhost:8080" ]
+    //       "Content-Security-Policy": [ "frame-src *" ]
+    //   }, details.responseHeaders)});
+    // });
+
+    // if (ConfigUtil.getConfigItem('startMinimized')) {
+    //   mainWindow.minimize()
+    // } else {
+    //   mainWindow.show()
+    // }
+  })
+
+  win.webContents.on('did-finish-load', () => {
+    if (debug) { console.log('[background] did-finish-load') }
+		// Initate auto-updates on MacOS and Windows
+		// appUpdater()
+	})
+
+  win.webContents.on('open-dev-tools', () => {
+    if (debug) { console.warn('[background] page on open-dev-tools') }
+  })
+
 
   return win
 }
@@ -208,39 +248,18 @@ app.on("ready", async () => {
 
   mainWindow = await createWindow()
 
+  if (debug) { console.log('[background] after mainWindow') }
+
   const page = mainWindow.webContents
   global.mainPage = page
 
-  page.on('dom-ready', () => {
-    // session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-    //   callback({ responseHeaders: Object.assign({
-    //       // "Content-Security-Policy": [ "default-src 'self' http://localhost:8080" ]
-    //       "Content-Security-Policy": [ "frame-src *" ]
-    //   }, details.responseHeaders)});
-    // });
-
-    // if (ConfigUtil.getConfigItem('startMinimized')) {
-    //   mainWindow.minimize()
-    // } else {
-    //   mainWindow.show()
-    // }
-  })
-
-  page.once('did-frame-finish-load', () => {
-		// Initate auto-updates on MacOS and Windows
-		appUpdater()
-	})
-
-  page.on('open-dev-tools', () => {
-    console.warn('[background] page on open-dev-tools')
-  })
-
   ipcMain.on('open-dev-tools', () => {
-    console.warn('[background] ipcMain.on open-dev-tools')
+    if (debug) { console.warn('[background] ipcMain.on open-dev-tools') }
   })
 
   ipcMain.on('reload-app', () => {
-    console.log('[background] reload-app')
+    if (debug) { console.log('[background] reload-app') }
+
     app.relaunch()
     app.quit()
   })
@@ -283,7 +302,7 @@ app.on("ready", async () => {
   ipcMain.on('update-badge', (event, messageCount) => {
     badgeCount = messageCount
     BadgeSettings.updateBadge(badgeCount, mainWindow)
-    console.debug('[background] badgeCount', badgeCount, messageCount)
+    if (this.debug) { console.debug('[background] badgeCount', badgeCount, messageCount) }
     page.send('tray', messageCount)
   })
 

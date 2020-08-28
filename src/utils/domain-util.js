@@ -65,7 +65,7 @@ if (process.platform === 'win32') {
   defaultIconUrl = path.normalize(defaultIconUrl)
 }
 
-console.log('defaultIconUrl', defaultIconUrl)
+if (DEBUG) { console.log('defaultIconUrl', defaultIconUrl) }
 
 // Fix https issue
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
@@ -207,7 +207,8 @@ class DomainUtil {
       this.pingDomain(url)
         .then(() => {
           this.getServerSettings(domain).then(serverSettings => {
-            console.debug('ping settings', serverSettings)
+            if (this.debug) { console.debug('ping settings', serverSettings) }
+
             resolve(serverSettings)
           }, error => {
             reject(error)
@@ -229,9 +230,8 @@ class DomainUtil {
   }
 
   verifyServer(server) {
-    if (this.debug) {
-      console.warn('verifyServer', server.url)
-    }
+    if (this.debug) { console.warn('verifyServer', server.url) }
+
     if (!(server.local && server.local.url)) {
       if (this.debug) { console.warn('no local url for', server.url) }
       return this.checkDomain(server.url, true)
@@ -529,7 +529,8 @@ class DomainUtil {
     this.verifyServer(server).then(newServerConf => {
       if (this.debug) { console.warn('verified server resp', newServerConf) }
       this.saveServerIcon(newServerConf.icon).then(localIconUrl => {
-        console.debug('localIconUrl', localIconUrl)
+        if (this.debug) { console.debug('localIconUrl', localIconUrl) }
+
         newServerConf.icon = localIconUrl;
         this.updateDomain(index, newServerConf);
         this.reloadDB()
@@ -542,7 +543,8 @@ class DomainUtil {
     try {
       const json = Utils.verifyUserData(domainJsonPath, 'domain', dialog)
       if (typeof json == 'object') {
-        console.info('got json back', json)
+        if (this.debug) { console.info('got json back', json) }
+
         return store.dispatch('settings/putServers', json['domains'] || [])
       }
       console.warn('was not able to verify userData')

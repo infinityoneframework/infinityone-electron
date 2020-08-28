@@ -11,11 +11,16 @@ module.exports = {
       preload: 'src/preload.js',
       builderOptions: {
         publish: ['github'],
-        copyright: '©2018-2020 E-MetroTel Global Inc.',
-        appId: 'org.emetrotel.infinityone-electron',
+        copyright: '©2020 E-MetroTel Global Inc.',
+        appId: 'com.emetrotel.infinityone-electron',
+        afterSign: "scripts/notarize.js",
+        asar: true,
+        asarUnpack: ['**/*.node'],
+
         mac: {
           darkModeSupport: true,
           hardenedRuntime: true,
+          gatekeeperAssess: false,
           category: 'public.app-category.productivity',
           entitlements: 'entitlements.mac.plist',
           entitlementsInherit: 'entitlements.mac.plist',
@@ -24,6 +29,7 @@ module.exports = {
             NSMicrophoneUsageDescription: 'InfinityOne requires access to your microphone in order to make calls (audio/video).',
           },
         },
+
         dmg: {
           sign: false,
           background: 'build/appdmg.png',
