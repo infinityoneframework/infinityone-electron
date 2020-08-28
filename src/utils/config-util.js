@@ -53,6 +53,10 @@ class ConfigUtil {
 		return instance
 	}
 
+	getConfig() {
+		return store.get('settings/config')
+	}
+
 	getConfigItem(key, defaultValue = null) {
 		if (this.debug) { console.log('getConfigItem', key) }
 

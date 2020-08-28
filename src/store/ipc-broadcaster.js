@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron'
 import process from 'process'
 
+const debug = false
 const ignoreTypes = ['settings/SET_CURRENT_COMPONENT']
 
 const send = theMutation => {
@@ -9,8 +10,10 @@ const send = theMutation => {
     if (process.type === 'renderer') {
       if (!ignoreTypes.includes(mutation.type)) {
         ipcRenderer.send('vuex-mutation', mutation)
+        if (debug) { console.log('send mutation success', mutation) }
+      } else {
+        if (debug) { console.log('send mutation ignore', mutation) }
       }
-      // console.log('send mutation success', mutation)
     }
   }
   catch(err) {

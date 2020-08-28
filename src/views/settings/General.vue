@@ -91,7 +91,7 @@
         ]},
         { title: 'Functionality', items: [
           { title: 'Start app at login', field: 'startAtLogin'},
-          { title: 'Always start minimized', field: 'startminimized'},
+          { title: 'Always start minimized', field: 'startMinimized'},
           // can't get the spell checking compiling. Disabling for now
           // { title: 'Enable Spellchecker (requires restart)', field: 'enableSpellchecker'},
         ]},

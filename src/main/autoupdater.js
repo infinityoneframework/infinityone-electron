@@ -28,6 +28,7 @@ export function appUpdater() {
 
   // Handle auto updates for beta/pre releases
   autoUpdater.allowPrerelease = ConfigUtil.getConfigItem('betaUpdate') || false
+  log.log('allowPrerelease', autoUpdater.allowPrerelease)
 
   // Ask the user if update is available
   // eslint-disable-next-line no-unused-vars

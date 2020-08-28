@@ -15,8 +15,11 @@ import { appUpdater } from '@/main/autoupdater'
 import Logger from '@/utils/logger-util'
 // const appMenu = require('@/main/menu');
 
-const debug = false
+ConfigUtil.reloadDB()
+
+const debug = true
 const isDevelopment = process.env.NODE_ENV !== "production";
+const isDev = require('electron-is-dev')
 
 // We need this because of https://github.com/electron/electron/issues/18214
 app.commandLine.appendSwitch('disable-site-isolation-trials');
@@ -42,6 +45,10 @@ let isQuitting = false
 const logger = new Logger({ file: 'crash-log.log' })
 const console = new Logger({ file: 'console.log' })
 
+const version = app.getVersion()
+const versionMsg = isDev ? version + ' (dev)' : version
+console.log('Starting InfinityOne v' + versionMsg)
+
 const registerLocalResourceProtocol = () => {
   protocol.registerFileProtocol('local-resource', (request, callback) => {
     const url = request.url.replace(/^local-resource:\/\//, '')
@@ -56,6 +63,19 @@ const registerLocalResourceProtocol = () => {
   })
 }
 
+const showOrMinimizeWindow = win => {
+  if (isDev) { return }
+
+  const startMinimized = ConfigUtil.getConfigItem('startMinimized')
+  if (startMinimized) {
+    if (debug) { console.log('[background] start minimized') }
+    win.minimize()
+  } else {
+    if (debug) { console.log('[background] start showing') }
+    win.show()
+  }
+}
+
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } }
@@ -67,11 +87,14 @@ async function createWindow() {
 		defaultHeight: 720
   })
 
+  const title = 'InfinityOne Desktop' + (isDev ? ' (dev)' : '')
+
 	// Let's keep the window position global so that we can access it in other process
   global.mainWindowState = mainWindowState;
 
   // Create the browser window.
   const win = new BrowserWindow({
+    title: title,
     x: mainWindowState.x,
     y: mainWindowState.y,
     width: mainWindowState.width,
@@ -94,11 +117,15 @@ async function createWindow() {
     }
   });
 
+  console.log('title', title)
+  win.setTitle(title)
+
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
     if (!process.env.IS_TEST) win.webContents.openDevTools()
 
+    appUpdater()
   } else {
     createProtocol("app");
     // Load the index.html when not in development
@@ -106,13 +133,7 @@ async function createWindow() {
 
     appUpdater()
 
-		if (ConfigUtil.getConfigItem('startMinimized')) {
-      if (debug) { console.log('[background] start minimized') }
-			win.minimize()
-		} else {
-      if (debug) { console.log('[background] start showing') }
-			win.show()
-		}
+    // showOrMinimizeWindow(win)
   }
 
   win.on("closed", () => {
@@ -133,7 +154,7 @@ async function createWindow() {
     }
   })
 
-  win.setTitle('InfinityOne')
+  // win.setTitle('InfinityOne')
 
   win.on('enter-full-screen', () => {
     win.webContents.send('enter-fullscreen')
@@ -145,13 +166,13 @@ async function createWindow() {
 
   win.once('ready-to-show', () => {
     if (debug) { console.log('ready-to-show') }
-		if (ConfigUtil.getConfigItem('startMinimized')) {
-      if (debug) { console.log('[background] start minimized') }
-			win.minimize()
-		} else {
-      if (debug) { console.log('[background] start showing') }
-			win.show()
-		}
+		// if (ConfigUtil.getConfigItem('startMinimized')) {
+    //   if (debug) { console.log('[background] start minimized') }
+		// 	win.minimize()
+		// } else {
+    //   if (debug) { console.log('[background] start showing') }
+		// 	win.show()
+		// }
   })
 
   win.webContents.on('will-navigate', e => {
@@ -167,7 +188,7 @@ async function createWindow() {
   })
 
   win.webContents.on('dom-ready', () => {
-    if (debug) { console.log('dom-ready') }
+    if (debug) { console.log('[background] dom-ready') }
     // session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     //   callback({ responseHeaders: Object.assign({
     //       // "Content-Security-Policy": [ "default-src 'self' http://localhost:8080" ]
@@ -213,7 +234,6 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  console.warn('[background] activate callback', store.state.settings)
   if (mainWindow === null) {
     mainWindow = createWindow();
   }
@@ -225,10 +245,11 @@ app.on("activate", () => {
 app.on("ready", async () => {
   registerLocalResourceProtocol()
 
-  console.log('[background] ...ready isDevelopment', isDevelopment)
+
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
-    console.log('[background] installing vuejs_devtools')
+    if (debug) { console.log('[background] installing vuejs_devtools') }
+
     // require('vue-devtools').install().then(resp => {
     //   console.log('vue install', resp)
     // })
@@ -250,6 +271,8 @@ app.on("ready", async () => {
 
   if (debug) { console.log('[background] after mainWindow') }
 
+  showOrMinimizeWindow(mainWindow)
+
   const page = mainWindow.webContents
   global.mainPage = page
 
@@ -265,28 +288,34 @@ app.on("ready", async () => {
   })
 
   ipcMain.on('focus-app', () => {
-    console.log('[background] focus..')
+    if (debug) { console.log('[background] focus..') }
     mainWindow.show()
   })
 
+  ipcMain.on('minimize-app', () => {
+    mainWindow.minimize()
+  })
+
   ipcMain.on('quit-app', () => {
+    if (debug) { console.log('[background] quit-app') }
     app.quit()
   })
 
   ipcMain.on('reload-full-app', () => {
-    console.log('[background] reload-full-app')
+    if (debug) { console.log('[background] reload-full-app') }
     mainWindow.reload()
     page.send('destroytray')
   })
 
   ipcMain.on('clear-app-settings', () => {
+    if (debug) { console.log('[background] clear-app-settings') }
     global.mainWindowState.unmanage(mainWindow)
     app.relaunch()
     app.exit()
   })
 
   ipcMain.on('toggle-app', () => {
-    console.log('[background] toggle-app')
+    if (debug) { console.log('[background] toggle-app') }
     if (mainWindow.isVisible()) {
       mainWindow.hide()
     } else {
@@ -315,17 +344,39 @@ app.on("ready", async () => {
   })
 
   ipcMain.on('update-menu', (event, props) => {
+    // if (debug) { console.log('[background] update-menu') }
     // console.warn('... update-menu', store.get('settings/activeServerId'))
     appMenu.setMenu(props)
   })
 
   ipcMain.on('vuex-mutation', (e, mutation) => {
-    // console.log('vuex-mutation', mutation)
-    store.commit(mutation.type, mutation.payload)
+    const payload = mutation.payload
+    if (payload !== undefined) {
+      // if (debug) { console.log('vuex-mutation', mutation) }
+      if (payload.expr) {
+        // if (debug) { console.log('vuex', mutation) }
+        store.set(payload.expr, payload.value)
+      } else {
+        store.commit(mutation.type, payload)
+      }
+    }
   })
 
   ipcMain.on('toggleAudoLauncher', (event, AutoLaunchValue) => {
     setAutoLaunch(AutoLaunchValue)
+  })
+
+  ipcMain.on('showConfig', () => {
+    // console.log('betaUpdate', store.get('settings/config@betaUpdate'))
+    // console.log('betaUpdate1', store.state.settings.config.betaUpdate)
+    // console.log('getConfigItem', ConfigUtil.getConfigItem('betaUpdate'))
+    // const config = store.get('settings/config')
+    // console.log('store.state keys', Object.keys(store.state))
+    // console.log('store.state values', Object.values(store.state))
+    // console.log('store.state.settings.config', store.state.settings.config)
+    // console.log('config keys', Object.keys(config))
+    // console.log('config values', Object.values(config))
+    // console.log('betaUpdate', config.betaUpdate)
   })
 })
 
