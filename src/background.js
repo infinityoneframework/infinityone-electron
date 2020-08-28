@@ -351,14 +351,14 @@ app.on("ready", async () => {
 
   ipcMain.on('vuex-mutation', (e, mutation) => {
     const payload = mutation.payload
-    if (payload !== undefined) {
-      // if (debug) { console.log('vuex-mutation', mutation) }
-      if (payload.expr) {
-        // if (debug) { console.log('vuex', mutation) }
-        store.set(payload.expr, payload.value)
-      } else {
-        store.commit(mutation.type, payload)
-      }
+    if (payload === undefined || payload === null) { return }
+
+    // if (debug) { console.log('vuex-mutation', mutation) }
+    if (payload.expr) {
+      // if (debug) { console.log('vuex', mutation) }
+      store.set(payload.expr, payload.value)
+    } else {
+      store.commit(mutation.type, payload)
     }
   })
 

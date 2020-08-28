@@ -4,13 +4,11 @@ import process from 'process'
 
 // const os = require('os');
 const path = require('path');
-
 // const { app, shell, BrowserWindow, Menu } = require('electron');
 const { app, shell, BrowserWindow, Menu } = require('electron');
-
 const fs = require('fs-extra');
-
 const appName = app.getName();
+const debug = false
 
 class AppMenu {
 	getHistorySubmenu() {
@@ -91,11 +89,10 @@ class AppMenu {
 			label: 'Toggle Sidebar',
 			accelerator: 'CommandOrControl+S',
 			click(item, focusedWindow) {
-        console.log('toggle sidebar', focusedWindow)
+				if (debug) { console.log('toggle sidebar') }
+
 				if (focusedWindow) {
-          console.log('ConfigUtil...', ConfigUtil.getConfigItem)
           const newValue = !ConfigUtil.getConfigItem('showSidebar');
-          console.log('toggle new value', newValue)
 					focusedWindow.webContents.send('toggle-sidebar', newValue);
 					ConfigUtil.setConfigItem('showSidebar', newValue);
 				}
@@ -113,10 +110,7 @@ class AppMenu {
 			accelerator: process.platform === 'darwin' ? 'Alt+Command+U' : 'Ctrl+Shift+U',
 			click(item, focusedWindow) {
 				if (focusedWindow) {
-					// console.warn('process', process.type, global.mainPage)
-					// global.mainPage.send('open-dev-tools', {})
 					focusedWindow.webContents.send('open-dev-tools')
-					// webContents.send('open-dev-tools')
 					AppMenu.sendAction('tab-devtools');
 				}
 			}
