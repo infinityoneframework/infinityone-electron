@@ -54,6 +54,7 @@ const registerLocalResourceProtocol = () => {
     const url = request.url.replace(/^local-resource:\/\//, '')
     // Decode URL to prevent errors when loading filenames with UTF-8 chars or chars like "#"
     const decodedUrl = decodeURI(url) // Needed in case URL contains spaces
+
     try {
       return callback(decodedUrl)
     }
@@ -107,6 +108,7 @@ async function createWindow() {
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       // nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
       'web-security': false,
+      webSecurity: false,
       nodeIntegration: true,
       experimentalFeatures: true, // Insertable streams, for E2EE.
       // nativeWindowOpen: true,

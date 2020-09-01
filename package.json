@@ -1,7 +1,7 @@
 {
   "name": "infinityone",
   "productName": "InfinityOne",
-  "version": "2.0.0-alpha4",
+  "version": "2.0.0-alpha5",
   "private": true,
   "license": "MIT",
   "copyright": "E-MetroTel Global Inc.",
@@ -35,6 +35,19 @@
     "i18n:fix": "scripts/i18n-fix.js"
   },
   "main": "background.js",
+  "keywords": [
+    "Infinity One",
+    "Group Chat app",
+    "electron-app",
+    "electron",
+    "Desktop app",
+    "InstantMessaging",
+    "WebRTC",
+    "E-MetroTel",
+    "Unified Communications",
+    "Collaboration",
+    "Telecommunications"
+  ],
   "dependencies": {
     "@mdi/font": "^3.6.95",
     "auto-launch": "^5.0.5",
@@ -46,7 +59,6 @@
     "electron-window-state": "^5.0.3",
     "gsap": "^3.5.0",
     "node-json-db": "^1.1.0",
-    "node-mac-notifier": "^1.2.0",
     "request": "^2.88.2",
     "roboto-fontface": "*",
     "semver": "^7.3.2",

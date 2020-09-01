@@ -2361,7 +2361,7 @@ binary-extensions@^2.0.0:
   resolved "https://registry.npm.taobao.org/binary-extensions/download/binary-extensions-2.1.0.tgz?cache=0&sync_timestamp=1593261294370&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fbinary-extensions%2Fdownload%2Fbinary-extensions-2.1.0.tgz#30fa40c9e7fe07dbc895678cd287024dea241dd9"
   integrity sha1-MPpAyef+B9vIlWeM0ocCTeokHdk=
 
-bindings@^1.2.1, bindings@^1.5.0:
+bindings@^1.5.0:
   version "1.5.0"
   resolved "https://registry.npm.taobao.org/bindings/download/bindings-1.5.0.tgz#10353c9e945334bc0511a6d90b38fbc7c9c504df"
   integrity sha1-EDU8npRTNLwFEabZCzj7x8nFBN8=
@@ -4650,11 +4650,6 @@ event-pubsub@4.3.0:
   version "4.3.0"
   resolved "https://registry.npm.taobao.org/event-pubsub/download/event-pubsub-4.3.0.tgz#f68d816bc29f1ec02c539dc58c8dd40ce72cb36e"
   integrity sha1-9o2Ba8KfHsAsU53FjI3UDOcss24=
-
-event-target-shim@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-1.1.1.tgz#a86e5ee6bdaa16054475da797ccddf0c55698491"
-  integrity sha1-qG5e5r2qFgVEddp5fM3fDFVphJE=
 
 eventemitter3@^4.0.0:
   version "4.0.4"
@@ -7740,15 +7735,6 @@ node-libs-browser@^2.2.1:
     url "^0.11.0"
     util "^0.11.0"
     vm-browserify "^1.0.1"
-
-node-mac-notifier@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/node-mac-notifier/-/node-mac-notifier-1.2.0.tgz#ff03b1c2a142456f73b5caa634175bd2d9518e1c"
-  integrity sha512-+9FZ01BbPMv3pQVRWgPlaIKbhQl35Pn3WmRg96zIrCJHb4XvClnAqc0+aPfHrWs8o1PYMAQFeYK5tF69ljkKQw==
-  dependencies:
-    bindings "^1.2.1"
-    event-target-shim "^1.1.1"
-    uuid "^3.3.2"
 
 node-releases@^1.1.58:
   version "1.1.58"

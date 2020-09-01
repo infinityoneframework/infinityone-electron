@@ -32,7 +32,7 @@
         </v-list-item-icon>
       </v-list-item>
     </template>
-    <span v-text="item.alias" />
+    <span v-text="item.alias + ' (' + item.url + ')'" />
   </v-tooltip>
 </template>
 
@@ -79,9 +79,12 @@
         this.$emit('contextmenu', index)
       },
 
-      icon (src) {
-        if (src.startsWith('/')) {
-          return `local-resource://${src}`
+      icon (path) {
+        // win 10 hack. v-icon seems to be stripping \ from the url.
+        const src = path.replace(/\\/g, '/')
+        if (src.startsWith('/') || /^[A-Z]:/.test(src)) {
+          const url = `local-resource://${src}`
+          return url
         }
         return src
       },
@@ -90,6 +93,9 @@
 </script>
 
 <style lang="sass" scoped>
+  .nav-tab.v-list-item
+    padding: 0 !important
+
   .server-tab-badge
     display: none
     &.active

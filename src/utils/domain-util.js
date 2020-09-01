@@ -497,6 +497,7 @@ class DomainUtil {
     return new Promise(resolve => {
       const filePath = this.generateFilePath(url);
       const file = fs.createWriteStream(filePath);
+
       try {
         request(url).on('response', response => {
           response.on('error', err => {
@@ -571,7 +572,7 @@ class DomainUtil {
       fs.mkdirSync(dir);
     }
 
-    return `${dir}/${hash >>> 0}${extension}`;
+    return path.join(dir, `${hash >>> 0}${extension}`)
   }
 
   formatUrl(domain) {

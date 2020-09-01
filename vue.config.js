@@ -49,6 +49,25 @@ module.exports = {
             }
           ]
         },
+        win: {
+          verifyUpdateCodeSignature: false,
+          target: [
+            {
+              target: 'nsis-web',
+              arch: [
+                'x64',
+                'ia32',
+              ],
+            },
+          ],
+          icon: 'build/icons/icon.ico',
+          publisherName: 'E-Metrotel',
+        },
+        nsis: {
+          perMachine: true,
+          oneClick: false,
+          allowToChangeInstallationDirectory: true,
+        },
       },
     },
     devServer: {
