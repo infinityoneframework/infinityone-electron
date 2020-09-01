@@ -74,35 +74,37 @@
   export default {
     name: 'GeneralSettings',
 
-    data: () => ({
-      title: 'General Settings',
-      items: [
-        { title: 'Appearance', items: [
-          { title: 'Show app icon in system tray', field: 'trayIcon' },
-          { title: `Show sidebar (<span class="shortcut">${config.cmdKey}+S</span>)`, field: 'showSidebar' },
-          { title: 'Show app unread badge', field: 'badgeOption' },
-        ]},
-        { title: 'Desktop Notification', items: [
-          { title: 'Show Desktop Notifications', field: 'showNotification' },
-          { title: 'Mute all sounds from InfinityOne', field: 'silent' },
-        ]},
-        { title: 'App Updates', items: [
-          { title: 'Get beta updates', field: 'betaUpdate' },
-        ]},
-        { title: 'Functionality', items: [
-          { title: 'Start app at login', field: 'startAtLogin'},
-          { title: 'Always start minimized', field: 'startMinimized'},
-          // can't get the spell checking compiling. Disabling for now
-          // { title: 'Enable Spellchecker (requires restart)', field: 'enableSpellchecker'},
-        ]},
-        // { title: 'Add custom CSS', items: [
-        //   { title: 'This will inject the selected css stylesheet in all the added accounts', button: 'Add', method: 'add' },
-        // ]},
-        { title: 'Reset Application Data', items: [
-          { title: 'This will delete all application data including all added accounts and preferencs', button: 'Reset', method: 'reset' },
-        ]},
-      ]
-    }),
+    data () {
+      return {
+        title: 'General Settings',
+        items: [
+          { title: this.$t('Appearance'), items: [
+            { title: this.$t('Show app icon in system tray'), field: 'trayIcon' },
+            { title: `${this.$t('Show sidebar')} (<span class="shortcut">${config.cmdKey}+S</span>)`, field: 'showSidebar' },
+            { title: this.$t('Show app unread badge'), field: 'badgeOption' },
+          ]},
+          { title: this.$t('Desktop Notification'), items: [
+            { title: this.$t('Show Desktop Notifications'), field: 'showNotification' },
+            { title: this.$t('Mute all sounds from InfinityOne'), field: 'silent' },
+          ]},
+          { title: 'App Updates', items: [
+            { title: this.$t('Get beta updates'), field: 'betaUpdate' },
+          ]},
+          { title: this.$t('Functionality'), items: [
+            { title: this.$t('Start app at login'), field: 'startAtLogin'},
+            { title: this.$t('Always start minimized'), field: 'startMinimized'},
+            // can't get the spell checking compiling. Disabling for now
+            // { title: 'Enable Spellchecker (requires restart)', field: 'enableSpellchecker'},
+          ]},
+          // { title: 'Add custom CSS', items: [
+          //   { title: 'This will inject the selected css stylesheet in all the added accounts', button: 'Add', method: 'add' },
+          // ]},
+          { title: this.$t('Reset Application Data'), items: [
+            { title: this.$t('This will delete all application data including all added accounts and preferencs'), button: 'Reset', method: 'reset' },
+          ]},
+        ]
+      }
+    },
 
     computed: {
       trayIcon: {

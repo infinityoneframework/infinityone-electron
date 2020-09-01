@@ -7,7 +7,7 @@
       flat
     >
       <v-card-title class="servers-card">
-        Connected Organizations
+        {{ $t('Connected Organizations') }}
       </v-card-title>
       <v-card-text>
         <v-list
@@ -42,7 +42,7 @@
                   v-if="item.local && item.local.url"
                   class="local-url"
                 >
-                  (Local LAN: {{ item.local.url }})
+                  ({{ $t('Local LAN') }}: {{ item.local.url }})
                 </span>
               </v-list-item-subtitle>
             </v-list-item-content>
@@ -57,7 +57,7 @@
                     color="error"
                     @click="disconnect(inx)"
                   >
-                    Disconnect
+                    {{ $t('Disconnect') }}
                   </v-btn>
                 </v-col>
               </v-row>

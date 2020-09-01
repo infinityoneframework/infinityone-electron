@@ -32,12 +32,14 @@
       },
     },
 
-    data: () => ({
-      menuItems: [
-        { id: 'openDevTools', title: 'Open Dev Tools' },
-        { id: 'reload', title: 'Reload' },
-      ],
-    }),
+    data () {
+      return {
+        menuItems: [
+          { id: 'openDevTools', title: this.$t('Open Dev Tools') },
+          { id: 'reload', title: this.$t('Reload') },
+        ],
+      }
+    },
 
     computed: {
       ...get('settings', ['servers', 'currentComponent', 'activeServerId', 'lastServerId']),

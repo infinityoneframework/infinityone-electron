@@ -17,7 +17,7 @@
 
       <v-card id="server-info-dialog">
         <v-card-title class="headline grey darken-3 white--text">
-          Server Info
+          {{ $t('Server Info') }}
         </v-card-title>
 
         <v-card-text>
@@ -36,17 +36,17 @@
               <v-simple-table>
                 <tbody>
                   <tr>
-                    <th width="80">URL</th>
+                    <th width="80">{{ $t('URL') }}</th>
                     <td>
                       {{ server.url }}
                     </td>
                   </tr>
                   <tr>
-                    <th>Icon</th>
+                    <th>{{ $t('Icon') }}</th>
                     <td>{{ server.icon }}</td>
                   </tr>
                   <tr>
-                    <th>Alias</th>
+                    <th>{{ $t('Alias') }}</th>
                     <td>{{ server.alias }}</td>
                   </tr>
                 </tbody>
@@ -63,7 +63,7 @@
             <v-simple-table>
               <tbody>
                 <tr>
-                  <th width="80">Primary</th>
+                  <th width="80">{{ $t('Primary') }}</th>
                   <td>
                     <server-remote
                       :item="server.remote"
@@ -72,7 +72,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <th>Local</th>
+                  <th>{{ $t('Local') }}</th>
                   <td>
                     <server-remote
                       :item="server.local"
@@ -103,7 +103,7 @@
             text
             @click="verify"
           >
-            Verify
+            {{ $t('Verify') }}
           </v-btn>
           <v-spacer />
           <v-btn
@@ -111,7 +111,7 @@
             text
             @click="dialog=false"
           >
-            Close
+            {{ $t('Close') }}
           </v-btn>
         </v-card-actions>
       </v-card>

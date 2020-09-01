@@ -62,19 +62,21 @@
 
   export default {
     name: name,
-    data: () => ({
-      valid: true,
-      domain: '',
-      scheme: schemes[0],
-      schemeList: schemes,
-      urlRules: [
-        v => !!v || 'InfinityOne URL is required',
-        v => v.length > 2 || 'InfinityOne URL must be at least 3 characters long',
-        v => /^(([a-z][a-z0-9\-_]+\.[a-z0-9\-_]+(\.[a-z0-9\-_]+)*)|(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}))(:\d+)?$/i.test(v) || 'InfinityOne URL must be a IP address or a domain name!',
-        v => !DomainUtil.duplicateDomain(v) || "Server already exists",
-      ],
-      connect: 'Connect',
-    }),
+    data () {
+      return {
+        valid: true,
+        domain: '',
+        scheme: schemes[0],
+        schemeList: schemes,
+        urlRules: [
+          v => !!v || this.$t('InfinityOne URL is required'),
+          v => v.length > 2 || this.$t('InfinityOne URL must be at least 3 characters long'),
+          v => /^(([a-z][a-z0-9\-_]+\.[a-z0-9\-_]+(\.[a-z0-9\-_]+)*)|(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}))(:\d+)?$/i.test(v) || this.$t('InfinityOne URL must be a IP address or a domain name!'),
+          v => !DomainUtil.duplicateDomain(v) || this.$t('Server already exists'),
+        ],
+        connect: this.$t('Connect'),
+      }
+    },
 
     computed: {
       list: get('settings/servers'),
@@ -87,7 +89,7 @@
 
     methods: {
       validate () {
-        this.connect = 'Connecting...'
+        this.connect = this.$t('Connecting...')
         DomainUtil.checkDomain(this.url).then(serverConf => {
           DomainUtil.addDomain(serverConf).then(() => {
             const timeout = () => {
@@ -99,7 +101,7 @@
             setTimeout(timeout, 1)
           });
         }, errorMessage => {
-          this.connect = 'Connect';
+          this.connect = this.$t('Connect');
           alert(errorMessage)
         });
       },
@@ -107,7 +109,7 @@
       resetForm () {
         this.domain = ''
         this.scheme = schemes[0]
-        this.connect = 'Connect'
+        this.connect = this.$t('Connect')
         this.valid = true
       }
     }

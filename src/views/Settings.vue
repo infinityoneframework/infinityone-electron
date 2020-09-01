@@ -36,18 +36,20 @@
     components: {
     },
 
-    data: () => ({
-      tabs: [
-        { name: "general", title: "General", to: "/settings", component: General },
-        { name: "network", title: "Network", to: "/network", component: Network },
-        { name: "organizations", title: "Organizations", to: "/servers", component: Servers },
-        { name: "shortcuts", title: "Shortcuts", to: "/shortcuts", component: Shortcuts },
-      ],
-      tab: 'general',
-      component: General,
-      value: General.name,
-      change: false,
-    }),
+    data () {
+      return {
+        tabs: [
+          { name: 'general', title: this.$t('General'), to: '/settings', component: General },
+          { name: 'network', title: this.$t('Network'), to: '/network', component: Network },
+          { name: 'organizations', title: this.$t('Organizations'), to: '/servers', component: Servers },
+          { name: 'shortcuts', title: this.$t('Shortcuts'), to: '/shortcuts', component: Shortcuts },
+        ],
+        tab: 'general',
+        component: General,
+        value: General.name,
+        change: false,
+      }
+    },
 
     computed: {
       currentComponent: get('settings/currentComponent'),

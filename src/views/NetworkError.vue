@@ -21,11 +21,11 @@
             />
           </div>
           <div id="title">
-            InfinityOne can't connect
+            {{ $t("InfinityOne can't connect") }}
           </div>
           <div id="description">
-            <div>Your computer seems to be offline.</div>
-            <div>We will keep trying to reconnect, or you can try now.</div>
+            <div>{{ $t('Your computer seems to be offline.') }}</div>
+            <div>{{ $t('We will keep trying to reconnect, or you can try now.') }}</div>
           </div>
           <v-btn
             id="reconnect"
@@ -34,7 +34,7 @@
             text
             @click="reconnect"
           >
-            Try now
+            {{ $t('Try now') }}
           </v-btn>
         </v-card-text>
       </v-card>

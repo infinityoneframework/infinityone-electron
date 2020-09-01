@@ -99,31 +99,33 @@
 
   export default {
     name: 'NetworkSettings',
-    data: () => ({
-      title: 'Network Settings',
+    data () {
+      return {
+        title: this.$t('Network Settings'),
 
-      showSave: false,
+        showSave: false,
 
-      fields: {
-        useProxy: false,
-        proxyPAC: '',
-        proxyRules: '',
-        proxyBypass: '',
-      },
+        fields: {
+          useProxy: false,
+          proxyPAC: '',
+          proxyRules: '',
+          proxyBypass: '',
+        },
 
-      items: [
-        { title: 'Proxy', items: [
-          { title: 'Connect servers through a proxy', field: 'useProxy', type: 'switch' },
-          { title: 'PAC script', field: 'proxyPAC', placeHolder: 'foobar.com/pacfile.js', type: 'text' },
-          { title: 'Proxy rules', field: 'proxyRules', placeHolder: 'http=foopy:80;ftp=foopy2', type: 'text' },
-          { title: 'Proxy bypass rules', field: 'proxyBypass', placeHolder: 'foobar.com', type: 'text' },
-          { type: 'buttons', items: [
-            { button: 'Save', method: 'submit' },
-            { button: 'Cancel', method: 'cancel' },
+        items: [
+          { title: this.$t('Proxy'), items: [
+            { title: this.$t('Connect servers through a proxy'), field: 'useProxy', type: 'switch' },
+            { title: this.$t('PAC script'), field: 'proxyPAC', placeHolder: 'foobar.com/pacfile.js', type: 'text' },
+            { title: this.$t('Proxy rules'), field: 'proxyRules', placeHolder: 'http=foopy:80;ftp=foopy2', type: 'text' },
+            { title: this.$t('Proxy bypass rules'), field: 'proxyBypass', placeHolder: 'foobar.com', type: 'text' },
+            { type: 'buttons', items: [
+              { button: this.$t('Save'), method: 'submit' },
+              { button: this.$t('Cancel'), method: 'cancel' },
+            ]},
           ]},
-        ]},
-      ],
-    }),
+        ],
+      }
+    },
 
     computed: {
       config: sync('settings/config'),

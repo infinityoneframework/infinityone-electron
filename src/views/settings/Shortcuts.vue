@@ -29,7 +29,7 @@
                 cols="6"
                 class="text-right"
               >
-                <kbd 
+                <kbd
                   v-for="key in item.keys"
                   :key="key"
                   v-text="key"
@@ -40,18 +40,18 @@
                 cols="6"
                 class="text-right"
               >
-                <kbd 
+                <kbd
                   :key="item.keys[0]"
                   v-text="item.keys[0]"
-                /> 
+                />
                 +
-                <kbd 
+                <kbd
                   :key="item.keys[1]"
                   v-text="item.keys[1]"
                 />
                 <span v-if="item.keys.length === 3">
                   +
-                  <kbd 
+                  <kbd
                     :key="item.keys[2]"
                     v-text="item.keys[2]"
                   />
@@ -81,54 +81,56 @@
       // Kbd: () => import('@/components/Kbd'),
     },
 
-    data: () => ({
-      title: 'Shortcuts',
+    data () {
+      return {
+        title: this.$t('Shortcuts'),
 
-      items: [
-        { title: 'Application Shortcuts', items: [
-          { title: 'Settings', keys: [userOSKey, ','] },
-          { title: 'Keyboard Shortcuts', keys: [userOSKey, 'K'] },
-          { title: 'Reset App Settings', keys: ['Shift', userOSKey, 'D'], os: 'mac' },
-          { title: 'Log Out', keys: [userOSKey, 'L'] },
-          { title: 'Hide InfinityOne', keys: [userOSKey, 'H'], os: 'mac' },
-          { title: 'Hide Others', keys: ['Option', userOSKey, 'H'], os: 'mac' },
-          { title: 'Quit InfinityOne', keys: [userOSKey, 'Q'] },
-        ]},
-        { title: 'Edit Shortcuts', items: [
-          { title: 'Undo', keys: [userOSKey, 'Z'] },
-          { title: 'Redo', keys: ['Shift', userOSKey, 'Z'], os: 'mac' },
-          { title: 'Redo', keys: [userOSKey, 'Y'], os: 'win' },
-          { title: 'Cut', keys: [userOSKey, 'X'] },
-          { title: 'Copy', keys: [userOSKey, 'C'] },
-          { title: 'Paste', keys: [userOSKey, 'V'] },
-          { title: 'Paste and Match Style', keys: ['Shift', userOSKey, 'V'] },
-          { title: 'Select All', keys: [userOSKey, 'A'] },
-          { title: 'Find', keys: [userOSKey, 'F'], os: 'mac' },
-          { title: 'Find Next', keys: [userOSKey, 'G'], os: 'mac' },
-          { title: 'Emoji & Symbols', keys: ['Control', userOSKey, 'Space'], os: 'mac' },
-        ]},
-        { title: 'View Shortcuts', items: [
-          { title: 'Reload', keys: [userOSKey, 'R'] },
-          { title: 'Hard Reload', keys: ['Shift', userOSKey, 'R'] },
-          { title: 'Enter Full Screen', keys: ['Control', userOSKey, mac ? 'F' : 'F11'] },
-          { title: 'Zoom In', keys: [userOSKey, mac ? '+' : '='] },
-          { title: 'Zoom Out', keys: [userOSKey, '-'] },
-          { title: 'Actual Size', keys: [userOSKey, '0'] },
-          { title: 'Toggle Sidebar', keys: [userOSKey, 'S'] },
-          { title: 'Toggle DevTools for InfinityOne App', keys: [mac ? 'Option' : 'Shift', userOSKey, 'I'] },
-          { title: 'Toggle DevTools for Active Tab', keys: [mac ? 'Option' : 'Shift', userOSKey, 'U'] },
-        ] },
-        { title: 'History Shortcuts', items: [
-          { title: 'Back', keys: [userOSKey, '←'] },
-          { title: 'Forward', keys: [userOSKey, '→'] },
-        ]},
-        { title: 'Window Shortcuts', items: [
-          { title: 'Minimize', keys: [userOSKey, 'M'] },
-          { title: 'Close', keys: [userOSKey, mac ? 'C' : 'W'] },
-        ]},
-      ],
-      mac: mac,
-    }),
+        items: [
+          { title: this.$t('Application Shortcuts'), items: [
+            { title: this.$t('Settings'), keys: [userOSKey, ','] },
+            { title: this.$t('Keyboard Shortcuts'), keys: [userOSKey, 'K'] },
+            { title: this.$t('Reset App Settings'), keys: [this.$t('Shift'), userOSKey, 'D'], os: 'mac' },
+            { title: this.$t('Log Out'), keys: [userOSKey, 'L'] },
+            { title: this.$t('Hide InfinityOne'), keys: [userOSKey, 'H'], os: 'mac' },
+            { title: this.$t('Hide Others'), keys: [this.$t('Option'), userOSKey, 'H'], os: 'mac' },
+            { title: this.$t('Quit InfinityOne'), keys: [userOSKey, 'Q'] },
+          ]},
+          { title: this.$t('Edit Shortcuts'), items: [
+            { title: this.$t('Undo'), keys: [userOSKey, 'Z'] },
+            { title: this.$t('Redo'), keys: [this.$t('Shift'), userOSKey, 'Z'], os: 'mac' },
+            { title: this.$t('Redo'), keys: [userOSKey, 'Y'], os: 'win' },
+            { title: this.$t('Cut'), keys: [userOSKey, 'X'] },
+            { title: this.$t('Copy'), keys: [userOSKey, 'C'] },
+            { title: this.$t('Paste'), keys: [userOSKey, 'V'] },
+            { title: this.$t('Paste and Match Style'), keys: [this.$t('Shift'), userOSKey, 'V'] },
+            { title: this.$t('Select All'), keys: [userOSKey, 'A'] },
+            { title: this.$t('Find'), keys: [userOSKey, 'F'], os: 'mac' },
+            { title: this.$t('Find Next'), keys: [userOSKey, 'G'], os: 'mac' },
+            { title: this.$t('Emoji & Symbols'), keys: [this.$t('Control'), userOSKey, this.$t('Space')], os: 'mac' },
+          ]},
+          { title: this.$t('View Shortcuts'), items: [
+            { title: this.$t('Reload'), keys: [userOSKey, 'R'] },
+            { title: this.$t('Hard Reload'), keys: [this.$t('Shift'), userOSKey, 'R'] },
+            { title: this.$t('Enter Full Screen'), keys: [this.$t('Control'), userOSKey, mac ? 'F' : 'F11'] },
+            { title: this.$t('Zoom In'), keys: [userOSKey, mac ? '+' : '='] },
+            { title: this.$t('Zoom Out'), keys: [userOSKey, '-'] },
+            { title: this.$t('Actual Size'), keys: [userOSKey, '0'] },
+            { title: this.$t('Toggle Sidebar'), keys: [userOSKey, 'S'] },
+            { title: this.$t('Toggle DevTools for InfinityOne App'), keys: [mac ? this.$t('Option') : this.$t('Shift'), userOSKey, 'I'] },
+            { title: this.$t('Toggle DevTools for Active Tab'), keys: [mac ? this.$t('Option') : this.$t('Shift'), userOSKey, 'U'] },
+          ] },
+          { title: this.$t('History Shortcuts'), items: [
+            { title: this.$t('Back'), keys: [userOSKey, '←'] },
+            { title: this.$t('Forward'), keys: [userOSKey, '→'] },
+          ]},
+          { title: this.$t('Window Shortcuts'), items: [
+            { title: this.$t('Minimize'), keys: [userOSKey, 'M'] },
+            { title: this.$t('Close'), keys: [userOSKey, mac ? 'C' : 'W'] },
+          ]},
+        ],
+        mac: mac,
+      }
+    },
 
     computed: {
     },

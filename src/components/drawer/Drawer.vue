@@ -70,18 +70,20 @@
       NetworkErrorTab,
     },
 
-    data: () => ({
-      items: [
-        { icon: 'mdi-reload', title: 'Reload', id: 'reload' },
-        { icon: 'mdi-arrow-left', title: 'Go Back', id: 'back' },
-        { icon: 'mdi-settings', title: 'Settings', to: '/settings', name: 'settings' },
-      ],
-      topItems: [
-        { icon: 'mdi-plus', title: 'Add Organization', to: '/organization/new', name: 'add-server' },
-      ],
-      menuServerIndex: 0,
-      menu: false,
-    }),
+    data() {
+      return {
+        items: [
+          { icon: 'mdi-reload', title: this.$t('Reload'), id: 'reload' },
+          { icon: 'mdi-arrow-left', title: this.$t('Go Back'), id: 'back' },
+          { icon: 'mdi-settings', title: this.$t('Settings'), to: '/settings', name: 'settings' },
+        ],
+        topItems: [
+          { icon: 'mdi-plus', title: this.$t('Add Organization'), to: '/organization/new', name: 'add-server' },
+        ],
+        menuServerIndex: 0,
+        menu: false,
+      }
+    },
 
     computed: {
       servers: get('settings/servers'),

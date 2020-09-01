@@ -2,15 +2,15 @@
   <v-simple-table class="server-remote">
     <tbody>
       <tr>
-        <th>URL</th>
+        <th>{{ $t('URL') }}</th>
         <td>{{ item.url }}</td>
       </tr>
       <tr>
-        <th>Icon</th>
+        <th>{{ $t('Icon') }}</th>
         <td>{{ item.icon }}</td>
       </tr>
       <tr>
-        <th>Icon URL</th>
+        <th>{{ $t('Icon URL') }}</th>
         <td>{{ item.iconUrl }}</td>
       </tr>
     </tbody>

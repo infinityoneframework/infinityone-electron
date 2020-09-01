@@ -14,19 +14,19 @@
     />
     <div class="maintenance-info">
       <p class="detail maintainer">
-        Maintained by
+        {{ $t('Maintained by') }}
         <a
           @click="linkInBrowser('website')"
         >
-          Infinity One
+          InfinityOne
         </a>
       </p>
       <p class="detail license">
-        Available under the
+        {{ $t('Available under the') }}
         <a
           @click="linkInBrowser('license')"
         >
-          MIT License
+          {{ $t('MIT License') }}
         </a>
       </p>
     </div>
@@ -144,3 +144,12 @@
   p.detail a:hover
     text-decoration: underline
 </style>
+<i18n>
+{
+  "en": {
+    "Maintained by": "Maintained by",
+    "Available under the": "Available under the"
+  }
+}
+</i18n>
+
