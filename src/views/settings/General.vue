@@ -76,7 +76,7 @@
 
     data () {
       return {
-        title: 'General Settings',
+        title: this.$t('General Settings'),
         items: [
           { title: this.$t('Appearance'), items: [
             { title: this.$t('Show app icon in system tray'), field: 'trayIcon' },
@@ -95,13 +95,13 @@
             { title: this.$t('Start app at login'), field: 'startAtLogin'},
             { title: this.$t('Always start minimized'), field: 'startMinimized'},
             // can't get the spell checking compiling. Disabling for now
-            // { title: 'Enable Spellchecker (requires restart)', field: 'enableSpellchecker'},
+            // { title: this.$t('Enable Spellchecker (requires restart)'), field: 'enableSpellchecker'},
           ]},
-          // { title: 'Add custom CSS', items: [
-          //   { title: 'This will inject the selected css stylesheet in all the added accounts', button: 'Add', method: 'add' },
+          // { title: this.$t('Add custom CSS'), items: [
+          //   { title: this.$t('This will inject the selected css stylesheet in all the added accounts'), button: this.$t('Add'), method: 'add' },
           // ]},
           { title: this.$t('Reset Application Data'), items: [
-            { title: this.$t('This will delete all application data including all added accounts and preferencs'), button: 'Reset', method: 'reset' },
+            { title: this.$t('This will delete all application data including all added accounts and preferencs'), button: this.$t('Reset'), method: 'reset' },
           ]},
         ],
         platform: process.platform,

@@ -11,7 +11,7 @@
           v-bind="attrs"
           v-on="on"
         >
-          Show
+          {{ $t('Show') }}
         </v-btn>
       </template>
 
@@ -157,12 +157,12 @@
           DomainUtil.verifyServer(this.server)
             .then(() => {
               this.verifying = false
-              this.$notification.success('Server verified successfully', opts)
+              this.$notification.success(this.$t('Server verified successfully'), opts)
             })
             .catch(error => {
               console.warn('error', error)
               this.verifying = false
-              this.$notification.error('Problem verifing servers!', { ...opts, timer: 8 })
+              this.$notification.error(this.$t('Problem verifing servers!'), { ...opts, timer: 8 })
             })
         }, 1)
       },

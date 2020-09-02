@@ -17,7 +17,7 @@ import Logger from '@/utils/logger-util'
 
 ConfigUtil.reloadDB()
 
-const debug = true
+const debug = false
 const isDevelopment = process.env.NODE_ENV !== "production";
 const isDev = require('electron-is-dev')
 
@@ -114,12 +114,11 @@ async function createWindow() {
       // nativeWindowOpen: true,
       webviewTag: true,
       enableRemoteModule: true,
-      preload: path.join(__dirname, 'preload.js'),
+      // preload: path.join(__dirname, 'preload.js'),
       allowRunningInsecureContent: true,
     }
   });
 
-  console.log('title', title)
   win.setTitle(title)
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {

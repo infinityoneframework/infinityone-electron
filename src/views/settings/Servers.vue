@@ -85,7 +85,7 @@
 
     methods: {
       async disconnect (index) {
-        const res = await this.$confirm(`Remove <b>${this.list[index].url}</b>?`, { title: 'Are you sure?' })
+        const res = await this.$confirm(`${this.$t('Remove')} <b>${this.list[index].url}</b>?`, { title: this.$t('Are you sure?') })
         if (res) {
           this.$store.dispatch('settings/removeServer', index)
         }

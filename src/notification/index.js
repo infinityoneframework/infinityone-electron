@@ -1,18 +1,18 @@
 'use strict'
 
-import { remote } from 'electron'
-
+const { remote} = require('electron')
 
 // import ConfigUtil from '@/utils/config-util'
-import DefaultNotification from './default-notification'
+const DefaultNotification = require('./default-notification')
 // import { appId, setNotificationCallback2 } from './helpers'
-import Helpers from './helpers'
+ const Helpers = require('./helpers')
+
 // const { appId, setNotificationCallback2, setNotificationCallback } = require('./helpers')
 
 // From https://github.com/felixrieseberg/electron-windows-notifications#appusermodelid
 // On windows 8 we have to explicitly set the appUserModelId otherwise notification won't work.
 
-const debug = false
+// const debug = false
 
 const { app } = remote
 app.setAppUserModelId(Helpers.appId)
@@ -29,16 +29,5 @@ let Notification = DefaultNotification
 // }
 
 window.addEventListener('load', () => {
-	// console.warn('load event...')
 	Helpers.setNotificationCallback2(Notification)
-
-	// if (typeof window.one_chat !== 'undefined' && typeof window.one_chat.notifier !== 'undefined') {
-  if (window.one_chat && window.one_chat.notifier) {
-		window.one_chat.notifier.audioEnabled = () => {
-      // return !(ConfigUtil.getConfigItem('silent') || false)
-      return true
-		}
-	} else {
-		if (debug) { console.warn('window.one_chat.notifier is not defined') }
-	}
 })

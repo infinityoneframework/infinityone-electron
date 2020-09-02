@@ -1,4 +1,4 @@
-import { remote } from 'electron'
+const { remote } = require('electron')
 
 // Do not change this
 const appId = 'org.emetrotel.infinityone-electron'
@@ -173,7 +173,7 @@ function setHandlers(Notification, opts) {
 	Notification.addEventListener('reply', replyHandler)
 }
 
-export default {
+module.exports = {
 	appId,
 	checkElements,
 	customReply,

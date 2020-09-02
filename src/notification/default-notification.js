@@ -1,9 +1,7 @@
 'use strict'
 
-import { ipcRenderer } from 'electron'
-import ConfigUtil from '@/utils/config-util'
-// import { focusCurrentServer } from './helpers'
-import Helpers from './helpers'
+const { ipcRenderer } = require('electron')
+const Helpers = require('./helpers')
 
 const NativeNotification = window.Notification
 class BaseNotification extends NativeNotification {
@@ -24,10 +22,14 @@ class BaseNotification extends NativeNotification {
 
 	// Override default Notification permission
 	static get _permission() {
-		const showNotification = ConfigUtil.getConfigItem('showNotification')
-		// console.warn('showNotification', showNotification)
+		// I could not figure out how to get access to the config from here. Instead,
+		// the ServerWebView view watches showNotification (and silent) and uses
+		// webview.execJavaScript to set window.OneChat.notifier values.
+		// const showNotification = configUtil.getConfigItem('showNotification', false)
+		const showNotification = true
 		return showNotification ? 'granted' : 'denied'
 	}
 }
 
-export default BaseNotification
+// export default BaseNotification
+module.exports = BaseNotification

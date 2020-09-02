@@ -24,7 +24,7 @@
           :src="server.url"
           :node-integration="nodeIntegration"
           disablewebsecurity
-          preload="file:./preload.js"
+          :preload="getPreload()"
           remote-module
           partition="persist:webviewsession"
           webpreferences="allowRunningInsecureContent, javascript=yes"
@@ -43,8 +43,10 @@
   import { ipcRenderer} from 'electron'
   import { get, sync } from 'vuex-pathify'
   import SystemUtil from '@/utils/system-util'
+  import path from 'path'
 
   const name = 'ServerWebView'
+  const debug = false
 
   export default {
     name: name,
@@ -67,6 +69,8 @@
       ...get('settings', ['activeServerId', 'currentComponent']),
       servers: get('settings/enabledServers'),
       networkErrors: sync('settings/networkErrors'),
+      silent: get('settings/config@silent'),
+      showNotification: get('settings/config@showNotification'),
       show () {
         return this.isCurrentComponent ? '' : 'inactive'
       },
@@ -92,13 +96,27 @@
     },
 
     watch: {
+      silent (curr, prev) {
+        if (debug) {
+          console.log('silent change', curr, prev)
+        }
+        this.onNotifierChange('silent', !curr)
+      },
+
+      showNotification (curr, prev) {
+        if (debug) {
+          console.log('showNotification change', curr, prev)
+        }
+        this.onNotifierChange('supported', curr)
+      },
+
       networkErrors (curr, prev) {
         curr = Object.keys(curr)
         prev = Object.keys(prev)
 
         prev.forEach(id => {
           if (!curr.includes(id)) {
-            console.debug('found a cleared id', id)
+            if (debug) { console.debug('found a cleared id', id) }
             this.loadServer(id, $el => $el.reload())
           }
         })
@@ -106,8 +124,14 @@
     },
 
     methods: {
+      getPreload () {
+        const preload = path.join(process.cwd(), 'src', 'preload.js')
+        return `file://${preload}`
+      },
+
       newWindow (e) {
-        console.debug('newWindow', e)
+        if (debug) { console.debug('newWindow', e) }
+
         if (e.url.match(/video\?/)) {
           this.url = e.url.replace('video', 'desktop')
           this.$router.push({ path: '/video' })
@@ -188,9 +212,30 @@
           const loaded = { ...this.loaded }
           loaded[serverId] = true
           this.loaded = loaded
+          this.setNotifierItem($el, 'sound', !this.silent)
+          this.setNotifierItem($el, 'supported', this.showNotification)
         }
         return $el
-      }
+      },
+
+      setNotifierItem ($el, item, value) {
+        $el.executeJavaScript(`if (window.OneChat && window.OneChat.notifier) { window.OneChat.notifier.${item} = ${value} }`)
+          .then(result => {
+            if (debug) { console.log('done', item, result) }
+          })
+          .catch(error => {
+            console.warn('error', $el, item, error)
+          })
+      },
+
+      onNotifierChange (item, value) {
+        const $elems = document.querySelectorAll(`webview[data-server-id]`)
+        if ($elems) {
+          $elems.forEach($el => {
+            this.setNotifierItem($el, item, value)
+          })
+        }
+      },
     },
   }
 </script>

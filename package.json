@@ -1,7 +1,7 @@
 {
   "name": "infinityone",
   "productName": "InfinityOne",
-  "version": "2.0.0-alpha5",
+  "version": "2.0.0-alpha6",
   "private": true,
   "license": "MIT",
   "copyright": "E-MetroTel Global Inc.",
@@ -29,10 +29,10 @@
     "electron:serve": "vue-cli-service electron:serve",
     "electron:publish": "vue-cli-service electron:build -p always",
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
+    "i18n:help": "vue-cli-service i18n:report --help",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
-    "electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
-    "i18n:fix": "scripts/i18n-fix.js"
+    "electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten"
   },
   "main": "background.js",
   "keywords": [

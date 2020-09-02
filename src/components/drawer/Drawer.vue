@@ -13,7 +13,7 @@
       fill-height
     >
       <v-list
-        class="servers-nav-block"
+        class="servers-nav-block pt-0"
         dense
       >
         <server-tab

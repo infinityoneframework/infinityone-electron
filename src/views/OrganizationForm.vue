@@ -14,7 +14,7 @@
         width="600"
       >
         <v-card-title>
-          Add an InfinityOne server
+          {{ $t('Add an InfinityOne server') }}
         </v-card-title>
         <v-card-text>
           <v-form

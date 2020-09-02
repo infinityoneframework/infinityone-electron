@@ -175,9 +175,15 @@ class ServerManager {
 
     for (const key in webviewListeners) {
       ipcRenderer.on(key, () => {
-        const activeWebview = this.tabs[this.activeTabIndex].webview;
-        if (activeWebview) {
-          activeWebview[webviewListeners[key]]();
+        try {
+          const activeWebview = this.tabs[this.activeTabIndex].webview;
+          if (activeWebview) {
+            activeWebview[webviewListeners[key]]();
+          }
+        }
+        catch (error) {
+          console.warn(error)
+          console.log('tabs, activeTabIndex', this.tabs, this.activeTabIndex)
         }
       });
     }

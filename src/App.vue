@@ -77,6 +77,11 @@
         }
       },
     },
+
+    // beforeMount () {
+    //   window.myThis = this
+    // },
+
   }
 </script>
 <style lang="sass">

@@ -26,7 +26,7 @@
         <a
           @click="linkInBrowser('license')"
         >
-          {{ $t('MIT License') }}
+          {{ $t('license') }}
         </a>
       </p>
     </div>
@@ -72,6 +72,7 @@
         return 'v' + app.getVersion() + env
       },
     },
+
   }
 </script>
 <style lang="sass" scoped>
@@ -144,12 +145,3 @@
   p.detail a:hover
     text-decoration: underline
 </style>
-<i18n>
-{
-  "en": {
-    "Maintained by": "Maintained by",
-    "Available under the": "Available under the"
-  }
-}
-</i18n>
-

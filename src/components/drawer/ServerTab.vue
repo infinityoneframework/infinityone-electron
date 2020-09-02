@@ -32,7 +32,7 @@
         </v-list-item-icon>
       </v-list-item>
     </template>
-    <span v-text="item.alias + ' (' + item.url + ')'" />
+    <span v-text="item.alias + ' (' + item.url.replace(/^https?:\/\//, '') + ')'" />
   </v-tooltip>
 </template>
 
