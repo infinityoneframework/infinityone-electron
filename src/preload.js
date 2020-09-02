@@ -2,7 +2,7 @@ const { ipcRenderer, remote } = require('electron')
 const os = require('os')
 const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready' ]
 
-require('@/notification')
+require('./notification')
 
 window.jitsiNodeAPI = {
     osUserInfo: os.userInfo,

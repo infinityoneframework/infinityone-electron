@@ -23,7 +23,7 @@
               style="background-color: white"
             >
               <v-row
-                v-for="item in group.items"
+                v-for="item in groupItems(group.items)"
                 :key="item.field"
                 dense
                 width="100%"
@@ -82,6 +82,7 @@
             { title: this.$t('Show app icon in system tray'), field: 'trayIcon' },
             { title: `${this.$t('Show sidebar')} (<span class="shortcut">${config.cmdKey}+S</span>)`, field: 'showSidebar' },
             { title: this.$t('Show app unread badge'), field: 'badgeOption' },
+            { title: this.$t('Flash taskbar on new message'), field: 'flashTaskbarOnMessage', platforms: ['win32'] },
           ]},
           { title: this.$t('Desktop Notification'), items: [
             { title: this.$t('Show Desktop Notifications'), field: 'showNotification' },
@@ -102,7 +103,8 @@
           { title: this.$t('Reset Application Data'), items: [
             { title: this.$t('This will delete all application data including all added accounts and preferencs'), button: 'Reset', method: 'reset' },
           ]},
-        ]
+        ],
+        platform: process.platform,
       }
     },
 
@@ -132,6 +134,10 @@
             console.log('add clicked')
             break
         }
+      },
+
+      groupItems (items) {
+        return items.filter(item => !item.platforms || item.platforms.includes(this.platform))
       },
     },
   }

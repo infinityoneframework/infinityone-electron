@@ -327,19 +327,19 @@ app.on("ready", async () => {
   })
 
   ipcMain.on('toggle-badge-option', () => {
-    // BadgeSettings.updateBadge(badgeCount, win)
+    BadgeSettings.updateBadge(badgeCount, mainWindow)
   })
 
   ipcMain.on('update-badge', (event, messageCount) => {
     badgeCount = messageCount
     BadgeSettings.updateBadge(badgeCount, mainWindow)
-    if (this.debug) { console.debug('[background] badgeCount', badgeCount, messageCount) }
+    if (debug) { console.debug('[background] badgeCount', badgeCount, messageCount) }
     page.send('tray', messageCount)
   })
 
-  // ipcMain.on('update-taskbar-icon', (event, data, text) => {
-  //   BadgeSettings.updateTaskbarIcon(data, text, win)
-  // })
+  ipcMain.on('update-taskbar-icon', (event, data, text) => {
+    BadgeSettings.updateTaskbarIcon(data, text, mainWindow)
+  })
 
   ipcMain.on('forward-message', (event, listener, ...params) => {
     page.send(listener, ...params)

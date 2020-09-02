@@ -29,6 +29,7 @@ let Notification = DefaultNotification
 // }
 
 window.addEventListener('load', () => {
+	// console.warn('load event...')
 	Helpers.setNotificationCallback2(Notification)
 
 	// if (typeof window.one_chat !== 'undefined' && typeof window.one_chat.notifier !== 'undefined') {

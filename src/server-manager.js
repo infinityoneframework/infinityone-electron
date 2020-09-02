@@ -213,6 +213,35 @@ class ServerManager {
     ipcRenderer.on('reload-viewer', (event, servers) => {
       this.reloadView(servers)
     })
+
+    ipcRenderer.on('render-taskbar-icon', (event, messageCount) => {
+      console.log('render-taskbar-icon', messageCount)
+      function createOverlayIcon(messageCount) {
+				const canvas = document.createElement('canvas')
+				canvas.height = 128
+				canvas.width = 128
+				canvas.style.letterSpacing = '-5px'
+				const ctx = canvas.getContext('2d')
+				ctx.fillStyle = '#f42020'
+				ctx.beginPath()
+				ctx.ellipse(64, 64, 64, 64, 0, 0, 2 * Math.PI)
+				ctx.fill()
+				ctx.textAlign = 'center'
+				ctx.fillStyle = 'white'
+				if (messageCount > 99) {
+					ctx.font = '65px Helvetica'
+					ctx.fillText('99+', 64, 85)
+				} else if (messageCount < 10) {
+					ctx.font = '90px Helvetica'
+					ctx.fillText(String(Math.min(99, messageCount)), 64, 96)
+				} else {
+					ctx.font = '85px Helvetica'
+					ctx.fillText(String(Math.min(99, messageCount)), 64, 90)
+				}
+				return canvas
+      }
+      ipcRenderer.send('update-taskbar-icon', createOverlayIcon(messageCount).toDataURL(), String(messageCount))
+    })
   }
 
   openSettings(nav = 'settings') {

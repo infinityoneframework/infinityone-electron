@@ -53,9 +53,10 @@ const defaultSettings = {
 	showNotification: true,
 	lastActiveTab: 0,
 	spellcheckerLanguage: 'en',
+  flashTaskbarOnMessage: false,
 	proxyPAC: '',
 	proxyRules: '',
-	proxyBypass: '',
+  proxyBypass: '',
 }
 
 export default { 

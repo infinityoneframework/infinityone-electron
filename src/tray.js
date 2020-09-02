@@ -40,16 +40,17 @@ const config = {
 	pixelRatio: window.devicePixelRatio,
 	unreadCount: 0,
 	showUnreadCount: true,
-	unreadColor: '#000000',
+	unreadColor: '#F44336',
 	readColor: '#000000',
-	unreadBackgroundColor: '#C0DF86',
-	readBackgroundColor: '#C0DF86',
+	unreadBackgroundColor: '#a0CF4A',
+	readBackgroundColor: '#87B530',
 	size: trayIconSize(),
 	thick: process.platform === 'win32'
 }
 
 const renderCanvas = function (arg) {
 	config.unreadCount = arg
+	console.log('renderCanvas', arg, config.unreadCount)
 
 	return new Promise(resolve => {
 		const SIZE = config.size * config.pixelRatio
@@ -75,17 +76,18 @@ const renderCanvas = function (arg) {
 		ctx.stroke()
 		// Count or Icon
 		if (HAS_COUNT) {
+			console.warn('HAS_COUNT...')
 			ctx.fillStyle = color
 			ctx.textAlign = 'center'
 			if (config.unreadCount > 99) {
 				ctx.font = `${config.thick ? 'bold ' : ''}${SIZE * 0.4}px Helvetica`
 				ctx.fillText('99+', CENTER, CENTER + (SIZE * 0.15))
 			} else if (config.unreadCount < 10) {
-				ctx.font = `${config.thick ? 'bold ' : ''}${SIZE * 0.5}px Helvetica`
-				ctx.fillText(config.unreadCount, CENTER, CENTER + (SIZE * 0.20))
+				ctx.font = `${config.thick ? 'bold ' : ''}${SIZE * 0.8}px Helvetica`
+				ctx.fillText(config.unreadCount, CENTER, CENTER + (SIZE * 0.30))
 			} else {
-				ctx.font = `${config.thick ? 'bold ' : ''}${SIZE * 0.5}px Helvetica`
-				ctx.fillText(config.unreadCount, CENTER, CENTER + (SIZE * 0.15))
+				ctx.font = `${config.thick ? 'bold ' : ''}${SIZE * 0.65}px Helvetica`
+				ctx.fillText(config.unreadCount, CENTER, CENTER + (SIZE * 0.25))
 			}
 
 			resolve(canvas)
@@ -101,7 +103,7 @@ const renderNativeImage = function (arg) {
 	return Promise.resolve()
 		.then(() => renderCanvas(arg))
 		.then(canvas => {
-			const pngData = nativeImage.createFromDataURL(canvas.toDataURL('image/png')).toPng()
+			const pngData = nativeImage.createFromDataURL(canvas.toDataURL('image/png')).toPNG()
 			return Promise.resolve(nativeImage.createFromBuffer(pngData, config.pixelRatio))
 		})
 }

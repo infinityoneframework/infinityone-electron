@@ -23,8 +23,8 @@
           :data-server-id="server.serverId"
           :src="server.url"
           :node-integration="nodeIntegration"
-          preload="file://./preload.js"
           disablewebsecurity
+          preload="file:./preload.js"
           remote-module
           partition="persist:webviewsession"
           webpreferences="allowRunningInsecureContent, javascript=yes"

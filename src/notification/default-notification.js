@@ -24,7 +24,9 @@ class BaseNotification extends NativeNotification {
 
 	// Override default Notification permission
 	static get _permission() {
-		return ConfigUtil.getConfigItem('showNotification') ? 'granted' : 'denied'
+		const showNotification = ConfigUtil.getConfigItem('showNotification')
+		// console.warn('showNotification', showNotification)
+		return showNotification ? 'granted' : 'denied'
 	}
 }
 
