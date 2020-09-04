@@ -16,18 +16,18 @@ defmodule Lang do
     IO.puts ~s/
     Create entries for lang.json files.
 
-    First run "yarn i18n:report" and the copy the output rows (exclude the header)
+    First run "yarn i18n:report" and then copy the output rows (exclude the header)
 
     Then run
         iex> rr = Lang.parse """
               <paste copied data>
               """
 
-    Copy the output and paste it into google translate. copy the translated output.
+    Copy the output and paste it into Google translate. copy the translated output.
 
     Run
         iex> Lang.report rr, """
-        < paste trantated text>
+        < paste translated text>
         """
 
     The output is the json that can be copied and pasted into the appropriate lang file.
@@ -42,7 +42,7 @@ defmodule Lang do
   end
 
   defp print_list(list) do
-    IO.puts("Copy the items between the ------ and paste them into google traslate")
+    IO.puts("Copy the items between the ------ and paste them into Google translate")
     IO.puts("--------------------------------")
     Enum.each(list, &IO.puts/1)
     IO.puts("--------------------------------")
