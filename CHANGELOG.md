@@ -1,5 +1,17 @@
 # InfinityOne Desktop Client Changelog
 
+## 2.0.0-alpha7 (2020-09-04)
+
+### Bug Fixes
+
+* Fix Windows notifications
+
+### Known Issues
+
+* Linux not yet supported
+* Video window may lockup
+* Spell checker not working
+
 ## 2.0.0-alpha6 (2020-09-04)
 
 ### Bug Fixes

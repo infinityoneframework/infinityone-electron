@@ -15,6 +15,7 @@ const DefaultNotification = require('./default-notification')
 // const debug = false
 
 const { app } = remote
+
 app.setAppUserModelId(Helpers.appId)
 
 let Notification = DefaultNotification

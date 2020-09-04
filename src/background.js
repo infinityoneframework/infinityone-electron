@@ -1,9 +1,9 @@
-"use strict";
+"use strict"
 /* global __static */
 
-import { app, protocol, BrowserWindow, ipcMain } from "electron";
-import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
-import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
+import { app, protocol, BrowserWindow, ipcMain } from "electron"
+import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
+import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer"
 import windowStateKeeper from 'electron-window-state'
 import appMenu from '@/main/menu'
 import ConfigUtil from '@/utils/config-util'
@@ -13,31 +13,31 @@ import BadgeSettings from '@/components/badge-settings'
 import { setAutoLaunch } from '@/main/startup'
 import { appUpdater } from '@/main/autoupdater'
 import Logger from '@/utils/logger-util'
-// const appMenu = require('@/main/menu');
+// const appMenu = require('@/main/menu')
 
 ConfigUtil.reloadDB()
 
 const debug = false
-const isDevelopment = process.env.NODE_ENV !== "production";
+const isDevelopment = process.env.NODE_ENV !== "production"
 const isDev = require('electron-is-dev')
 
 // We need this because of https://github.com/electron/electron/issues/18214
-app.commandLine.appendSwitch('disable-site-isolation-trials');
+app.commandLine.appendSwitch('disable-site-isolation-trials')
 
 // https://bugs.chromium.org/p/chromium/issues/detail?id=1086373
-app.commandLine.appendSwitch('disable-webrtc-hw-encoding');
-app.commandLine.appendSwitch('disable-webrtc-hw-decoding');
+app.commandLine.appendSwitch('disable-webrtc-hw-encoding')
+app.commandLine.appendSwitch('disable-webrtc-hw-decoding')
 
-app.commandLine.appendSwitch('disable-web-security');
-app.commandLine.appendSwitch('user-data-dir');
+app.commandLine.appendSwitch('disable-web-security')
+app.commandLine.appendSwitch('user-data-dir')
 
 // Needed until robot.js is fixed: https://github.com/octalmage/robotjs/issues/580
-app.allowRendererProcessReuse = false;
+app.allowRendererProcessReuse = false
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 global.mainPage = null
-let mainWindow;
+let mainWindow
 let badgeCount
 
 let isQuitting = false
@@ -80,7 +80,7 @@ const showOrMinimizeWindow = win => {
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } }
-]);
+])
 
 async function createWindow() {
   const mainWindowState = windowStateKeeper({
@@ -91,7 +91,7 @@ async function createWindow() {
   const title = 'InfinityOne Desktop' + (isDev ? ' (dev)' : '')
 
 	// Let's keep the window position global so that we can access it in other process
-  global.mainWindowState = mainWindowState;
+  global.mainWindowState = mainWindowState
 
   // Create the browser window.
   const win = new BrowserWindow({
@@ -117,18 +117,18 @@ async function createWindow() {
       // preload: path.join(__dirname, 'preload.js'),
       allowRunningInsecureContent: true,
     }
-  });
+  })
 
   win.setTitle(title)
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
-    await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
+    await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
     if (!process.env.IS_TEST) win.webContents.openDevTools()
 
     appUpdater()
   } else {
-    createProtocol("app");
+    createProtocol("app")
     // Load the index.html when not in development
     win.loadURL("app://./index.html")
 
@@ -138,10 +138,10 @@ async function createWindow() {
   }
 
   win.on("closed", () => {
-    // win = null;
+    // win = null
     mainWindow = null
     global.mainPage = null
-  });
+  })
 
   win.on('close', event => {
     if (!isQuitting) {
@@ -194,8 +194,8 @@ async function createWindow() {
     //   callback({ responseHeaders: Object.assign({
     //       // "Content-Security-Policy": [ "default-src 'self' http://localhost:8080" ]
     //       "Content-Security-Policy": [ "frame-src *" ]
-    //   }, details.responseHeaders)});
-    // });
+    //   }, details.responseHeaders)})
+    // })
 
     // if (ConfigUtil.getConfigItem('startMinimized')) {
     //   mainWindow.minimize()
@@ -228,17 +228,17 @@ app.on("window-all-closed", () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== "darwin") {
-    app.quit();
+    app.quit()
   }
-});
+})
 
 app.on("activate", () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
-    mainWindow = createWindow();
+    mainWindow = createWindow()
   }
-});
+})
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -258,15 +258,15 @@ app.on("ready", async () => {
     //   console.warn('vue install errror', error)
     // })
     try {
-      await installExtension(VUEJS_DEVTOOLS);
+      await installExtension(VUEJS_DEVTOOLS)
     } catch (e) {
-      console.error("[background] Vue Devtools failed to install:", e.toString());
+      console.error("[background] Vue Devtools failed to install:", e.toString())
     }
   }
 
   appMenu.setMenu({
 		tabs: []
-  });
+  })
 
   mainWindow = await createWindow()
 
@@ -395,12 +395,12 @@ if (isDevelopment) {
   if (process.platform === "win32") {
     process.on("message", data => {
       if (data === "graceful-exit") {
-        app.quit();
+        app.quit()
       }
-    });
+    })
   } else {
     process.on("SIGTERM", () => {
-      app.quit();
-    });
+      app.quit()
+    })
   }
 }

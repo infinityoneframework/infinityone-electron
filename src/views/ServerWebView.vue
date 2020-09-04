@@ -221,6 +221,7 @@
           this.loaded = loaded
           this.setNotifierItem($el, 'sound', !this.silent)
           this.setNotifierItem($el, 'supported', this.showNotification)
+          this.setNotifierItem($el, 'electron', true)
         }
         return $el
       },
