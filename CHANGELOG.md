@@ -1,5 +1,22 @@
 # InfinityOne Desktop Client Changelog
 
+## 2.0.0-alpha6 (2020-09-04)
+
+### Bug Fixes
+
+* Fix showNotifications and silent config
+
+### Features
+
+* Support windows
+* Support French and Spansish language translations
+
+### Known Issues
+
+* Linux not yet supported
+* Video window may lockup
+* Spell checker not working
+
 ## 2.0.0-alpha5 (2020-08-28)
 
 ### Bug Fixes

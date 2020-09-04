@@ -47,6 +47,7 @@
 
   const name = 'ServerWebView'
   const debug = false
+  const isDev = require('electron-is-dev')
 
   export default {
     name: name,
@@ -100,7 +101,7 @@
         if (debug) {
           console.log('silent change', curr, prev)
         }
-        this.onNotifierChange('silent', !curr)
+        this.onNotifierChange('sound', !curr)
       },
 
       showNotification (curr, prev) {
@@ -125,7 +126,13 @@
 
     methods: {
       getPreload () {
-        const preload = path.join(process.cwd(), 'src', 'preload.js')
+        let preload
+
+        if (isDev) {
+          preload = path.join(process.cwd(), 'src', 'preload.js')
+        } else {
+          preload = path.join(__dirname, 'preload.js')
+        }
         return `file://${preload}`
       },
 
