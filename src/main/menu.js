@@ -317,7 +317,7 @@ class AppMenu {
         label: $t('Reset App Settings'),
         accelerator: 'Ctrl+Shift+D',
         click() {
-          AppMenu.resetAppSettings();
+          ConfigUtil.resetAppSettings();
         }
       }, {
         label: $t('Log Out'),
