@@ -3,6 +3,7 @@
     v-model="showSidebar"
     mini-variant
     mini-variant-width="60"
+    mobile-breakpoint="840"
     dark
     app
   >
