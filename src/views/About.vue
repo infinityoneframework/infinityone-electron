@@ -1,39 +1,49 @@
 <template>
-  <v-main
-    id="about-view"
-    :class="`about app-panel settings-page pl-0 ${show}`"
-  >
-    <v-img
-      :src="require('@/assets/infinityone.png')"
-      class="logo"
-      width="150"
-    />
-    <p
-      class="detail"
-      v-text="version()"
-    />
-    <div class="maintenance-info">
-      <p class="detail maintainer">
-        {{ $t('Maintained by') }}
-        <a
-          @click="linkInBrowser('website')"
-        >
-          InfinityOne
-        </a>
-      </p>
-      <p class="detail license">
-        {{ $t('Available under the') }}
-        <a
-          @click="linkInBrowser('license')"
-        >
-          {{ $t('license') }}
-        </a>
-      </p>
-    </div>
-  </v-main>
+  <div>
+    <v-container
+      :class="`px-0 pl-0 ${show}`"
+      style="margin-left: 70px !important"
+    >
+      <back-button />
+    </v-container>
+    <v-main
+      id="about-view"
+      :class="`about app-panel settings-page pl-0 ${show}`"
+    >
+      <v-img
+        :src="require('@/assets/infinityone.png')"
+        class="logo"
+        width="150"
+      />
+      <p
+        class="detail"
+        v-text="version()"
+      />
+      <div class="maintenance-info">
+        <p class="detail maintainer">
+          {{ $t('Maintained by') }}
+          <a
+            @click="linkInBrowser('website')"
+          >
+            InfinityOne
+          </a>
+        </p>
+        <p class="detail license">
+          {{ $t('Available under the') }}
+          <a
+            @click="linkInBrowser('license')"
+          >
+            {{ $t('license') }}
+          </a>
+        </p>
+      </div>
+    </v-main>
+  </div>
 </template>
 <script>
   import { get } from 'vuex-pathify'
+  import BackButton from '@/components/BackButton'
+
   const { app } = require('electron').remote
   const { shell } = require('electron')
   const isDev = require('electron-is-dev')
@@ -41,6 +51,10 @@
 
   export default {
     name: name,
+
+    components: {
+      BackButton,
+    },
 
     computed: {
       aboutOpen: get('settings/aboutOpen'),
@@ -80,6 +94,9 @@
     background: #fafafa
     font-family: menu, "Helvetica Neue", sans-serif
     -webkit-font-smoothing: subpixel-antialiased
+
+  .inactive
+    display: none
 
   .logo
     display: block

@@ -1,73 +1,63 @@
 <template>
-  <div>
-    <v-card
-      height="100%"
-      width="100%"
-      flat
-      class="settings-card"
+  <v-card-text>
+    <section
+      v-for="(group, inx) in items"
+      :key="inx"
+      style="width: 100%"
     >
-      <v-card-title v-text="title" />
-      <v-card-text>
-        <section
-          v-for="(group, inx) in items"
-          :key="inx"
-          style="width: 100%"
+      <div v-text="group.title" />
+      <article
+        class="px-6 py-3 mt-2 mb-6"
+        style="background-color: white"
+      >
+        <v-row
+          v-for="(item, index) in groupItems(group)"
+          :key="index"
+          dense
+          width="100%"
         >
-          <div v-text="group.title" />
-          <article
-            class="px-6 py-3 mt-2 mb-6"
-            style="background-color: white"
+          <v-col
+            v-if="mac"
+            cols="6"
+            class="text-right"
           >
-            <v-row
-              v-for="(item, index) in groupItems(group)"
-              :key="index"
-              dense
-              width="100%"
-            >
-              <v-col
-                v-if="mac"
-                cols="6"
-                class="text-right"
-              >
-                <kbd
-                  v-for="key in item.keys"
-                  :key="key"
-                  v-text="key"
-                />
-              </v-col>
-              <v-col
-                v-else
-                cols="6"
-                class="text-right"
-              >
-                <kbd
-                  :key="item.keys[0]"
-                  v-text="item.keys[0]"
-                />
-                +
-                <kbd
-                  :key="item.keys[1]"
-                  v-text="item.keys[1]"
-                />
-                <span v-if="item.keys.length === 3">
-                  +
-                  <kbd
-                    :key="item.keys[2]"
-                    v-text="item.keys[2]"
-                  />
-                </span>
-              </v-col>
-              <v-col
-                cols="6"
-                class="my-auto body-1"
-                v-text="item.title"
+            <kbd
+              v-for="key in item.keys"
+              :key="key"
+              v-text="key"
+            />
+          </v-col>
+          <v-col
+            v-else
+            cols="6"
+            class="text-right"
+          >
+            <kbd
+              :key="item.keys[0]"
+              v-text="item.keys[0]"
+            />
+            +
+            <kbd
+              :key="item.keys[1]"
+              v-text="item.keys[1]"
+            />
+            <span v-if="item.keys.length === 3">
+              +
+              <kbd
+                :key="item.keys[2]"
+                v-text="item.keys[2]"
               />
-            </v-row>
-          </article>
-        </section>
-      </v-card-text>
-    </v-card>
-  </div>
+            </span>
+          </v-col>
+          <v-col
+            cols="6"
+            class="my-auto body-1"
+            v-text="item.title"
+          />
+        </v-row>
+      </article>
+    </section>
+  </v-card-text>
 </template>
 <script>
   // const mac = false

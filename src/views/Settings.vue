@@ -19,7 +19,18 @@
         />
       </v-tabs>
       <section class="settings-page pa-0">
-        <component :is="component" />
+        <v-card
+          height="100%"
+          width="100%"
+          flat
+          class="settings-card"
+        >
+          <v-card-title>
+            <back-button />
+            {{ title }}
+          </v-card-title>
+          <component :is="component" />
+        </v-card>
       </section>
     </v-container>
   </v-main>
@@ -30,10 +41,14 @@
   import Network from '@/views/settings/Network'
   import Shortcuts from '@/views/settings/Shortcuts'
   import { get } from 'vuex-pathify'
+  import BackButton from '@/components/BackButton'
+
+  const debug = false
 
   export default {
     name: 'Settings',
     components: {
+      BackButton,
     },
 
     data () {
@@ -48,6 +63,14 @@
         component: General,
         value: General.name,
         change: false,
+        history: [],
+        titles: {
+          general: this.$t('General Settings'),
+          network: this.$t('Network Settings'),
+          organizations: this.$t('Connected Organizations'),
+          shortcuts: this.$t('Shortcuts'),
+        },
+        debug: debug,
       }
     },
 
@@ -56,14 +79,19 @@
       show () {
         return this.currentComponent && this.currentComponent.name === 'Settings' ? '' : 'inactive'
       },
+      title () {
+        const tab = this.tabs.find(item => item.component.name === this.value)
+        if (this.debug) { console.log('title...', tab, this.value) }
+        return tab ? this.titles[tab.name] : ''
+      },
     },
 
     watch: {
       $route (to, from) {
-        console.log('route change', to, from)
+        if (this.debug) { console.log('route change', to, from) }
       },
       component (curr, prev) {
-        console.log('component change', curr && curr.name, prev && prev.name, this.value)
+        if (this.debug) { console.log('component change', curr && curr.name, prev && prev.name, this.value) }
       }
     },
 
@@ -76,9 +104,17 @@
       // coming from a route.
       const history = this.$router.history
       const meta = history && history.pending && history.pending.meta
+
+      if (this.debug) { console.log('beforeUpdate', meta, !this.change) }
+
       if (meta && meta.settings && !this.change) {
         this.component = meta.component || General
+        if (this.value !== this.component.name) {
+          this.history.push(this.component.name)
+        }
         this.value = this.component.name
+      } else {
+        this.history = []
       }
       this.change = false
     },

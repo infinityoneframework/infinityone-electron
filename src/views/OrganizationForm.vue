@@ -4,8 +4,14 @@
     :class="`app-panel settings-page pl-0 ${show}`"
   >
     <v-container
+      class="px-0 pl-0"
+      style="margin-left: 70px !important"
+    >
+      <back-button />
+    </v-container>
+    <v-container
       class="fill-height px-0 pl-0"
-      style="padding-top: 100px"
+      style="padding-top: 80"
       fluid
     >
       <v-card
@@ -56,12 +62,18 @@
 <script>
   import { get } from 'vuex-pathify'
   import DomainUtil from '@/utils/domain-util'
+  import BackButton from '@/components/BackButton'
 
   const schemes = ['https://', 'http://']
   const name = 'OrganizationForm'
 
   export default {
     name: name,
+
+    components: {
+      BackButton,
+    },
+
     data () {
       return {
         valid: true,

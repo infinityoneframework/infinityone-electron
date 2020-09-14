@@ -1,97 +1,87 @@
 <template>
-  <div>
-    <v-card
-      height="100%"
-      width="100%"
-      flat
-      class="settings-card"
+  <v-card-text>
+    <v-form
+      ref="form"
     >
-      <v-card-title v-text="title" />
-      <v-card-text>
-        <v-form
-          ref="form"
+      <section
+        v-for="(group, inx) in items"
+        :key="inx"
+        style="width: 100%"
+      >
+        <div v-text="group.title" />
+        <article
+          class="px-6 py-3 mt-2 mb-6"
+          style="background-color: white"
         >
-          <section
-            v-for="(group, inx) in items"
-            :key="inx"
-            style="width: 100%"
+          <v-row
+            v-for="item in group.items"
+            :key="item.field"
+            :class="visible(item.field || item.type) ? '' : 'hidden'"
+            dense
+            width="100%"
           >
-            <div v-text="group.title" />
-            <article
-              class="px-6 py-3 mt-2 mb-6"
-              style="background-color: white"
+            <v-col
+              v-if="item.title"
+              cols="8"
+              style="padding-top: 6px"
             >
-              <v-row
-                v-for="item in group.items"
-                :key="item.field"
-                :class="visible(item.field || item.type) ? '' : 'hidden'"
-                dense
-                width="100%"
+              <label
+                :for="item.field"
+                v-text="item.title"
+              />
+            </v-col>
+            <v-col
+              cols="4"
+            >
+              <v-switch
+                v-if="item.type === 'switch'"
+                v-model="fields[item.field]"
+                class="float-right mt-0"
+                hide-details
+                @change="change(item.field)"
+              />
+              <v-text-field
+                v-if="item.type === 'text'"
+                v-model="fields[item.field]"
+                class="mt-0"
+                hide-details
+                :placeholder="item.placeHolder"
+                @change="change(item.field)"
+              />
+              <v-btn
+                v-if="item.button"
+                dark
+                :disabled="!showSave"
+                tile
+                small
+                width="100"
+                color="rgb(160,210,65)"
+                class="mt-0"
+                @click="method(item.method)"
+                v-text="item.button"
+              />
+              <span
+                v-if="item.items"
               >
-                <v-col
-                  v-if="item.title"
-                  cols="8"
-                  style="padding-top: 6px"
-                >
-                  <label
-                    :for="item.field"
-                    v-text="item.title"
-                  />
-                </v-col>
-                <v-col
-                  cols="4"
-                >
-                  <v-switch
-                    v-if="item.type === 'switch'"
-                    v-model="fields[item.field]"
-                    class="float-right mt-0"
-                    hide-details
-                    @change="change(item.field)"
-                  />
-                  <v-text-field
-                    v-if="item.type === 'text'"
-                    v-model="fields[item.field]"
-                    class="mt-0"
-                    hide-details
-                    :placeholder="item.placeHolder"
-                    @change="change(item.field)"
-                  />
-                  <v-btn
-                    v-if="item.button"
-                    dark
-                    :disabled="!showSave"
-                    tile
-                    small
-                    width="100"
-                    color="rgb(160,210,65)"
-                    class="mt-0"
-                    @click="method(item.method)"
-                    v-text="item.button"
-                  />
-                  <span
-                    v-if="item.items"
-                  >
-                    <v-btn
-                      v-for="btn in item.items"
-                      :key="btn.method"
-                      dark
-                      :disabled="!showSave"
-                      tile
-                      small
-                      width="100"
-                      :class="`mt-0 mr-2 ${btn.method}`"
-                      @click="method(btn.method)"
-                      v-text="btn.button"
-                    />
-                  </span>
-                </v-col>
-              </v-row>
-            </article>
-          </section>
-        </v-form>
-      </v-card-text>
-    </v-card>
-  </div>
+                <v-btn
+                  v-for="btn in item.items"
+                  :key="btn.method"
+                  dark
+                  :disabled="!showSave"
+                  tile
+                  small
+                  width="100"
+                  :class="`mt-0 mr-2 ${btn.method}`"
+                  @click="method(btn.method)"
+                  v-text="btn.button"
+                />
+              </span>
+            </v-col>
+          </v-row>
+        </article>
+      </section>
+    </v-form>
+  </v-card-text>
 </template>
 <script>
   import { sync } from 'vuex-pathify'
