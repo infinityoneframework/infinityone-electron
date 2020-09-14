@@ -4,18 +4,23 @@ import process from 'process'
 import store from '@/store'
 import PersistPlugin from '@/store/persist-plugin'
 import Utils from '@/utils/index'
+import i18n from '@/i18n'
 // import Logger from './logger-util'
 
 // const logger = new Logger({
 // 	file: 'config-util.log',
 // 	timestamp: true
 // });
+
+const { BrowserWindow } = require('electron')
+
 const DEBUG = false
 let instance = null
 // let rendererInstance = null
 // let mainInstance = null
 let dialog = null
 let app = null
+const $t = msg => i18n.tc(msg)
 
 const	userDataPath = () => {
 	return path.join(app.getPath('userData'), '/settings.json')
@@ -31,6 +36,8 @@ if (process.type === 'renderer') {
 	dialog = electron.dialog
 	app = electron.app
 }
+
+const appName = app.getName()
 
 // const getInstance = () => {
 //   if (process.type === 'renderer') {
@@ -111,6 +118,53 @@ class ConfigUtil {
 	saveUserData(config) {
 		fs.writeFileSync(userDataPath(), JSON.stringify(config, null, '\t'), { encoding: 'utf-8' })
 	}
+
+  clearAppDataConfirmation() {
+    return dialog.showMessageBox({
+      type: 'question',
+      buttons: [$t('Cancel'), $t('Yes, clear it')],
+      defaultId: 1,
+      message: $t('Are you sure?'),
+      detail: $t('This will remove all configuration, settings, and logs. This cannot be undone.')
+    })
+  }
+
+  resetAppSettings() {
+    // We save App's settings/configurations in following files
+    const settingFiles = ['window-state.json', 'domain.json', 'settings.json'];
+
+    this.clearAppDataConfirmation()
+      .then(({ response = 0 })  => {
+        if (this.debug) { console.log('clearAppDataConfirmation response', response)}
+        if (response === 1) {
+          settingFiles.forEach(settingFileName => {
+            const getSettingFilesPath = path.join(app.getPath('appData'), appName, settingFileName);
+            fs.access(getSettingFilesPath, error => {
+              if (error) {
+                console.log(error);
+              } else {
+                fs.unlink(getSettingFilesPath, () => {
+                  this.sendAction('clear-app-data');
+                });
+              }
+            });
+          });
+        }
+      })
+      .catch(error => {
+        alert(`error: ${error}`)
+      })
+
+  }
+  sendAction(action, ...params) {
+    const win = BrowserWindow.getAllWindows()[0];
+
+    if (process.platform === 'darwin') {
+      win.restore();
+    }
+
+    win.webContents.send(action, ...params);
+  }
 }
 
 export default new ConfigUtil()

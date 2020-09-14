@@ -310,6 +310,7 @@ app.on("ready", async () => {
 
   ipcMain.on('clear-app-settings', () => {
     if (debug) { console.log('[background] clear-app-settings') }
+
     global.mainWindowState.unmanage(mainWindow)
     app.relaunch()
     app.exit()

@@ -70,6 +70,7 @@
 <script>
   import { sync } from 'vuex-pathify'
   import config from '@/config'
+  import ConfigUtil from '@/utils/config-util'
 
   export default {
     name: 'GeneralSettings',
@@ -128,10 +129,9 @@
       method (action) {
         switch (action) {
           case 'reset':
-            console.log('reset clicked')
+            ConfigUtil.resetAppSettings()
             break
           case 'add':
-            console.log('add clicked')
             break
         }
       },

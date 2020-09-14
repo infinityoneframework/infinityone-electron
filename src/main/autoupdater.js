@@ -1,5 +1,7 @@
 import ConfigUtil from '@/utils/config-util'
+import i18n from '@/i18n'
 
+const $t = msg => i18n.t(msg)
 const { app, dialog } = require('electron')
 const { autoUpdater } = require('electron-updater')
 const isDev = require('electron-is-dev')
@@ -36,10 +38,10 @@ export function appUpdater() {
     // Ask user to update the app
     dialog.showMessageBox({
       type: 'question',
-      buttons: ['Install and Relaunch', 'Install Later'],
+      buttons: [$t('Install and Relaunch'), $t('Install Later')],
       defaultId: 0,
-      message: `A new update ${event.version} has been downloaded`,
-      detail: 'It will be installed the next time you restart the application'
+      message: $t('A new update {version} has been downloaded', { version: event.version }),
+      detail: $t('It will be installed the next time you restart the application')
     })
     .then(({ response = 1 })  => {
       if (response === 0) {

@@ -6,6 +6,11 @@
 
 * Fix Windows notifications
 
+### Features
+
+* Add confirmation to Reset App Data
+
+
 ### Known Issues
 
 * Linux not yet supported
