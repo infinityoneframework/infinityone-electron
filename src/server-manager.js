@@ -161,32 +161,32 @@ class ServerManager {
   }
 
   registerIpcs() {
-    const webviewListeners = {
-      'webview-reload': 'reload',
-      back: 'back',
-      focus: 'focus',
-      forward: 'forward',
-      zoomIn: 'zoomIn',
-      zoomOut: 'zoomOut',
-      zoomActualSize: 'zoomActualSize',
-      'log-out': 'logOut',
-      'tab-devtools': 'openDevTools'
-    };
+    // const webviewListeners = {
+    //   'webview-reload': 'reload',
+    //   back: 'back',
+    //   focus: 'focus',
+    //   forward: 'forward',
+    //   zoomIn: 'zoomIn',
+    //   zoomOut: 'zoomOut',
+    //   zoomActualSize: 'zoomActualSize',
+    //   'log-out': 'logOut',
+    //   'tab-devtools': 'openDevTools'
+    // };
 
-    for (const key in webviewListeners) {
-      ipcRenderer.on(key, () => {
-        try {
-          const activeWebview = this.tabs[this.activeTabIndex].webview;
-          if (activeWebview) {
-            activeWebview[webviewListeners[key]]();
-          }
-        }
-        catch (error) {
-          console.warn(error)
-          console.log('tabs, activeTabIndex', this.tabs, this.activeTabIndex)
-        }
-      });
-    }
+    // for (const key in webviewListeners) {
+    //   ipcRenderer.on(key, () => {
+    //     try {
+    //       const { webview: activeWebview} = this.tabs[this.activeTabIndex] || {}
+    //       if (activeWebview) {
+    //         activeWebview[webviewListeners[key]]()
+    //       }
+    //     }
+    //     catch (error) {
+    //       console.warn(error)
+    //       console.log('tabs, activeTabIndex', this.tabs, this.activeTabIndex)
+    //     }
+    //   });
+    // }
 
     ipcRenderer.on('open-settings', (event, settingNav) => {
       this.openSettings(settingNav);

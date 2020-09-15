@@ -12,8 +12,9 @@
         :class="enabledClass"
         style="height: 100%; width: 100%"
         :src="url"
-        preload="file://./preload.js"
+        :preload="getPreload()"
         disablewebsecurity
+        plugings
         remote-module
         partition="persist:webviewsession"
         webpreferences="allowRunningInsecureContent, javascript=yes"
@@ -25,11 +26,17 @@
 </template>
 <script>
   import { get, sync } from 'vuex-pathify'
+  import path from 'path'
 
+  const isDev = require('electron-is-dev')
   const name = 'VideoConference'
 
   export default {
     name: name,
+
+    data: () => ({
+      ready: false,
+    }),
 
     computed: {
       ...get('video/*'),
@@ -51,6 +58,10 @@
             this.$store.set(`video/${key}`, val)
           })
           this.videoActive = true
+          if (this.ready) {
+            const $el = document.getElementById('video-container')
+            $el.reload()
+          }
         }
       },
 
@@ -70,6 +81,17 @@
     },
 
     methods: {
+      getPreload () {
+        let preload
+
+        if (isDev) {
+          preload = path.join(process.cwd(), 'src', 'preload.js')
+        } else {
+          preload = path.join(__dirname, 'preload.js')
+        }
+        return `file://${preload}`
+      },
+
       closeHandler () {
         console.debug('closeHandler')
         const $el = document.querySelector('webview#video-container')
@@ -85,7 +107,22 @@
 
       domReady () {
         console.debug('domReady')
+        this.ready = true
       },
+
+      // startVideo () {
+      //   const $el = document.querySelector('webview#video-container')
+
+      //   const {
+      //     setupScreenSharingRender,
+      //   } = window.jitsiNodeAPI.jitsiMeetElectronUtils
+
+      //   initPopupsConfigurationRender(this._api);
+
+      //   const iframe = this._api.getIFrame();
+
+      //   setupScreenSharingRender(this._api);
+      // }
     },
   }
 </script>
