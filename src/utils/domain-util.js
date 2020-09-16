@@ -6,6 +6,7 @@ import PersistPlugin from '@/store/persist-plugin'
 import Utils from './index.js'
 import router from '@/router'
 import config from '@/config'
+import axios from 'axios'
 // import { deleteProp } from '../utils'
 // import { deleteProp, range } from '../utils'
 // import Logger from './logger-util'
@@ -37,6 +38,22 @@ const certsError = [
 const whitelistDomains = [
   'localhost',
 ]
+
+const get = (url, callback) => {
+  if (DEBUG) { console.warn('request', url) }
+  axios.get(url, {
+    timeout: 2000,
+    validStatus: status => status >= 200 && status < 400,
+  })
+    .then(response => {
+      if (DEBUG) { console.debug('got response', response) }
+      callback(null, response)
+    })
+    .catch(error => {
+      if (DEBUG) { console.warn('got error', error) }
+      callback(error, null)
+    })
+}
 
 // const logger = new Logger({
 // 	file: 'config-util.log',
@@ -185,10 +202,10 @@ class DomainUtil {
     }
 
     return new Promise((resolve, reject) => {
-      request(checkDomain, (error, response) => {
+      get(checkDomain, (error, response) => {
         const cert = error ? certsError.indexOf(error.toString()) >= 0 : -1
         const certsCheck = domain.indexOf(whitelistDomains) >= 0 || cert >= 0
-        if (!error && response.statusCode < 400 || certsCheck) {
+        if (!error && response.status < 400 || certsCheck) {
           resolve(response)
         } else {
           reject(error)
@@ -269,7 +286,7 @@ class DomainUtil {
 
   checkDomain(domain, silent = false) {
     if (this.debug) {
-      console.warn('checkDomain', domain, silent)
+      console.debug('checkDomain', domain, silent)
     }
     if (!silent && this.duplicateDomain(domain)) {
       // Do not check duplicate in silent mode
@@ -288,12 +305,12 @@ class DomainUtil {
     };
 
     return new Promise((resolve, reject) => {
-      request(checkDomain, (error, response) => {
+      get(checkDomain, (error, response) => {
 
         // make sure that error is a error or string not undefined
         // so validation does not throw error.
         error = error || '';
-        if (!error && response.statusCode < 400) {
+        if (!error && response.status < 400) {
           // Correct
           this.getServerSettings(domain).then(serverSettings => {
             resolve(serverSettings);
@@ -365,10 +382,12 @@ class DomainUtil {
 
     const serverSettingsUrl = domain + '/api/v1/settings.public' + query
     return new Promise((resolve, reject) => {
-      request(serverSettingsUrl, (error, response) => {
-        if (!error && response.statusCode === 200) {
+      get(serverSettingsUrl, (error, response) => {
+        if (!error && response.status === 200) {
           try {
-            const resp = JSON.parse(response.body)
+            const resp = response.data
+
+            if (DEBUG) { console.debug('getServerSettings resp', resp) }
 
             let data = {}
 
@@ -452,10 +471,10 @@ class DomainUtil {
     }
     const serverSettingsUrl = domain + '/api/v1/server_settings'
     return new Promise((resolve, reject) => {
-      request(serverSettingsUrl, (error, response) => {
-        if (!error && response.statusCode === 200) {
+      get(serverSettingsUrl, (error, response) => {
+        if (!error && response.status === 200) {
           try {
-            const data = JSON.parse(response.body)
+            const data = response.data
             if (this.debug) {
               console.warn('server settings legacy', data)
             }
