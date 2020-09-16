@@ -27,6 +27,12 @@ export const setAutoLaunch = autoLaunchValue => {
 
   if (autoLaunchOption) {
     OneAutoLauncher.enable()
+
+    OneAutoLauncher.isEnabled()
+      .then(isEnabled => {
+        if (isEnabled) { return }
+        OneAutoLauncher.enable()
+      })
   } else {
     OneAutoLauncher.disable()
   }
