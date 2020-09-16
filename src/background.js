@@ -365,8 +365,15 @@ app.on("ready", async () => {
     }
   })
 
-  ipcMain.on('toggleAudoLauncher', (event, AutoLaunchValue) => {
-    setAutoLaunch(AutoLaunchValue)
+  ipcMain.on('toggleAutoLauncher', (event, autoLaunchValue) => {
+    console.log('toggle setAutoLaunch', autoLaunchValue, setAutoLaunch)
+    try {
+      setAutoLaunch(autoLaunchValue)
+      console.log('after toggleSetAutoLaunch')
+    }
+    catch(error) {
+      console.log('error', error)
+    }
   })
 
   ipcMain.on('showConfig', () => {

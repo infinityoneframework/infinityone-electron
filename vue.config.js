@@ -17,6 +17,26 @@ module.exports = {
         asar: true,
         asarUnpack: ['**/*.node'],
 
+        linux: {
+          category: 'Chat;GNOME;GTK;Network;InstantMessaging',
+          packageCategory: 'GNOME;GTK;Network;InstantMessaging',
+          description: 'InfinityOne Desktop Client for Linux',
+          target: [
+            'zip',
+            'AppImage',
+            'rpm'
+          ],
+          maintainer: 'Stephen Pallen <steve.pallen@emetrotel.com>',
+          executableName: 'infinityone-desktop',
+          desktop: {
+            StartupWMClass: 'infinityOne.Chat',
+            MimeType: 'x-scheme-handler/infinityone',
+          },
+          artifactName: 'infinityone-${version}.${ext}',
+        },
+        rpm: {
+          artifactName: 'infinityone-${version}.${arch}.${ext}',
+        },
         mac: {
           darkModeSupport: true,
           hardenedRuntime: true,

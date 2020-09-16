@@ -38,6 +38,14 @@ You will need the following dependencies installed:
 sudo dnf install g++ libXtst-devel libpng-devel
 ```
 
+#### Snap
+
+```sh
+$ sudo dnf install snapd 
+$ sudo ln -s /var/lib/snapd/snap /snap
+$ sudo snap install snapcraft --classic
+```
+
 ### Other OSes
 
 Other developers run the app on Windows, macOS, and possibly other OSes.

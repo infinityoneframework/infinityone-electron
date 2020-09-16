@@ -61,6 +61,7 @@
   import { sync } from 'vuex-pathify'
   import config from '@/config'
   import ConfigUtil from '@/utils/config-util'
+  import { ipcRenderer } from 'electron'
 
   export default {
     name: 'GeneralSettings',
@@ -114,6 +115,7 @@
     methods: {
       change (field) {
         this.$store.set(`settings/config@${field}`, this.config[field])
+        this.method(field)
       },
 
       method (action) {
@@ -122,7 +124,14 @@
             ConfigUtil.resetAppSettings()
             break
           case 'add':
+            console.log('add action')
             break
+          case 'startAtLogin': 
+            console.log('startAtLogin clicked', this.config.startAtLogin)
+            ipcRenderer.send('toggleAutoLauncher', this.config.startAtLogin)
+            break
+          default:
+            console.log('default action', action)
         }
       },
 

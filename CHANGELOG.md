@@ -1,6 +1,16 @@
 # InfinityOne Desktop Client Changelog
 
-## 2.0.0-alpha7 (2020-09-04)
+## 2.0.0-alpha8 (2020-09-14)
+
+### Bug Fixes
+
+
+### Features 
+
+* Support Linux AppImages
+
+
+## 2.0.0-alpha7 (2020-09-14)
 
 ### Bug Fixes
 
