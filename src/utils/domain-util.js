@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 import process from 'process'
-import request from 'request'
 import PersistPlugin from '@/store/persist-plugin'
 import Utils from './index.js'
 import router from '@/router'
@@ -76,7 +75,7 @@ if (process.type === 'renderer') {
   app = electron.app
 }
 
-let defaultIconUrl = './assets/icon-server.png'
+let defaultIconUrl = require('@/assets/icon-server.png')
 
 if (process.platform === 'win32') {
   defaultIconUrl = path.normalize(defaultIconUrl)
@@ -146,11 +145,12 @@ class DomainUtil {
   addDomain(server) {
     return new Promise(resolve => {
       if (server.icon) {
-        this.saveServerIcon(server.icon).then(localIconUrl => {
-          server.icon = localIconUrl;
-          store.set('settings/addServer', server)
-          resolve();
-        });
+        this.saveServerIcon(server.icon)
+          .then(localIconUrl => {
+            server.icon = localIconUrl;
+            store.set('settings/addServer', server)
+            resolve();
+          });
       } else {
         server.icon = defaultIconUrl;
         store.set('settings/addServer', server)
@@ -176,6 +176,9 @@ class DomainUtil {
   checkDisabled() {
     const errors = store.get('settings/networkErrors')
     const servers = store.get('settings/servers')
+
+    if (this.debug) { console.debug('checkDisabled') }
+
     Object.keys(errors).forEach(serverId => {
       const server = servers.find(s => s.serverId === parseInt(serverId))
       if (!server) {
@@ -184,13 +187,17 @@ class DomainUtil {
       }
       this.fetchDomain(server.url)
         .then(() => {
+          if (this.debug) { console.debug('ckeckDisabled fetchDomain ok', server.url) }
+
           const errors = { ...store.get('settings/networkErrors') }
           delete errors[server.serverId]
           store.set('settings/networkErrors', errors)
 
           this.checkDomain(server.url, true)
         })
-        .catch(() => {})
+        .catch(error  => {
+          if (this.debug) { console.warn('ckeckDisabled fetchDomain error', server.url, error) }
+        })
     })
   }
 
@@ -312,18 +319,27 @@ class DomainUtil {
         error = error || '';
         if (!error && response.status < 400) {
           // Correct
-          this.getServerSettings(domain).then(serverSettings => {
-            resolve(serverSettings);
-          }, () => {
-            resolve(serverConf);
-          });
+
+          if (this.debug) { console.debug('no error, status: ', response.status) }
+
+          this.getServerSettings(domain)
+            .then(serverSettings => {
+              if (this.debug) { console.debug('getServerSettings response', serverSettings) }
+              resolve(serverSettings)
+            })
+            .catch(error => {
+              if (this.debug) { console.warn('getServerSettings error', error) }
+              resolve(serverConf)
+            })
         } else if (domain.indexOf(whitelistDomains) >= 0 || certsError.indexOf(error.toString()) >= 0) {
           if (silent) {
-            this.getServerSettings(domain).then(serverSettings => {
-              resolve(serverSettings);
-            }, () => {
-              resolve(serverConf);
-            });
+            this.getServerSettings(domain)
+              .then(serverSettings => {
+                resolve(serverSettings);
+              }) 
+              .catch(() => {
+                resolve(serverConf);
+              })
           } else {
             const certErrorMessage = `Do you trust certificate from ${domain}? \n ${error}`;
             const certErrorDetail = `The server you're connecting to is either someone impersonating the Infinity One server you entered, or the server you're trying to connect to is configured in an insecure way.
@@ -416,6 +432,8 @@ class DomainUtil {
 
               const icon = realmIcon.startsWith('/') ? data.Site_Url + realmIcon : realmIcon
 
+              if (this.debug) { console.debug('icons', icon, localUrl) }
+
               if (localUrl) {
                 const localRealmIcon = this.getLocalRealmIcon(localUrl, realmIcon)
                 local = {
@@ -424,6 +442,8 @@ class DomainUtil {
                   iconUrl: localRealmIcon,
                 }
               }
+
+              if (this.debug) { console.debug('about to resolve, local:', local) }
 
               resolve({
                 // Some InfinityOne Servers use absolute URL for server icon whereas others use relative URL
@@ -514,27 +534,57 @@ class DomainUtil {
       console.warn('saveServerIcon', url)
     }
     return new Promise(resolve => {
-      const filePath = this.generateFilePath(url);
-      const file = fs.createWriteStream(filePath);
+      const filePath = this.generateFilePath(url)
+
+      const ref = setTimeout(() => {
+        console.log('saveServerIcon timeout') 
+        resolve(defaultIconUrl)
+      }, 3000)
 
       try {
-        request(url).on('response', response => {
-          response.on('error', err => {
-            console.log(err);
-            resolve(defaultIconUrl);
-          });
-          response.pipe(file).on('finish', () => {
-            resolve(filePath);
-          });
-        }).on('error', err => {
-          console.log(err);
-          resolve(defaultIconUrl);
-        });
+        axios.request({
+          method: 'get',
+          url: url,
+          timeout: 2000,
+          validStatus: status => status >= 200 && status < 400,
+          responseType:'blob',
+        })
+          .then(response => {
+            // The following handles writing the blob to the local filesystem.
+
+            const fileReader = new FileReader()
+
+            fileReader.onload = function() {
+              fs.writeFile(filePath, Buffer.from(new Uint8Array(this.result)), error => {
+                if (error) {
+                  console.warn("error writing", filePath, error)
+                  clearTimeout(ref)
+                  resolve(defaultIconUrl)
+                  return
+                }
+                if (this.debug) { console.debug('file should be writtend') }
+
+                clearTimeout(ref)
+                resolve(filePath)
+                // resolve(defaultIconUrl)
+              })
+            }
+
+            fileReader.readAsArrayBuffer(response.data)
+          })
+          .catch(err => {
+            if (err) {
+              console.warn(err)
+              clearTimeout(ref)
+              resolve(defaultIconUrl)
+            }
+          })
       } catch (err) {
-        console.log(err);
-        resolve(defaultIconUrl);
+        clearTimeout(ref)
+        console.warn(err)
+        resolve(defaultIconUrl)
       }
-    });
+    })
   }
 
   updateSavedServer(server, index) {
@@ -548,13 +598,19 @@ class DomainUtil {
 
     this.verifyServer(server).then(newServerConf => {
       if (this.debug) { console.warn('verified server resp', newServerConf) }
-      this.saveServerIcon(newServerConf.icon).then(localIconUrl => {
-        if (this.debug) { console.debug('localIconUrl', localIconUrl) }
+      this.saveServerIcon(newServerConf.icon)
+        .then(localIconUrl => {
+          if (this.debug) { console.debug('localIconUrl', localIconUrl) }
 
-        newServerConf.icon = localIconUrl;
-        this.updateDomain(index, newServerConf);
-        this.reloadDB()
-      });
+          newServerConf.icon = localIconUrl;
+          this.updateDomain(index, newServerConf);
+          this.reloadDB()
+        })
+        .catch(error => {
+          console.warn('error saveing ServerIcon', newServerConf.icon, error)
+          this.updateDomain(index, newServerConf);
+          this.reloadDB()
+        })
     });
   }
 

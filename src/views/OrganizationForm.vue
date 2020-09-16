@@ -66,6 +66,7 @@
 
   const schemes = ['https://', 'http://']
   const name = 'OrganizationForm'
+  const debug = false
 
   export default {
     name: name,
@@ -101,9 +102,14 @@
 
     methods: {
       validate () {
+        if (debug) { console.debug('running validate...') }
         this.connect = this.$t('Connecting...')
         DomainUtil.checkDomain(this.url).then(serverConf => {
+          if (debug) { console.debug('checkDoamin response', serverConf) }
+
           DomainUtil.addDomain(serverConf).then(() => {
+            if (debug) { console.debug('addDomain ok') }
+
             const timeout = () => {
               const servers = this.list
               const newServer = servers[servers.length - 1]
@@ -112,10 +118,13 @@
             }
             setTimeout(timeout, 1)
           });
-        }, errorMessage => {
+        }) 
+        .catch(errorMessage => {
+          if (debug) { console.warn('addDomain error', errorMessage) }
+
           this.connect = this.$t('Connect');
           alert(errorMessage)
-        });
+        })
       },
 
       resetForm () {

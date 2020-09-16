@@ -77,6 +77,9 @@
         if (res) {
           this.$store.dispatch('settings/removeServer', index)
         }
+        if (this.list.length === 0) {
+          this.$router.push({ path: '/organization/new' })
+        }
       },
     },
   }

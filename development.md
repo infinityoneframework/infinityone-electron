@@ -30,6 +30,14 @@ $ sudo apt install git nodejs python build-essential libxext-dev libxtst-dev lib
 
 [nodesource-install]: https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
 
+### Fedora 
+
+You will need the following dependencies installed:
+
+```sh
+sudo dnf install g++ libXtst-devel libpng-devel
+```
+
 ### Other OSes
 
 Other developers run the app on Windows, macOS, and possibly other OSes.
