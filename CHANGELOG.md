@@ -1,11 +1,23 @@
 # InfinityOne Desktop Client Changelog
 
+## 2.0.0-alpha9 (2020-09-17)
+
+### Bug Fixes
+
+* Fix auto launch on mac
+
+### Features
+
+* Support Linux rpm installation
+* Redirect to new Organization after removing last Server
+
+
 ## 2.0.0-alpha8 (2020-09-14)
 
 ### Bug Fixes
 
 
-### Features 
+### Features
 
 * Support Linux AppImages
 
