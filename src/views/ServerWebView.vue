@@ -34,6 +34,7 @@
           @did-finish-load="didFinishLoad($event, server.serverId)"
           @did-start-loading="didStartLoading(server.serverId)"
           @did-stop-loading="didFinishLoad($event, server.serverId)"
+          @dom-ready="domReady($event, server.serverId)"
         />
       </template>
     </v-container>
@@ -174,6 +175,14 @@
           this.updateBadgeCount()
         }
       },
+      domReady (event, serverId) {
+        const $el = document.querySelector(`webview[data-server-id="${serverId}"]`)
+        if (debug) { console.log('domReady', serverId, $el) }
+
+        // Remove this once https://github.com/electron/electron/issues/14474 is fixed
+        $el.blur()
+        $el.focus()
+      },
 
       didFinishLoad (event, serverId) {
         if (this.networkErrors[serverId]) {
@@ -247,6 +256,7 @@
           })
         }
       },
+
     },
   }
 </script>

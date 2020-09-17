@@ -10,6 +10,7 @@
 * [I1-1364] - [FIX] Screen sharing not working
 * [I1-1963] - [FIX] Video conference does not always close flex panel
 * [I1-309] - [FIX] Desktop notification does not close
+* [I1-1374] - [FIX] Text cursor does not show in input boxes
 
 ### Features
 
