@@ -79,6 +79,21 @@ module.exports = {
                 'ia32',
               ],
             },
+            {
+              target: 'nsis',
+              arch: [
+                'x64',
+                'ia32',
+              ],
+            },
+            // msi isn't working
+            // {
+            //   target: 'msi',
+            //   arch: [
+            //     'x64',
+            //     'ia32',
+            //   ],
+            // },
           ],
           icon: 'build/icons/icon.ico',
           publisherName: 'E-Metrotel',
