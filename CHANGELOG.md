@@ -1,5 +1,23 @@
 # InfinityOne Desktop Client Changelog
 
+## 2.0.0-beta01 (2020-09-17)
+
+### Bug Fixes
+
+* Fix version label in help menu
+* [I1-1390] - [FIX] Opening uploaded photo links not working
+* [I1-1389] - [FIX] Auto linked urls not working
+* [I1-1364] - [FIX] Screen sharing not working
+* [I1-1963] - [FIX] Video conference does not always close flex panel
+* [I1-309] - [FIX] Desktop notification does not close
+
+### Features
+
+* [I1-1350] - [STORY] Support Linux
+* Detect and notify Linux RPM update available
+* [I1-76] - [STORY] Config pages should have back link
+* Support Remote Control
+
 ## 2.0.0-alpha9 (2020-09-17)
 
 ### Bug Fixes

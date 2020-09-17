@@ -126,5 +126,7 @@
   "Add": "Añadir",
   "Close": "Cerca",
   "Copy": "Copiar",
-  "Control": "Controlar"
+  "Control": "Controlar",
+  "InfinityOne Desktop update available": "Actualización de InfinityOne Desktop disponible",
+  "Please use the system's package manager to update {version}": "Utilice el administrador de paquetes del sistema para actualizar {version}"
 }
