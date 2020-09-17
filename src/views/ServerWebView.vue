@@ -44,6 +44,7 @@
   import { get, sync } from 'vuex-pathify'
   import SystemUtil from '@/utils/system-util'
   import path from 'path'
+  import { openExternalLink } from '@/utils/openExternalLink'
 
   const name = 'ServerWebView'
   const debug = false
@@ -142,6 +143,8 @@
         if (e.url.match(/video\?/)) {
           this.url = e.url.replace('video', 'desktop')
           this.$router.push({ path: '/video' })
+        } else {
+          openExternalLink(e.url)
         }
       },
 
