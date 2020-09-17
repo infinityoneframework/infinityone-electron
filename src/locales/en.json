@@ -126,5 +126,7 @@
   "Add": "Add",
   "Close": "Close",
   "Copy": "Copy",
-  "Control": "Control"
+  "Control": "Control",
+  "InfinityOne Desktop update available": "InfinityOne Desktop update available",
+  "Please use the system's package manager to update {version}": "Please use the system's package manager to update {version}"
 }

@@ -23,8 +23,8 @@ module.exports = {
           description: 'InfinityOne Desktop Client for Linux',
           target: [
             'zip',
-            'AppImage',
-            'rpm'
+            'rpm',
+            'AppImage'
           ],
           maintainer: 'Stephen Pallen <steve.pallen@emetrotel.com>',
           executableName: 'infinityone-desktop',

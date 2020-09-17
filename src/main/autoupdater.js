@@ -12,11 +12,11 @@ export function appUpdater() {
     return
   }
 
-  // if (process.platform === 'linux' && !process.env.APPIMAGE) {
-  // 	const { linuxUpdateNotification } = require('./linuxupdater')
-  // 	linuxUpdateNotification()
-  // 	return
-  // }
+  if (process.platform === 'linux' && !process.env.APPIMAGE) {
+    const { linuxUpdateNotification } = require('./linuxupdater')
+    linuxUpdateNotification()
+    return
+  }
 
   // Create Logs directory
   const LogsDir = `${app.getPath('userData')}/Logs`
@@ -43,21 +43,21 @@ export function appUpdater() {
       message: $t('A new update {version} has been downloaded', { version: event.version }),
       detail: $t('It will be installed the next time you restart the application')
     })
-    .then(({ response = 1 })  => {
-      if (response === 0) {
-        log.log('preparing to quit and install')
-        setTimeout(() => {
-          autoUpdater.quitAndInstall()
-          // force app to quit. This is just a workaround, ideally autoUpdater.quitAndInstall() should relaunch the app.
-          app.quit()
-        }, 1000)
-      } else {
-        log.log('user canceled prearing to quit and install', response)
-      }
-    })
-    .catch(error => {
-      console.warn('showDialog response error', error)
-    })
+      .then(({ response = 1 })  => {
+        if (response === 0) {
+          log.log('preparing to quit and install')
+          setTimeout(() => {
+            autoUpdater.quitAndInstall()
+            // force app to quit. This is just a workaround, ideally autoUpdater.quitAndInstall() should relaunch the app.
+            app.quit()
+          }, 1000)
+        } else {
+          log.log('user canceled prearing to quit and install', response)
+        }
+      })
+      .catch(error => {
+        console.warn('showDialog response error', error)
+      })
   })
 
   // Init for updates

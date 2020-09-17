@@ -1,15 +1,16 @@
+import Logger from '@/utils/logger-util'
+import { JsonDB } from 'node-json-db'
+
 const fs = require('fs')
 const path = require('path')
 const process = require('process')
 const remote =
 	process.type === 'renderer' ? require('electron').remote : require('electron')
-const JsonDB = require('node-json-db')
-// const Logger = require('./logger-util')
 
-// const logger = new Logger({
-// 	file: 'linux-update-util.log',
-// 	timestamp: true
-// })
+const logger = new Logger({
+	file: 'linux-update-util.log',
+	timestamp: true
+})
 
 /* To make the util runnable in both main and renderer process */
 const { dialog, app } = remote
@@ -61,10 +62,8 @@ class LinuxUpdateUtil {
 					'Error saving update notifications.',
 					'We encountered error while saving update notifications.'
 				)
-        // logger.error('Error while JSON parsing updates.json: ')
-				// logger.error(err)
-        console.error('Error while JSON parsing updates.json: ')
-				console.error(err)
+				logger.error('Error while JSON parsing updates.json: ')
+				logger.error(err)
 			}
 		}
 		this.db = new JsonDB(linuxUpdateJsonPath, true, true)

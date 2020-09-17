@@ -124,11 +124,13 @@ class AppMenu {
   getHelpSubmenu() {
     return [
       {
-        label: `${appName} ${$t('Desktop')} -'} v${app.getVersion()}`,
+        label: `${appName} ${$t('Desktop')} - v${app.getVersion()}`,
         enabled: false
       }, {
         label: $t('Show App Data'),
         click() {
+          // Remove this 
+          console.log("show app data path", app.getPath('userData'))
           shell.openPath(app.getPath('userData'));
         }
       }

@@ -13,6 +13,15 @@ import BadgeSettings from '@/components/badge-settings'
 import { setAutoLaunch } from '@/main/startup'
 import { appUpdater } from '@/main/autoupdater'
 import Logger from '@/utils/logger-util'
+import config from '@/config'
+
+const {
+    // initPopupsConfigurationMain,
+    // getPopupTarget,
+    // setupAlwaysOnTopMain,
+    setupPowerMonitorMain,
+    setupScreenSharingMain
+} = require('jitsi-meet-electron-utils');
 // const appMenu = require('@/main/menu')
 
 ConfigUtil.reloadDB()
@@ -137,6 +146,20 @@ async function createWindow() {
 
     // showOrMinimizeWindow(win)
   }
+
+  // initPopupsConfigurationMain(mainWindow)
+  // setupAlwaysOnTopMain(mainWindow)
+  setupPowerMonitorMain(win)
+  setupScreenSharingMain(win, config.appName)
+
+  // mainWindow.webContents.on('new-window', (event, url, frameName) => {
+  //     const target = getPopupTarget(url, frameName)
+
+  //     if (!target || target === 'browser') {
+  //         event.preventDefault()
+  //         openExternalLink(url)
+  //     }
+  // })
 
   win.on("closed", () => {
     // win = null
@@ -369,14 +392,16 @@ app.on("ready", async () => {
     console.log('toggle setAutoLaunch', autoLaunchValue, setAutoLaunch)
     try {
       setAutoLaunch(autoLaunchValue)
-      console.log('after toggleSetAutoLaunch')
+      // console.log('after toggleSetAutoLaunch')
     }
     catch(error) {
       console.log('error', error)
     }
   })
 
+  // This has been left in for testing...
   ipcMain.on('showConfig', () => {
+    console.log('showConfig called...')
     // console.log('betaUpdate', store.get('settings/config@betaUpdate'))
     // console.log('betaUpdate1', store.state.settings.config.betaUpdate)
     // console.log('getConfigItem', ConfigUtil.getConfigItem('betaUpdate'))
@@ -387,6 +412,30 @@ app.on("ready", async () => {
     // console.log('config keys', Object.keys(config))
     // console.log('config values', Object.values(config))
     // console.log('betaUpdate', config.betaUpdate)
+  })
+
+  // this can be used for debugging to run a system command. For example,
+  // in the main apps debug console, run the following:
+  //
+  // `require('electron').ipcRenderer.send('execjs', 'ls -l')
+  // 
+  // You should see the output of the command in the main process window.
+  ipcMain.on('execjs', (event, script) => {
+    console.log('execjs', script)
+    const { exec } = require('child_process')
+    exec(script, (error, stdout, stderr) => {
+      if (error) {
+        console.log(`error: ${error.message}`)
+        // return
+      }
+      if (stderr) {
+        console.log(`stderr: ${stderr}`)
+        // return
+      }
+      if (stdout) {
+        console.log(`stdout: '${stdout}'`)
+      }
+    })
   })
 })
 
