@@ -85,8 +85,8 @@
   }
 </script>
 <style lang="sass">
-  #app
-    border-top: 1px solid #ddd
+  // #app
+  //   border-top: 1px solid #ddd
 
   .app-panel.inactive
     display: none
