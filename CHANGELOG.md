@@ -1,5 +1,14 @@
 # InfinityOne Desktop Client Changelog
 
+## 2.0.0-beta02 (2020-09-xx)
+
+### Bug Fixes
+
+* [FIX] Settings page active tab indicator does not match contents
+
+### Features
+
+
 ## 2.0.0-beta01 (2020-09-17)
 
 ### Bug Fixes

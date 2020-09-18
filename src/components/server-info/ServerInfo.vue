@@ -123,6 +123,7 @@
   import DomainUtil from '@/utils/domain-util'
 
   const name = 'ServerInfo'
+  const defaultServer = { remote: {}, local: {} }
 
   export default {
     name: name,
@@ -131,9 +132,9 @@
       ServerRemote,
     },
     props: {
-      server: {
+      item: {
         type: Object,
-        required: true,
+        default: defaultServer,
       },
     },
 
@@ -141,6 +142,12 @@
       dialog: false,
       verifying: false
     }),
+
+    computed: {
+      server () {
+        return  this.item ? this.item : defaultServer
+      },
+    },
 
     methods: {
       icon (src) {

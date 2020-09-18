@@ -39,7 +39,7 @@
         <v-list-item-action>
           <v-row>
             <v-col>
-              <server-info :server="item" />
+              <server-info :item="item" />
             </v-col>
             <v-col>
               <v-btn

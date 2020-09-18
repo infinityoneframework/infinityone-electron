@@ -13,7 +13,7 @@
         <v-tab
           v-for="item in tabs"
           :key="item.name"
-          :value="item.component.name"
+          :value="component.name"
           @click.stop="setComponent(item.component)"
           v-text="item.title"
         />
@@ -43,7 +43,7 @@
   import { get } from 'vuex-pathify'
   import BackButton from '@/components/BackButton'
 
-  const debug = false
+  const debug = true
 
   export default {
     name: 'Settings',
@@ -59,7 +59,7 @@
           { name: 'organizations', title: this.$t('Organizations'), to: '/servers', component: Servers },
           { name: 'shortcuts', title: this.$t('Shortcuts'), to: '/shortcuts', component: Shortcuts },
         ],
-        tab: 'general',
+        tab: 0,
         component: General,
         value: General.name,
         change: false,
@@ -94,13 +94,16 @@
         if (this.debug) { console.log('component change', curr && curr.name, prev && prev.name, this.value) }
       }
     },
+    beforeCreate () {
+      window.setData = () => this
+    },
 
     beforeUpdate () {
       // this functionality is a little confusing. The following allows the required tab to be
       // shown when coming from a direct route. However, this function is interacting with the
       // correct functionality when a tab is clicked. So, this.value is true when a tab is clicked,
       // but not when we navigate from a route.
-      // Furthermore, this.value is used to ensure that the corret tab is marked active when
+      // Furthermore, this.value is used to ensure that the correct tab is marked active when
       // coming from a route.
       const history = this.$router.history
       const meta = history && history.pending && history.pending.meta
@@ -108,12 +111,15 @@
       if (this.debug) { console.log('beforeUpdate', meta, !this.change) }
 
       if (meta && meta.settings && !this.change) {
+        // coming from the router
         this.component = meta.component || General
         if (this.value !== this.component.name) {
           this.history.push(this.component.name)
         }
         this.value = this.component.name
+        this.tab = this.getTab(this.value)
       } else {
+        // tab clicked
         this.history = []
       }
       this.change = false
@@ -125,6 +131,24 @@
         this.value = component.name
         this.change = true
       },
+
+      getTab (componentName) {
+        return this.tabs.findIndex(tab => tab.component.name === componentName)
+      },
+
+      clickDebug () {
+        console.debug('debug clicked')
+        console.debug('-----------------------------')
+        console.debug('component.name', this.component.name)
+        console.debug('currentComponent.name', this.currentComponent.name)
+        console.debug('tab', this.tab)
+        console.debug('value', this.value)
+        console.debug('change', this.change )
+        console.debug('history', this.history )
+        console.debug('show', this.show)
+        console.debug('title', this.title)
+        console.debug('-----------------------------')
+      }
     },
   }
 </script>
