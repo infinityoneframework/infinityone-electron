@@ -73,6 +73,8 @@ const registerLocalResourceProtocol = () => {
   })
 }
 
+const gotTheLock = app.requestSingleInstanceLock()
+
 const showOrMinimizeWindow = win => {
   if (isDev) { return }
 
@@ -92,6 +94,11 @@ protocol.registerSchemesAsPrivileged([
 ])
 
 async function createWindow() {
+  if (!gotTheLock) {
+    app.quit()
+    return
+  } 
+
   const mainWindowState = windowStateKeeper({
 		defaultWidth: 1100,
 		defaultHeight: 720
@@ -191,13 +198,6 @@ async function createWindow() {
 
   win.once('ready-to-show', () => {
     if (debug) { console.log('ready-to-show') }
-		// if (ConfigUtil.getConfigItem('startMinimized')) {
-    //   if (debug) { console.log('[background] start minimized') }
-		// 	win.minimize()
-		// } else {
-    //   if (debug) { console.log('[background] start showing') }
-		// 	win.show()
-		// }
   })
 
   win.webContents.on('will-navigate', e => {
@@ -241,6 +241,16 @@ async function createWindow() {
 
   return win
 }
+
+app.on('second-instance', () => {
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) {
+      mainWindow.restore()
+    }
+
+    mainWindow.show()
+  }
+})
 
 app.on('certificate-error', (event, webContents, url, error, certificate, callback) => {
   event.preventDefault()
