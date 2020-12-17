@@ -72,7 +72,7 @@
           console.debug('closing tab', $el)
           this.videoClose = false
           if ($el) {
-            $el.executeJavaScript('window.close()')
+            $el.executeJavaScript('window.jitsiApi.executeCommand("hangup")')
           } else {
             console.warn('cannot find video container')
           }
@@ -109,20 +109,6 @@
         console.debug('domReady')
         this.ready = true
       },
-
-      // startVideo () {
-      //   const $el = document.querySelector('webview#video-container')
-
-      //   const {
-      //     setupScreenSharingRender,
-      //   } = window.jitsiNodeAPI.jitsiMeetElectronUtils
-
-      //   initPopupsConfigurationRender(this._api);
-
-      //   const iframe = this._api.getIFrame();
-
-      //   setupScreenSharingRender(this._api);
-      // }
     },
   }
 </script>
