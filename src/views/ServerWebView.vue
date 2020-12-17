@@ -127,6 +127,13 @@
     },
 
     methods: {
+      logOut (id) {
+        const $el = document.querySelector(`webview[data-server-id="${id}"]`)
+        if ($el) {
+          $el.executeJavaScript('const el = document.getElementById("logout"); if (el) el.click()')
+        }
+      },
+
       getPreload () {
         let preload
 

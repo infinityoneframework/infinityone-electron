@@ -220,6 +220,16 @@ class ServerManager {
       this.reloadView(servers)
     })
 
+    ipcRenderer.on('log-out', () => {
+      const current = store.get('settings/currentComponent')
+      if (current && current.methods && current.methods.logOut) {
+        const id = store.get('settings/activeServerId')
+        if (id) {
+          current.methods.logOut(id)
+        }
+      }
+    })
+
     ipcRenderer.on('render-taskbar-icon', (event, messageCount) => {
       console.log('render-taskbar-icon', messageCount)
       function createOverlayIcon(messageCount) {

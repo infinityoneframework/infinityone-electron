@@ -1,10 +1,13 @@
 # InfinityOne Desktop Client Changelog
 
-## 2.0.0-beta02 (2020-09-xx)
+## 2.0.0-beta02 (2020-12-18)
 
 ### Bug Fixes
 
 * [FIX] Settings page active tab indicator does not match contents
+* [I1-1525] - [FIX] support logout menu command
+* [I1-1440] - [FIX] Don't start app if already running
+* [I1-1419] - [FIX] stop video camera when ending video with red button
 
 ### Features
 
