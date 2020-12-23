@@ -31,5 +31,4 @@ class BaseNotification extends NativeNotification {
 	}
 }
 
-// export default BaseNotification
 module.exports = BaseNotification

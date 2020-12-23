@@ -1,4 +1,7 @@
 import fs from 'fs'
+import i18n from '@/i18n'
+
+const $t = msg => i18n.tc(msg)
 
 const deleteProp = (object, prop) => Object.keys(object).reduce((obj, key) => {
   console.log('object type', typeof object, typeof obj)
@@ -13,15 +16,15 @@ const range = (start, end) => { return (new Array(end - start + 1)).fill(null).m
 const errorBoxes = {
   domain: (dialog) => {
     dialog.showErrorBox(
-      'Error saving new server',
-      'There seems to be error while saving new server, ' +
-      'you may have to re-add your previous servers back.'
-    );
+      $t('Error saving new server'),
+      $t('There seems to be error while saving new server, ' +
+      'you may have to re-add your previous servers back.')
+    )
   },
   settings: (dialog) => {
     dialog.showErrorBox(
-      'Error saving settings',
-      'We encountered error while saving current settings.'
+      $t('Error saving settings'),
+      $t('We encountered error while saving current settings.')
     )
   }
 }
@@ -31,9 +34,9 @@ const verifyUserData = (path, which, dialog) => {
     return JSON.parse(file)
   } catch (err) {
     if (fs.existsSync(path)) {
-      fs.unlinkSync(path);
+      fs.unlinkSync(path)
       errorBoxes[which](dialog)
-      console.error(`Error while JSON parsing ${which}.json: `, err);
+      console.error(`Error while JSON parsing ${which}.json: `, err)
     }
     return false
   }
@@ -59,7 +62,7 @@ const defaultSettings = {
   proxyBypass: '',
 }
 
-export default { 
+export default {
   deleteProp,
   range,
   verifyUserData,

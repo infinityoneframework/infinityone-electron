@@ -1,4 +1,5 @@
 import fs from 'fs'
+
 const NodeConsole = require('console').Console
 const isDev = require('electron-is-dev')
 const { initSetUp } = require('./default-util')
@@ -30,7 +31,6 @@ class Logger {
 
 		const fileStream = fs.createWriteStream(file, { flags: 'a' })
 		const nodeConsole = new NodeConsole(fileStream)
-		// const nodeConsole = new NodeConsole(fileStream)
 
 		this.nodeConsole = nodeConsole
 		this.timestamp = timestamp
@@ -82,4 +82,5 @@ class Logger {
 		return timestamp
 	}
 }
+
 export default Logger

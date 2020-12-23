@@ -5,19 +5,11 @@ import store from '@/store'
 import PersistPlugin from '@/store/persist-plugin'
 import Utils from '@/utils/index'
 import i18n from '@/i18n'
-// import Logger from './logger-util'
-
-// const logger = new Logger({
-// 	file: 'config-util.log',
-// 	timestamp: true
-// });
 
 const { BrowserWindow } = require('electron')
 
 const DEBUG = false
 let instance = null
-// let rendererInstance = null
-// let mainInstance = null
 let dialog = null
 let app = null
 const $t = msg => i18n.tc(msg)
@@ -38,13 +30,6 @@ if (process.type === 'renderer') {
 }
 
 const appName = app.getName()
-
-// const getInstance = () => {
-//   if (process.type === 'renderer') {
-// 		return rendererInstance
-// 	}
-// 	return mainInstance
-// }
 
 class ConfigUtil {
 	constructor() {
@@ -131,24 +116,24 @@ class ConfigUtil {
 
   resetAppSettings() {
     // We save App's settings/configurations in following files
-    const settingFiles = ['window-state.json', 'domain.json', 'settings.json'];
+    const settingFiles = ['window-state.json', 'domain.json', 'settings.json']
 
     this.clearAppDataConfirmation()
       .then(({ response = 0 })  => {
         if (this.debug) { console.log('clearAppDataConfirmation response', response)}
         if (response === 1) {
           settingFiles.forEach(settingFileName => {
-            const getSettingFilesPath = path.join(app.getPath('appData'), appName, settingFileName);
+            const getSettingFilesPath = path.join(app.getPath('appData'), appName, settingFileName)
             fs.access(getSettingFilesPath, error => {
               if (error) {
-                console.log(error);
+                console.log(error)
               } else {
                 fs.unlink(getSettingFilesPath, () => {
-                  this.sendAction('clear-app-data');
-                });
+                  this.sendAction('clear-app-data')
+                })
               }
-            });
-          });
+            })
+          })
         }
       })
       .catch(error => {
@@ -157,13 +142,13 @@ class ConfigUtil {
 
   }
   sendAction(action, ...params) {
-    const win = BrowserWindow.getAllWindows()[0];
+    const win = BrowserWindow.getAllWindows()[0]
 
     if (process.platform === 'darwin') {
-      win.restore();
+      win.restore()
     }
 
-    win.webContents.send(action, ...params);
+    win.webContents.send(action, ...params)
   }
 }
 

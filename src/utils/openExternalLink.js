@@ -1,8 +1,7 @@
-const { shell } = require('electron');
-const url = require('url');
+const { shell } = require('electron')
+const url = require('url')
 
-
-const protocolRegex = /^https?:/i;
+const protocolRegex = /^https?:/i
 
 /**
  * Opens the given link in an external browser.
@@ -11,15 +10,15 @@ const protocolRegex = /^https?:/i;
  * @returns {void}
  */
 export function openExternalLink(link) {
-    let u;
+    let u
 
     try {
-        u = url.parse(link);
+        u = url.parse(link)
     } catch (e) {
-        return;
+        return
     }
 
     if (protocolRegex.test(u.protocol)) {
-        shell.openExternal(link);
+        shell.openExternal(link)
     }
 }

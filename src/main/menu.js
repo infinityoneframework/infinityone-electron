@@ -1,14 +1,10 @@
-'use strict';
+'use strict'
 import ConfigUtil from '@/utils/config-util'
 import process from 'process'
 import i18n from '@/i18n'
 
-// const os = require('os');
-// const path = require('path');
-// const { app, shell, BrowserWindow, Menu } = require('electron');
-const { app, shell, BrowserWindow, Menu } = require('electron');
-// const fs = require('fs-extra');
-const appName = app.getName();
+const { app, shell, BrowserWindow, Menu } = require('electron')
+const appName = app.getName()
 const debug = false
 
 const $t = msg => i18n.tc(msg)
@@ -20,7 +16,7 @@ class AppMenu {
       accelerator: process.platform === 'darwin' ? 'Command+Left' : 'Alt+Left',
       click(item, focusedWindow) {
         if (focusedWindow) {
-          AppMenu.sendAction('back');
+          AppMenu.sendAction('back')
         }
       }
     }, {
@@ -28,10 +24,10 @@ class AppMenu {
       accelerator: process.platform === 'darwin' ? 'Command+Right' : 'Alt+Right',
       click(item, focusedWindow) {
         if (focusedWindow) {
-          AppMenu.sendAction('forward');
+          AppMenu.sendAction('forward')
         }
       }
-    }];
+    }]
   }
 
   getViewSubmenu() {
@@ -40,7 +36,7 @@ class AppMenu {
       accelerator: 'CommandOrControl+R',
       click(item, focusedWindow) {
         if (focusedWindow) {
-          AppMenu.sendAction('reload-current-viewer');
+          AppMenu.sendAction('reload-current-viewer')
         }
       }
     }, {
@@ -48,7 +44,7 @@ class AppMenu {
       accelerator: 'CommandOrControl+Shift+R',
       click(item, focusedWindow) {
         if (focusedWindow) {
-          AppMenu.sendAction('hard-reload');
+          AppMenu.sendAction('hard-reload')
         }
       }
     }, {
@@ -61,7 +57,7 @@ class AppMenu {
       accelerator: process.platform === 'darwin' ? 'Command+Plus' : 'Control+=',
       click(item, focusedWindow) {
         if (focusedWindow) {
-          AppMenu.sendAction('zoomIn');
+          AppMenu.sendAction('zoomIn')
         }
       }
     }, {
@@ -69,7 +65,7 @@ class AppMenu {
       accelerator: 'CommandOrControl+-',
       click(item, focusedWindow) {
         if (focusedWindow) {
-          AppMenu.sendAction('zoomOut');
+          AppMenu.sendAction('zoomOut')
         }
       }
     }, {
@@ -77,7 +73,7 @@ class AppMenu {
       accelerator: 'CommandOrControl+0',
       click(item, focusedWindow) {
         if (focusedWindow) {
-          AppMenu.sendAction('zoomActualSize');
+          AppMenu.sendAction('zoomActualSize')
         }
       }
     }, {
@@ -86,7 +82,7 @@ class AppMenu {
       label: $t('Toggle Tray Icon'),
       click(item, focusedWindow) {
         if (focusedWindow) {
-          focusedWindow.webContents.send('toggletray');
+          focusedWindow.webContents.send('toggletray')
         }
       }
     }, {
@@ -96,9 +92,9 @@ class AppMenu {
         if (debug) { console.log('toggle sidebar') }
 
         if (focusedWindow) {
-          const newValue = !ConfigUtil.getConfigItem('showSidebar');
-          focusedWindow.webContents.send('toggle-sidebar', newValue);
-          ConfigUtil.setConfigItem('showSidebar', newValue);
+          const newValue = !ConfigUtil.getConfigItem('showSidebar')
+          focusedWindow.webContents.send('toggle-sidebar', newValue)
+          ConfigUtil.setConfigItem('showSidebar', newValue)
         }
       }
     }, {
@@ -106,7 +102,7 @@ class AppMenu {
       accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
       click(item, focusedWindow) {
         if (focusedWindow) {
-          focusedWindow.webContents.toggleDevTools();
+          focusedWindow.webContents.toggleDevTools()
         }
       }
     }, {
@@ -115,10 +111,10 @@ class AppMenu {
       click(item, focusedWindow) {
         if (focusedWindow) {
           focusedWindow.webContents.send('open-dev-tools')
-          AppMenu.sendAction('tab-devtools');
+          AppMenu.sendAction('tab-devtools')
         }
       }
-    }];
+    }]
   }
 
   getHelpSubmenu() {
@@ -129,12 +125,12 @@ class AppMenu {
       }, {
         label: $t('Show App Data'),
         click() {
-          // Remove this 
+          // Remove this
           console.log("show app data path", app.getPath('userData'))
-          shell.openPath(app.getPath('userData'));
+          shell.openPath(app.getPath('userData'))
         }
       }
-    ];
+    ]
   }
 
   getWindowSubmenu(tabs, activeTabIndex) {
@@ -144,12 +140,12 @@ class AppMenu {
     }, {
       label: $t('Close Window'),
       role: 'close'
-    }];
+    }]
 
     if (tabs.length > 0) {
       initialSubmenu.push({
         type: 'separator'
-      });
+      })
       for (let i = 0; i < tabs.length; i++) {
         initialSubmenu.push({
           label: tabs[i].alias,
@@ -157,19 +153,19 @@ class AppMenu {
           checked: i === activeTabIndex,
           click(item, focusedWindow) {
             if (focusedWindow) {
-              AppMenu.sendAction('switch-server-tab', tabs[i].serverId);
+              AppMenu.sendAction('switch-server-tab', tabs[i].serverId)
             }
           },
           type: 'checkbox'
-        });
+        })
       }
     }
 
-    return initialSubmenu;
+    return initialSubmenu
   }
 
   getDarwinTpl(props) {
-    const { tabs, activeTabIndex } = props;
+    const { tabs, activeTabIndex } = props
 
     return [{
       label: `${app.getName()}`,
@@ -177,7 +173,7 @@ class AppMenu {
         label: $t('About Infinity One'),
         click(item, focusedWindow) {
           if (focusedWindow) {
-            AppMenu.sendAction('open-about');
+            AppMenu.sendAction('open-about')
           }
         }
       }, {
@@ -187,7 +183,7 @@ class AppMenu {
         accelerator: 'Cmd+,',
         click(item, focusedWindow) {
           if (focusedWindow) {
-            AppMenu.sendAction('open-settings');
+            AppMenu.sendAction('open-settings')
           }
         }
       }, {
@@ -195,7 +191,7 @@ class AppMenu {
         accelerator: 'Cmd+Shift+K',
         click(item, focusedWindow) {
           if (focusedWindow) {
-            AppMenu.sendAction('open-shortcuts');
+            AppMenu.sendAction('open-shortcuts')
           }
         }
       }, {
@@ -204,14 +200,14 @@ class AppMenu {
         label: $t('Reset App Settings'),
         accelerator: 'Command+Shift+D',
         click() {
-          ConfigUtil.resetAppSettings();
+          ConfigUtil.resetAppSettings()
         }
       }, {
         label: $t('Log Out'),
         accelerator: 'Cmd+L',
         click(item, focusedWindow) {
           if (focusedWindow) {
-            AppMenu.sendAction('log-out');
+            AppMenu.sendAction('log-out')
           }
         }
       }, {
@@ -278,11 +274,11 @@ class AppMenu {
     }, {
       role: 'help',
       submenu: this.getHelpSubmenu()
-    }];
+    }]
   }
 
   getOtherTpl(props) {
-    const { tabs, activeTabIndex } = props;
+    const { tabs, activeTabIndex } = props
 
     return [{
       label: $t('File'),
@@ -290,7 +286,7 @@ class AppMenu {
         label: $t('About Infinity One'),
         click(item, focusedWindow) {
           if (focusedWindow) {
-            AppMenu.sendAction('open-about');
+            AppMenu.sendAction('open-about')
           }
         }
       }, {
@@ -300,7 +296,7 @@ class AppMenu {
         accelerator: 'Ctrl+,',
         click(item, focusedWindow) {
           if (focusedWindow) {
-            AppMenu.sendAction('open-settings');
+            AppMenu.sendAction('open-settings')
           }
         }
       }, {
@@ -310,7 +306,7 @@ class AppMenu {
         accelerator: 'Ctrl+Shift+K',
         click(item, focusedWindow) {
           if (focusedWindow) {
-            AppMenu.sendAction('shortcut');
+            AppMenu.sendAction('shortcut')
           }
         }
       }, {
@@ -319,14 +315,14 @@ class AppMenu {
         label: $t('Reset App Settings'),
         accelerator: 'Ctrl+Shift+D',
         click() {
-          ConfigUtil.resetAppSettings();
+          ConfigUtil.resetAppSettings()
         }
       }, {
         label: $t('Log Out'),
         accelerator: 'Ctrl+L',
         click(item, focusedWindow) {
           if (focusedWindow) {
-            AppMenu.sendAction('log-out');
+            AppMenu.sendAction('log-out')
           }
         }
       }, {
@@ -379,24 +375,26 @@ class AppMenu {
     }, {
       role: 'help',
       submenu: this.getHelpSubmenu()
-    }];
+    }]
   }
 
   static sendAction(action, ...params) {
-    const win = BrowserWindow.getAllWindows()[0];
+    const win = BrowserWindow.getAllWindows()[0]
 
     if (process.platform === 'darwin') {
-      win.restore();
+      win.restore()
     }
 
-    win.webContents.send(action, ...params);
+    win.webContents.send(action, ...params)
   }
 
   setMenu(props) {
-    const tpl = process.platform === 'darwin' ? this.getDarwinTpl(props) : this.getOtherTpl(props);
-    const menu = Menu.buildFromTemplate(tpl);
-    Menu.setApplicationMenu(menu);
+    const tpl = process.platform === 'darwin' ?
+      this.getDarwinTpl(props) : this.getOtherTpl(props)
+
+    const menu = Menu.buildFromTemplate(tpl)
+    Menu.setApplicationMenu(menu)
   }
 }
 
-export default new AppMenu();
+export default new AppMenu()

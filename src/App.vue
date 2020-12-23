@@ -47,7 +47,13 @@
 
     computed: {
       serverId: get('settings/activeServerId'),
-      ...get('settings', ['currentComponent', 'settingsDrawer', 'servers', 'activeServerIndex', 'networkErrors']),
+      ...get('settings', [
+        'currentComponent',
+        'settingsDrawer',
+        'servers',
+        'activeServerIndex',
+        'networkErrors',
+      ]),
       ...sync('settings', ['videoActive', 'lastServerId']),
     },
 
@@ -77,24 +83,15 @@
         }
       },
     },
-
-    // beforeMount () {
-    //   window.myThis = this
-    // },
-
   }
 </script>
 <style lang="sass">
-  // #app
-  //   border-top: 1px solid #ddd
-
   .app-panel.inactive
     display: none
 
   .settings-page
     background-color: #eee
     width: 100%
-    // margin-left: 60px
 
   .main-content
     background-color: #eee

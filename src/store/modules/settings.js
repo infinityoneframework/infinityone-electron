@@ -1,9 +1,6 @@
 import { make } from 'vuex-pathify'
 import Utils from '@/utils/index'
-// import domainUtil from '@/utils/domain-util'
 
-// const saveUserData = list => list
-// const saveUserData = list => domainUtil.saveUserDataDomains(list)
 const debug = false
 
 const state = {

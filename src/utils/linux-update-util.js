@@ -1,6 +1,8 @@
 import Logger from '@/utils/logger-util'
 import { JsonDB } from 'node-json-db'
+import i18n from '@/i18n'
 
+const $t = (msg, ...args) => i18n.t(msg, ...args)
 const fs = require('fs')
 const path = require('path')
 const process = require('process')
@@ -59,8 +61,8 @@ class LinuxUpdateUtil {
 			if (fs.existsSync(linuxUpdateJsonPath)) {
 				fs.unlinkSync(linuxUpdateJsonPath)
 				dialog.showErrorBox(
-					'Error saving update notifications.',
-					'We encountered error while saving update notifications.'
+					$t('Error saving update notifications.'),
+					$t('We encountered error while saving update notifications.')
 				)
 				logger.error('Error while JSON parsing updates.json: ')
 				logger.error(err)

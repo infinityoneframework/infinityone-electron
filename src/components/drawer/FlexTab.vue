@@ -46,9 +46,11 @@
         return name => {
           switch (name) {
             case 'add-server':
-              return this.currentComponent && this.currentComponent.name === 'OrganizationForm' ? 'active' : ''
+              return this.currentComponent &&
+                this.currentComponent.name === 'OrganizationForm' ? 'active' : ''
             case 'settings':
-              return this.currentComponent && this.currentComponent.name === 'Settings' ? 'active' : ''
+              return this.currentComponent &&
+                this.currentComponent.name === 'Settings' ? 'active' : ''
           }
           return ''
         }
@@ -57,7 +59,6 @@
 
     methods: {
       click (item) {
-        console.debug('item', item)
         const el = document.querySelector('webview.enabled')
         if (item.id === 'reload') {
           if (el) {

@@ -48,11 +48,12 @@ export function appUpdater() {
           log.log('preparing to quit and install')
           setTimeout(() => {
             autoUpdater.quitAndInstall()
-            // force app to quit. This is just a workaround, ideally autoUpdater.quitAndInstall() should relaunch the app.
+            // force app to quit. This is just a workaround, ideally
+            // autoUpdater.quitAndInstall() should relaunch the app.
             app.quit()
           }, 1000)
         } else {
-          log.log('user canceled prearing to quit and install', response)
+          log.log('user canceled preparing to quit and install', response)
         }
       })
       .catch(error => {

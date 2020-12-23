@@ -2,17 +2,11 @@
 
 const { remote} = require('electron')
 
-// import ConfigUtil from '@/utils/config-util'
 const DefaultNotification = require('./default-notification')
-// import { appId, setNotificationCallback2 } from './helpers'
  const Helpers = require('./helpers')
-
-// const { appId, setNotificationCallback2, setNotificationCallback } = require('./helpers')
 
 // From https://github.com/felixrieseberg/electron-windows-notifications#appusermodelid
 // On windows 8 we have to explicitly set the appUserModelId otherwise notification won't work.
-
-// const debug = false
 
 const { app } = remote
 

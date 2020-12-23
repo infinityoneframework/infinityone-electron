@@ -31,7 +31,9 @@ const checkForUpdatesRpm = () => {
   exec('dnf check-update infinityone', (error, stdout) => {
     if (stdout) {
       try {
-        const version = stdout.split('\n').find(item => item.startsWith('infinityone')).split(' ').filter(item => item !== '')[1]
+        const version = stdout.split('\n').find(item =>
+          item.startsWith('infinityone')).split(' ').filter(item => item !== '')[1]
+
         if (version) {
           logger.log(`RPM update available ${version}`)
           updateAvailableMessage(version)
@@ -72,7 +74,10 @@ export function linuxUpdateNotification() {
       if (semver.gt(latestVersion, app.getVersion())) {
         const notified = LinuxUpdateUtil.getUpdateItem(latestVersion)
         if (notified === null) {
-          new Notification({title: 'Infinity One Update', body: 'A new version ' + latestVersion + ' is available. Please update using your package manager.'}).show()
+          new Notification({
+            title: $t('InfinityOne Update'),
+            body: $t('A new version {latestVersion} is available. Please update using your package manager.')
+          }).show()
           LinuxUpdateUtil.setUpdateItem(latestVersion, true)
         }
       }

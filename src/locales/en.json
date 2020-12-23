@@ -128,5 +128,9 @@
   "Copy": "Copy",
   "Control": "Control",
   "InfinityOne Desktop update available": "InfinityOne Desktop update available",
-  "Please use the system's package manager to update {version}": "Please use the system's package manager to update {version}"
+  "Please use the system's package manager to update {version}": "Please use the system's package manager to update {version}",
+  "Error: self signed certificate": "Error: self signed certificate",
+  "Error: unable to verify the first certificate": "Error: unable to verify the first certificate",
+  "Error: unable to get local issuer certificate": "Error: unable to get local issuer certificate",
+  "Do you trust certificate from {domain}? ": "Do you trust certificate from {domain}? "
 }
