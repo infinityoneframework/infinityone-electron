@@ -4,9 +4,6 @@ import {
 
 const state = {
   list: [
-    { url: "test.com", name: "Test" },
-    { url: "other.com", name: "Other" },
-    { url: "last.com", name: "Last" },
   ],
 }
 

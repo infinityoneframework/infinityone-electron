@@ -170,9 +170,10 @@
       pageTitleUpdate (e) {
         if (e.title && e.title !== '') {
           const serverId = e.target.getAttribute('data-server-id')
-          // console.warn('pageTitleUpdate', e.title, serverId)
           const match = e.title.match(/\((\d+)\)/)
+
           let count = 0
+
           if (match) {
             count = parseInt(match[1])
           }
@@ -184,7 +185,7 @@
       },
       domReady (event, serverId) {
         const $el = document.querySelector(`webview[data-server-id="${serverId}"]`)
-        if (debug) { console.log('domReady', serverId, $el) }
+        if (debug) { console.debug('domReady', serverId, $el) }
 
         // Remove this once https://github.com/electron/electron/issues/14474 is fixed
         $el.blur()
@@ -193,7 +194,7 @@
 
       didFinishLoad (event, serverId) {
         if (this.networkErrors[serverId]) {
-          console.debug('network errors')
+          console.log('network errors')
           return
         }
         this.setLoaded(serverId)
@@ -246,9 +247,10 @@
       },
 
       setNotifierItem ($el, item, value) {
-        $el.executeJavaScript(`if (window.OneChat && window.OneChat.notifier) { window.OneChat.notifier.${item} = ${value} }`)
+        $el.executeJavaScript(`if (window.OneChat && window.OneChat.notifier) ` +
+          `{ window.OneChat.notifier.${item} = ${value} }`)
           .then(result => {
-            if (debug) { console.log('done', item, result) }
+            if (debug) { console.debug('done', item, result) }
           })
           .catch(error => {
             console.warn('error', $el, item, error)
@@ -263,7 +265,6 @@
           })
         }
       },
-
     },
   }
 </script>
@@ -287,4 +288,3 @@
         background-position: center !important
         z-index: 100
 </style>
-

@@ -27,7 +27,6 @@ class SystemUtil {
   }
 
   reload () {
-    console.log('reload...')
     ipcRenderer.send('reload-app')
   }
 

@@ -43,7 +43,7 @@
   import { get } from 'vuex-pathify'
   import BackButton from '@/components/BackButton'
 
-  const debug = true
+  const debug = false
 
   export default {
     name: 'Settings',
@@ -81,17 +81,19 @@
       },
       title () {
         const tab = this.tabs.find(item => item.component.name === this.value)
-        if (this.debug) { console.log('title...', tab, this.value) }
+        if (this.debug) { console.debug('title...', tab, this.value) }
         return tab ? this.titles[tab.name] : ''
       },
     },
 
     watch: {
       $route (to, from) {
-        if (this.debug) { console.log('route change', to, from) }
+        if (this.debug) { console.debug('route change', to, from) }
       },
       component (curr, prev) {
-        if (this.debug) { console.log('component change', curr && curr.name, prev && prev.name, this.value) }
+        if (this.debug) {
+          console.debug('component change', curr && curr.name, prev && prev.name, this.value)
+        }
       }
     },
     beforeCreate () {
@@ -108,7 +110,7 @@
       const history = this.$router.history
       const meta = history && history.pending && history.pending.meta
 
-      if (this.debug) { console.log('beforeUpdate', meta, !this.change) }
+      if (this.debug) { console.debug('beforeUpdate', meta, !this.change) }
 
       if (meta && meta.settings && !this.change) {
         // coming from the router
@@ -135,20 +137,6 @@
       getTab (componentName) {
         return this.tabs.findIndex(tab => tab.component.name === componentName)
       },
-
-      clickDebug () {
-        console.debug('debug clicked')
-        console.debug('-----------------------------')
-        console.debug('component.name', this.component.name)
-        console.debug('currentComponent.name', this.currentComponent.name)
-        console.debug('tab', this.tab)
-        console.debug('value', this.value)
-        console.debug('change', this.change )
-        console.debug('history', this.history )
-        console.debug('show', this.show)
-        console.debug('title', this.title)
-        console.debug('-----------------------------')
-      }
     },
   }
 </script>
@@ -156,4 +144,3 @@
   .settings-card, .settings-card .v-card__title, .settings-card .v-card__text
     background-color: #eee
 </style>
-

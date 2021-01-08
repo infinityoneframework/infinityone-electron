@@ -47,6 +47,7 @@
   import DomainUtil from '@/utils/domain-util'
 
   const name = 'NetworkError'
+  const debug = false
 
   export default {
     name: name,
@@ -73,7 +74,6 @@
             clearTimeout(this.timerRef)
             this.timerRef = null
             if (this.isActive) {
-              console.warn('opening Doamin')
               DomainUtil.openDomain()
             }
           }
@@ -99,14 +99,14 @@
               this.startTimer()
               DomainUtil.checkDisabled()
             } else {
-              console.debug('no errors', this.networkErrors)
+              if (debug) { console.debug('no errors', this.networkErrors) }
             }
           }, DomainUtil.serverRetryTicks(this.retryCount))
         }
       },
 
       reconnect () {
-        console.debug('click reconnect')
+        if (debug) { console.debug('click reconnect') }
         ipcRenderer.send('forward-message', 'reload-viewer', Object.keys(this.networkErrors))
       },
     },
@@ -118,4 +118,3 @@
     margin: 20px 0
     font-weight: bold
 </style>
-

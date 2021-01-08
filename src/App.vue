@@ -42,9 +42,6 @@
       NetworkError,
     },
 
-    data: () => ({
-    }),
-
     computed: {
       serverId: get('settings/activeServerId'),
       ...get('settings', [
@@ -85,6 +82,7 @@
     },
   }
 </script>
+
 <style lang="sass">
   .app-panel.inactive
     display: none
@@ -119,4 +117,3 @@
     bottom: 20px
     right: 90px
 </style>
-

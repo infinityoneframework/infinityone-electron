@@ -37,10 +37,11 @@ class ServerManager {
       if (this.debug) { console.log('toggle-sidebar') }
 
       this.toggleSidebar()
-    });
+    })
 
     ipcRenderer.on('open-dev-tools', () => {
       if (this.debug) { console.debug('got open-dev-tools') }
+
       const currentComponent = store.get('settings/currentComponent')
       let $el
 
@@ -66,7 +67,8 @@ class ServerManager {
 
   loadProxy() {
     return new Promise(resolve => {
-      const proxyEnabled = ConfigUtil.getConfigItem('useProxy', false);
+      const proxyEnabled = ConfigUtil.getConfigItem('useProxy', false)
+
       if (proxyEnabled) {
         session.fromPartition('persist:webviewsession').setProxy({
           pacScript: ConfigUtil.getConfigItem('proxyPAC', ''),
@@ -80,7 +82,7 @@ class ServerManager {
           proxyBypassRules: ''
         }).then(resolve)
       }
-    });
+    })
   }
 
   toggleSidebar() {
@@ -88,7 +90,8 @@ class ServerManager {
   }
 
   initTabs() {
-    const servers = DomainUtil.getDomains();
+    const servers = DomainUtil.getDomains()
+
     if (servers.length > 0) {
       for (let i = 0; i < servers.length; i++) {
         const server = servers[i]
@@ -98,10 +101,8 @@ class ServerManager {
       if (store.get('settings/networkErrors') == {}) {
         this.activateTab(ConfigUtil.getConfigItem('lastActiveTab'))
       }
-      // Remove focus from the settings icon at sidebar bottom
-      // this.$settingsButton.classList.remove('active');
     } else {
-      this.openSettings('servers/new');
+      this.openSettings('servers/new')
     }
   }
 
@@ -112,46 +113,47 @@ class ServerManager {
   }
 
   checkServers() {
-    return this.initServers(DomainUtil.getDomains());
+    return this.initServers(DomainUtil.getDomains())
   }
 
   initServers(servers) {
-    if (this.debug) { console.warn('initServers', servers) }
+    if (this.debug) { console.debug('initServers', servers) }
 
     return new Promise(resolve => {
       if (servers.length === 0) {
-        resolve(servers);
+        resolve(servers)
       } else {
-        let cnt = servers.length;
+        let cnt = servers.length
 
         for (let i = 0; i < servers.length; i++) {
-          const server = servers[i];
+          const server = servers[i]
 
           DomainUtil.verifyServer(server).then(
             serverConfig => {
               if (this.debug) {
-                console.warn('same?', server.url, this.isServerChanged(server, serverConfig))
-                console.warn('serverConfig', serverConfig)
+                console.debug('same?', server.url, this.isServerChanged(server, serverConfig))
+                console.debug('serverConfig', serverConfig)
               }
 
-              // if (server.alias !== serverConfig.alias || server.iconUrl !== serverConfig.iconUrl) {
               if (this.isServerChanged(server, serverConfig)) {
                 DomainUtil.updateDomain(i, serverConfig)
-                if (this.debug) { console.warn('updated server', i, store.get(`settings/servers`)[i]) }
+                if (this.debug) {
+                  console.debug('updated server', i, store.get(`settings/servers`)[i])
+                }
               }
               if (--cnt <= 0) {
-                resolve();
+                resolve()
               }
             },
             () => {
               if (--cnt <= 0) {
-                resolve();
+                resolve()
               }
             }
-          );
+          )
         }
       }
-    });
+    })
   }
 
   isServerChanged(server, serverConfig) {
@@ -161,36 +163,9 @@ class ServerManager {
   }
 
   registerIpcs() {
-    // const webviewListeners = {
-    //   'webview-reload': 'reload',
-    //   back: 'back',
-    //   focus: 'focus',
-    //   forward: 'forward',
-    //   zoomIn: 'zoomIn',
-    //   zoomOut: 'zoomOut',
-    //   zoomActualSize: 'zoomActualSize',
-    //   'log-out': 'logOut',
-    //   'tab-devtools': 'openDevTools'
-    // };
-
-    // for (const key in webviewListeners) {
-    //   ipcRenderer.on(key, () => {
-    //     try {
-    //       const { webview: activeWebview} = this.tabs[this.activeTabIndex] || {}
-    //       if (activeWebview) {
-    //         activeWebview[webviewListeners[key]]()
-    //       }
-    //     }
-    //     catch (error) {
-    //       console.warn(error)
-    //       console.log('tabs, activeTabIndex', this.tabs, this.activeTabIndex)
-    //     }
-    //   });
-    // }
-
     ipcRenderer.on('open-settings', (event, settingNav) => {
-      this.openSettings(settingNav);
-    });
+      this.openSettings(settingNav)
+    })
 
     ipcRenderer.on('open-about', () => {
       return this.openAbout()
@@ -200,20 +175,16 @@ class ServerManager {
       return this.openSettings('shortcuts')
     })
 
-    // ipcRenderer.on('reload-viewer', this.reloadView.bind(this, this.tabs[this.activeTabIndex].props.index));
-
-    // ipcRenderer.on('reload-current-viewer', this.reloadCurrentView.bind(this));
-
     ipcRenderer.on('hard-reload', () => {
-      ipcRenderer.send('reload-full-app');
-    });
+      ipcRenderer.send('reload-full-app')
+    })
 
     ipcRenderer.on('clear-app-data', () => {
-      ipcRenderer.send('clear-app-settings');
-    });
+      ipcRenderer.send('clear-app-settings')
+    })
 
     ipcRenderer.on('switch-server-tab', (event, index) => {
-      this.activateTab(index);
+      this.activateTab(index)
     })
 
     ipcRenderer.on('reload-viewer', (event, servers) => {
@@ -256,12 +227,13 @@ class ServerManager {
 				}
 				return canvas
       }
-      ipcRenderer.send('update-taskbar-icon', createOverlayIcon(messageCount).toDataURL(), String(messageCount))
+      ipcRenderer.send('update-taskbar-icon', createOverlayIcon(messageCount).toDataURL(),
+        String(messageCount))
     })
   }
 
   openSettings(nav = 'settings') {
-    if (this.debug) { console.warn('openSettings', nav) }
+    if (this.debug) { console.debug('openSettings', nav) }
 
     router.push({ path: `/${nav}` })
   }
@@ -289,6 +261,5 @@ class ServerManager {
 
 window.onload = () => {
   const serverManager = new ServerManager()
-
   serverManager.init()
 }

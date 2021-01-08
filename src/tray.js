@@ -1,18 +1,17 @@
 'use strict'
 /* global __static */
+
 import path from 'path'
 import electron from 'electron'
 import ConfigUtil from '@/utils/config-util.js'
 import DomainUtil from '@/utils/domain-util.js'
+import i18n from '@/i18n'
 
+const $t = msg => i18n.tc(msg)
+const debug = false
 const {ipcRenderer, remote} = electron
 const {Tray, Menu, nativeImage, BrowserWindow} = remote
-
-// const APP_ICON = './assets/tray/tray'
 const APP_ICON = path.join(__static, 'tray', 'tray')
-
-// console.warn('from try __dirname', __dirname)
-// console.warn('APP_ICON', APP_ICON)
 
 const iconPath = () => {
 	if (process.platform === 'linux') {
@@ -50,7 +49,7 @@ const config = {
 
 const renderCanvas = function (arg) {
 	config.unreadCount = arg
-	console.log('renderCanvas', arg, config.unreadCount)
+	if (debug) { console.log('renderCanvas', arg, config.unreadCount) }
 
 	return new Promise(resolve => {
 		const SIZE = config.size * config.pixelRatio
@@ -76,7 +75,6 @@ const renderCanvas = function (arg) {
 		ctx.stroke()
 		// Count or Icon
 		if (HAS_COUNT) {
-			console.warn('HAS_COUNT...')
 			ctx.fillStyle = color
 			ctx.textAlign = 'center'
 			if (config.unreadCount > 99) {
@@ -121,10 +119,9 @@ function sendAction(action) {
 const createTray = function () {
 	window.tray = new Tray(iconPath())
 	const contextMenu = Menu.buildFromTemplate([{
-		label: 'About',
+		label: $t('About'),
 		click() {
       // We need to focus the main window first
-      console.log('About clicked')
 			ipcRenderer.send('focus-app')
 			sendAction('open-about')
 		}
@@ -133,7 +130,7 @@ const createTray = function () {
 		type: 'separator'
 	},
 	{
-		label: 'Focus',
+		label: $t('Focus'),
 		click() {
 			ipcRenderer.send('focus-app')
 		}
@@ -142,7 +139,7 @@ const createTray = function () {
 		type: 'separator'
 	},
 	{
-		label: 'Settings',
+		label: $t('Settings'),
 		click() {
 			ipcRenderer.send('focus-app')
 			sendAction('open-settings')
@@ -152,7 +149,7 @@ const createTray = function () {
 		type: 'separator'
 	},
 	{
-		label: 'Quit',
+		label: $t('Quit'),
 		click() {
 			ipcRenderer.send('quit-app')
 		}
@@ -184,7 +181,8 @@ ipcRenderer.on('destroytray', event => {
 
 const getToolTip = function () {
 	const { url } = DomainUtil.getDomain(ConfigUtil.getConfigItem('lastActiveTab'))
-	return `Infinity One\nActive Server: ${url}\n`
+	const activeServerMsg = $t('Active Server: {url}', { url })
+	return `Infinity One\n${activeServerMsg}\n`
 }
 
 ipcRenderer.on('tray', (event, arg) => {
@@ -197,12 +195,12 @@ ipcRenderer.on('tray', (event, arg) => {
 		if (arg === 0) {
 			unread = arg
 			window.tray.setImage(iconPath())
-			window.tray.setToolTip(prefix + 'No unread messages')
+			window.tray.setToolTip($t('{prefix} No unread messages', { prefix }))
 		} else {
 			unread = arg
 			renderNativeImage(arg).then(image => {
 				window.tray.setImage(image)
-				window.tray.setToolTip(prefix + arg + ' unread messages')
+				window.tray.setToolTip($t('{prefix} unread messages', { prefix: prefix + arg }))
 			})
 		}
 	}
@@ -223,7 +221,7 @@ function toggleTray() {
 		if (process.platform === 'linux' || process.platform === 'win32') {
 			renderNativeImage(unread).then(image => {
 				window.tray.setImage(image)
-				window.tray.setToolTip(unread + ' unread messages')
+				window.tray.setToolTip($t('{prefix} unread messages', { prefix: unread }))
 			})
 		}
 		ConfigUtil.setConfigItem('trayIcon', true)

@@ -3,10 +3,7 @@
 import Vue from "vue"
 import axios from "axios"
 
-// Full config:  https://github.com/axios/axios#request-config
-// axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || ''
-// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+const debug = false
 
 let config = {
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
@@ -42,7 +39,7 @@ _axios.interceptors.response.use(
 Plugin.install = function(Vue, options) {
   Vue.axios = _axios
   window.axios = _axios
-  console.debug(options)
+  if (debug) { console.debug(options) }
   Object.defineProperties(Vue.prototype, {
     axios: {
       get() {

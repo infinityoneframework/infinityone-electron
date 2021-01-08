@@ -4,7 +4,6 @@ import i18n from '@/i18n'
 const $t = msg => i18n.tc(msg)
 
 const deleteProp = (object, prop) => Object.keys(object).reduce((obj, key) => {
-  console.log('object type', typeof object, typeof obj)
   if (key !== prop) {
     obj[key] = object[key]
   }
@@ -24,7 +23,7 @@ const errorBoxes = {
   settings: (dialog) => {
     dialog.showErrorBox(
       $t('Error saving settings'),
-      $t('We encountered error while saving current settings.')
+      $t('We encountered an error while saving current settings.')
     )
   }
 }

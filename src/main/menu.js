@@ -125,8 +125,6 @@ class AppMenu {
       }, {
         label: $t('Show App Data'),
         click() {
-          // Remove this
-          console.log("show app data path", app.getPath('userData'))
           shell.openPath(app.getPath('userData'))
         }
       }

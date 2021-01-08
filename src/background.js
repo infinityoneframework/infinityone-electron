@@ -16,13 +16,9 @@ import Logger from '@/utils/logger-util'
 import config from '@/config'
 
 const {
-    // initPopupsConfigurationMain,
-    // getPopupTarget,
-    // setupAlwaysOnTopMain,
     setupPowerMonitorMain,
     setupScreenSharingMain
-} = require('jitsi-meet-electron-utils');
-// const appMenu = require('@/main/menu')
+} = require('jitsi-meet-electron-utils')
 
 ConfigUtil.reloadDB()
 
@@ -97,7 +93,7 @@ async function createWindow() {
   if (!gotTheLock) {
     app.quit()
     return
-  } 
+  }
 
   const mainWindowState = windowStateKeeper({
 		defaultWidth: 1100,
@@ -128,10 +124,8 @@ async function createWindow() {
       webSecurity: false,
       nodeIntegration: true,
       experimentalFeatures: true, // Insertable streams, for E2EE.
-      // nativeWindowOpen: true,
       webviewTag: true,
       enableRemoteModule: true,
-      // preload: path.join(__dirname, 'preload.js'),
       allowRunningInsecureContent: true,
     }
   })
@@ -150,26 +144,12 @@ async function createWindow() {
     win.loadURL("app://./index.html")
 
     appUpdater()
-
-    // showOrMinimizeWindow(win)
   }
 
-  // initPopupsConfigurationMain(mainWindow)
-  // setupAlwaysOnTopMain(mainWindow)
   setupPowerMonitorMain(win)
   setupScreenSharingMain(win, config.appName)
 
-  // mainWindow.webContents.on('new-window', (event, url, frameName) => {
-  //     const target = getPopupTarget(url, frameName)
-
-  //     if (!target || target === 'browser') {
-  //         event.preventDefault()
-  //         openExternalLink(url)
-  //     }
-  // })
-
   win.on("closed", () => {
-    // win = null
     mainWindow = null
     global.mainPage = null
   })
@@ -185,8 +165,6 @@ async function createWindow() {
       }
     }
   })
-
-  // win.setTitle('InfinityOne')
 
   win.on('enter-full-screen', () => {
     win.webContents.send('enter-fullscreen')
@@ -214,18 +192,6 @@ async function createWindow() {
 
   win.webContents.on('dom-ready', () => {
     if (debug) { console.log('[background] dom-ready') }
-    // session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-    //   callback({ responseHeaders: Object.assign({
-    //       // "Content-Security-Policy": [ "default-src 'self' http://localhost:8080" ]
-    //       "Content-Security-Policy": [ "frame-src *" ]
-    //   }, details.responseHeaders)})
-    // })
-
-    // if (ConfigUtil.getConfigItem('startMinimized')) {
-    //   mainWindow.minimize()
-    // } else {
-    //   mainWindow.show()
-    // }
   })
 
   win.webContents.on('did-finish-load', () => {
@@ -237,7 +203,6 @@ async function createWindow() {
   win.webContents.on('open-dev-tools', () => {
     if (debug) { console.warn('[background] page on open-dev-tools') }
   })
-
 
   return win
 }
@@ -285,12 +250,6 @@ app.on("ready", async () => {
     // Install Vue Devtools
     if (debug) { console.log('[background] installing vuejs_devtools') }
 
-    // require('vue-devtools').install().then(resp => {
-    //   console.log('vue install', resp)
-    // })
-    // .catch(error => {
-    //   console.warn('vue install errror', error)
-    // })
     try {
       await installExtension(VUEJS_DEVTOOLS)
     } catch (e) {
@@ -312,7 +271,7 @@ app.on("ready", async () => {
   global.mainPage = page
 
   ipcMain.on('open-dev-tools', () => {
-    if (debug) { console.warn('[background] ipcMain.on open-dev-tools') }
+    if (debug) { console.log('[background] ipcMain.on open-dev-tools') }
   })
 
   ipcMain.on('reload-app', () => {
@@ -355,7 +314,7 @@ app.on("ready", async () => {
     if (mainWindow.isVisible()) {
       mainWindow.hide()
     } else {
-      console.log('[background] show')
+      if (debug) { console.log('[background] show') }
       mainWindow.show()
     }
   })
@@ -380,8 +339,6 @@ app.on("ready", async () => {
   })
 
   ipcMain.on('update-menu', (event, props) => {
-    // if (debug) { console.log('[background] update-menu') }
-    // console.warn('... update-menu', store.get('settings/activeServerId'))
     appMenu.setMenu(props)
   })
 
@@ -389,9 +346,7 @@ app.on("ready", async () => {
     const payload = mutation.payload
     if (payload === undefined || payload === null) { return }
 
-    // if (debug) { console.log('vuex-mutation', mutation) }
     if (payload.expr) {
-      // if (debug) { console.log('vuex', mutation) }
       store.set(payload.expr, payload.value)
     } else {
       store.commit(mutation.type, payload)
@@ -399,10 +354,9 @@ app.on("ready", async () => {
   })
 
   ipcMain.on('toggleAutoLauncher', (event, autoLaunchValue) => {
-    console.log('toggle setAutoLaunch', autoLaunchValue, setAutoLaunch)
+    if (debug) { console.log('toggle setAutoLaunch', autoLaunchValue, setAutoLaunch) }
     try {
       setAutoLaunch(autoLaunchValue)
-      // console.log('after toggleSetAutoLaunch')
     }
     catch(error) {
       console.log('error', error)
@@ -428,7 +382,7 @@ app.on("ready", async () => {
   // in the main apps debug console, run the following:
   //
   // `require('electron').ipcRenderer.send('execjs', 'ls -l')
-  // 
+  //
   // You should see the output of the command in the main process window.
   ipcMain.on('execjs', (event, script) => {
     console.log('execjs', script)

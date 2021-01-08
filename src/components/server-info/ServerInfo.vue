@@ -169,14 +169,10 @@
             .catch(error => {
               console.warn('error', error)
               this.verifying = false
-              this.$notification.error(this.$t('Problem verifing servers!'), { ...opts, timer: 8 })
+              this.$notification.error(this.$t('Problem verifying servers!'), { ...opts, timer: 8 })
             })
         }, 1)
       },
     },
   }
 </script>
-<style lang="sass" scoped>
-  //
-</style>
-

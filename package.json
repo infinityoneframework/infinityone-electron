@@ -1,21 +1,21 @@
 {
   "name": "infinityone",
   "productName": "InfinityOne",
-  "version": "2.0.0-beta02",
+  "version": "2.0.0-rc1",
   "private": true,
   "license": "MIT",
   "copyright": "E-MetroTel Global Inc.",
   "description": "InfinityOne Desktop Application",
   "author": {
-    "name": "E-Metrotel Global Inc.",
+    "name": "E-MetroTel Global Inc.",
     "email": "support@emetrotel.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/infinityoneframework/infinityone-electron-vue.git"
+    "url": "https://github.com/infinityoneframework/infinityone-electron.git"
   },
   "bugs": {
-    "url": "https://github.com/infinityoneframework/infinityone-electron-vue/issues"
+    "url": "https://github.com/infinityoneframework/infinityone-electron/issues"
   },
   "engins": {
     "node": ">=10.0.0"

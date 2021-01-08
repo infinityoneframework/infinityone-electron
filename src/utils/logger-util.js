@@ -6,6 +6,7 @@ const { initSetUp } = require('./default-util')
 
 initSetUp()
 let app = null
+
 if (process.type === 'renderer') {
 	app = require('electron').remote.app
 } else {

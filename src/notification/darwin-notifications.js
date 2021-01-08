@@ -5,16 +5,16 @@ import url from 'url'
 import ConfigUtil from '@/utils/config-util'
 import Helpers from './helpers'
 
-console.debug('before node-mac-notifier')
+const debug = false
+
+if (debug) { console.debug('before node-mac-notifier') }
 const MacNotifier = require('node-mac-notifier')
-console.debug('MacNotifier', MacNotifier)
 
 let replyHandler
 let clickHandler
 
 class DarwinNotification {
 	constructor(title, opts) {
-		console.debug('DarwinNotification constructor')
 		if (DarwinNotification.permission === 'denied') {
 			return
 		}
@@ -23,10 +23,6 @@ class DarwinNotification {
 		const { host, protocol } = location
 		const { icon } = opts
 		const profilePic = url.resolve(`${protocol}//${host}`, icon)
-
-		console.log('profilePic', profilePic)
-
-    console.log('permission: ', DarwinNotification.permission)
 
 		this.tag = opts.tag
 		const notification = new MacNotifier(title, Object.assign(opts, {

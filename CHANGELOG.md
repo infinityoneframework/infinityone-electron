@@ -1,5 +1,9 @@
 # InfinityOne Desktop Client Changelog
 
+# 2.0.0-rc01 (2021-01-11)
+
+* Release cleanup
+
 ## 2.0.0-beta02 (2020-12-18)
 
 ### Bug Fixes

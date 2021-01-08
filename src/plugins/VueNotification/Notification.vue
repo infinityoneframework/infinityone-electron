@@ -229,7 +229,6 @@ export default {
       if (!notificationContainer) {
         notificationContainer = document.createElement("div");
         notificationContainer.classList.add("notificationCenter");
-        console.warn('target', this.target, this.props)
         document.querySelector(this.target).appendChild(notificationContainer);
         // document.body.appendChild(notificationContainer);
       }
@@ -357,5 +356,3 @@ export default {
   }
 }
 </style>
-
-

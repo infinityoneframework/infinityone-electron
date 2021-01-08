@@ -38,7 +38,7 @@
               <v-text-field
                 v-model="domain"
                 :rules="urlRules"
-                label="InfinityOne URL"
+                :label="$t('InfinityOne URL')"
                 required
                 style="margin-left: 10px;width: calc(100% - 85px); display: inline-block"
                 @keyup.enter="validate"
@@ -84,7 +84,8 @@
         urlRules: [
           v => !!v || this.$t('InfinityOne URL is required'),
           v => v.length > 2 || this.$t('InfinityOne URL must be at least 3 characters long'),
-          v => /^(([a-z][a-z0-9\-_]+\.[a-z0-9\-_]+(\.[a-z0-9\-_]+)*)|(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}))(:\d+)?$/i.test(v) || this.$t('InfinityOne URL must be a IP address or a domain name!'),
+          v => /^(([a-z][a-z0-9\-_]+\.[a-z0-9\-_]+(\.[a-z0-9\-_]+)*)|(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}))(:\d+)?$/i.test(v) ||
+            this.$t('InfinityOne URL must be an IP address or a domain name!'),
           v => !DomainUtil.duplicateDomain(v) || this.$t('Server already exists'),
         ],
         connect: this.$t('Connect'),
@@ -118,9 +119,9 @@
             }
             setTimeout(timeout, 1)
           });
-        }) 
+        })
         .catch(errorMessage => {
-          if (debug) { console.warn('addDomain error', errorMessage) }
+          if (debug) { console.debug('addDomain error', errorMessage) }
 
           this.connect = this.$t('Connect');
           alert(errorMessage)

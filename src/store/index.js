@@ -1,12 +1,11 @@
 import Vue from "vue"
 import Vuex from "vuex"
 import pathify from 'vuex-pathify'
-// import VuexPersistence from 'vuex-persist'
 import * as modules from './modules'
 import persist from './persist-plugin'
 import broadcaster from './ipc-broadcaster'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
   plugins: [
@@ -15,4 +14,4 @@ export default new Vuex.Store({
     broadcaster.plugin,
   ],
   modules,
-});
+})

@@ -62,7 +62,7 @@ class LinuxUpdateUtil {
 				fs.unlinkSync(linuxUpdateJsonPath)
 				dialog.showErrorBox(
 					$t('Error saving update notifications.'),
-					$t('We encountered error while saving update notifications.')
+					$t('We encountered an error while saving update notifications.')
 				)
 				logger.error('Error while JSON parsing updates.json: ')
 				logger.error(err)

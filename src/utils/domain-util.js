@@ -119,13 +119,13 @@ class DomainUtil {
   }
 
   serverRetryTicks(count) {
-    if (count <= config.serverRetryThreshould1) {
+    if (count <= config.serverRetryThreshold1) {
       return config.serverRetryTime1
     }
-    if (count <= config.serverRetryThreshould2) {
+    if (count <= config.serverRetryThreshold2) {
       return config.serverRetryTime2
     }
-    if (count <= config.serverRetryThreshould3) {
+    if (count <= config.serverRetryThreshold3) {
       return config.serverRetryTime3
     }
     return config.serverRetryTime4
@@ -536,7 +536,6 @@ class DomainUtil {
       const filePath = this.generateFilePath(url)
 
       const ref = setTimeout(() => {
-        console.log('saveServerIcon timeout')
         resolve(defaultIconUrl)
       }, 3000)
 

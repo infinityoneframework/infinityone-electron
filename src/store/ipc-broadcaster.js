@@ -17,7 +17,7 @@ const send = theMutation => {
     }
   }
   catch(err) {
-    console.warn('faild on type', mutation.type)
+    console.warn('failed on type', mutation.type)
     // this will fail on certain types
     // do nothing
   }

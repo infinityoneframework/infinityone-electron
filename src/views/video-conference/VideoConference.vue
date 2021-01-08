@@ -28,6 +28,7 @@
   import { get, sync } from 'vuex-pathify'
   import path from 'path'
 
+  const debug = false
   const isDev = require('electron-is-dev')
   const name = 'VideoConference'
 
@@ -52,7 +53,8 @@
 
     watch: {
       url (current, previous) {
-        console.debug('url change', current, previous)
+        if (debug) { console.debug('url change', current, previous) }
+
         if (current && !previous) {
           new URL(current).searchParams.forEach((val, key) => {
             this.$store.set(`video/${key}`, val)
@@ -66,11 +68,14 @@
       },
 
       videoClose (current, previous) {
-        console.debug('watch videoActive', current, previous)
+        if (debug) { console.debug('watch videoActive', current, previous) }
+
         if (current && !previous) {
           const $el = document.querySelector('webview#video-container')
-          console.debug('closing tab', $el)
+          if (debug) { console.debug('closing tab', $el) }
+
           this.videoClose = false
+
           if ($el) {
             $el.executeJavaScript('window.jitsiApi.executeCommand("hangup")')
           } else {
@@ -93,7 +98,6 @@
       },
 
       closeHandler () {
-        console.debug('closeHandler')
         const $el = document.querySelector('webview#video-container')
 
         if ($el) {
@@ -106,7 +110,6 @@
       },
 
       domReady () {
-        console.debug('domReady')
         this.ready = true
       },
     },
@@ -117,4 +120,3 @@
     height: 100vh
     width: 100%
 </style>
-

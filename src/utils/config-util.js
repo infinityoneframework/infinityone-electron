@@ -9,10 +9,11 @@ import i18n from '@/i18n'
 const { BrowserWindow } = require('electron')
 
 const DEBUG = false
+const $t = msg => i18n.tc(msg)
+
 let instance = null
 let dialog = null
 let app = null
-const $t = msg => i18n.tc(msg)
 
 const	userDataPath = () => {
 	return path.join(app.getPath('userData'), '/settings.json')

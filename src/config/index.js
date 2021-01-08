@@ -11,7 +11,7 @@ export default {
   serverRetryTime2: 30000,
   serverRetryTime3: 60000,
   serverRetryTime4: 300000,
-  serverRetryThreshould1: 20,
-  serverRetryThreshould2: 120,
-  serverRetryThreshould3: 4 * 120
+  serverRetryThreshold1: 20,
+  serverRetryThreshold2: 120,
+  serverRetryThreshold3: 4 * 120
 }

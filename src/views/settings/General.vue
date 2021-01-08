@@ -63,6 +63,8 @@
   import ConfigUtil from '@/utils/config-util'
   import { ipcRenderer } from 'electron'
 
+  const debug = false
+
   export default {
     name: 'GeneralSettings',
 
@@ -124,14 +126,14 @@
             ConfigUtil.resetAppSettings()
             break
           case 'add':
-            console.log('add action')
+            if (debug) { console.log('add action') }
             break
-          case 'startAtLogin': 
-            console.log('startAtLogin clicked', this.config.startAtLogin)
+          case 'startAtLogin':
+            if (debug) { console.log('startAtLogin clicked', this.config.startAtLogin) }
             ipcRenderer.send('toggleAutoLauncher', this.config.startAtLogin)
             break
           default:
-            console.log('default action', action)
+            if (debug) { console.log('default action', action) }
         }
       },
 
@@ -141,7 +143,3 @@
     },
   }
 </script>
-<style lang="sass" scoped>
-
-</style>
-

@@ -60,16 +60,11 @@
   </v-card-text>
 </template>
 <script>
-  // const mac = false
   const mac = process.platform === 'darwin'
   const userOSKey = mac ? '⌘' : 'Ctrl'
 
   export default {
     name: 'ShortcutSettings',
-
-    components: {
-      // Kbd: () => import('@/components/Kbd'),
-    },
 
     data () {
       return {
@@ -134,12 +129,9 @@
           }
           return [keys[1], keys[0], keys[2]]
         }
-        return group.items.filter((item) => !item.os || item.os === os).map((item) => mac ? item :  { ...item, keys: reverseWin(item.keys )})
+        return group.items.filter((item) => !item.os || item.os === os).map((item) =>
+          mac ? item :  { ...item, keys: reverseWin(item.keys )})
       },
     }
   }
 </script>
-<style lang="sass" scoped>
-  //
-</style>
-

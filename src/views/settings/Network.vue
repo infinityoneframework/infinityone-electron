@@ -87,6 +87,8 @@
   import { sync } from 'vuex-pathify'
   import configUtil from '@/utils/config-util'
 
+  const debug = false
+
   export default {
     name: 'NetworkSettings',
     data () {
@@ -130,7 +132,7 @@
 
     methods: {
       change (field) {
-        console.log('change', field)
+        if (debug) { console.log('change', field) }
         if (field === 'useProxy') {
           this.showFields = this.fields.useProxy
         }
@@ -139,7 +141,7 @@
 
       method (type) {
         if (type === 'submit' ) {
-          console.log('submitting form', this.fields)
+          if (debug) { console.log('submitting form', this.fields) }
           configUtil.saveConfigItems(this.fields)
           this.showSave = false
         } else if (type === 'cancel') {

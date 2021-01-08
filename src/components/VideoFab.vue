@@ -48,7 +48,6 @@
       },
 
       showVideo () {
-        console.debug('showVideo')
         if (this.videoActive) {
           this.$router.push({ path: '/video' })
         }
@@ -56,7 +55,3 @@
     },
   }
 </script>
-<style lang="sass" scoped>
-  //
-</style>
-

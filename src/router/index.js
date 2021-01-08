@@ -1,7 +1,6 @@
 import Vue from "vue";
 import store from '@/store'
-import VueRouter from "vue-router";
-import Home from "../views/Home"
+import VueRouter from "vue-router"
 import Settings from '@/views/Settings'
 import Servers from '@/views/settings/Servers'
 import General from '@/views/settings/General'
@@ -12,16 +11,11 @@ import VideoConference from '@/views/video-conference'
 import About from '@/views/About'
 import NetworkError from '@/views/NetworkError'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const debug = false
 
 const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home
-  },
   {
     path: "/about",
     name: "About",
@@ -88,8 +82,6 @@ const getComponent = ({ name }) => {
       return ServerWebView
     case 'Settings':
       return Settings
-    case 'Home':
-      return Home
     case 'AddServer':
       return OrganizationForm
     case 'Organizations':
