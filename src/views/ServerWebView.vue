@@ -35,13 +35,14 @@
           @did-start-loading="didStartLoading(server.serverId)"
           @did-stop-loading="didFinishLoad($event, server.serverId)"
           @dom-ready="domReady($event, server.serverId)"
+          @context-menu="contextMenu"
         />
       </template>
     </v-container>
   </v-main>
 </template>
 <script>
-  import { ipcRenderer} from 'electron'
+  import { ipcRenderer } from 'electron'
   import { get, sync } from 'vuex-pathify'
   import SystemUtil from '@/utils/system-util'
   import path from 'path'
@@ -127,6 +128,10 @@
     },
 
     methods: {
+      contextMenu (event) {
+        ipcRenderer.send('spellCheck', event.params)
+      },
+
       logOut (id) {
         const $el = document.querySelector(`webview[data-server-id="${id}"]`)
         if ($el) {

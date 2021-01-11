@@ -109,7 +109,6 @@ router.beforeEach((to, from, next) => {
 
   const component = getComponent(to)
   store.set('settings/currentComponent', component)
-
   store.set('settings/settingsDrawer', !!to.meta.settings)
 })
 

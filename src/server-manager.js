@@ -33,6 +33,16 @@ class ServerManager {
 
     this.registerIpcs()
 
+    ipcRenderer.on('replace-misspelling', (e, m) => {
+      const currentComponent = store.get('settings/currentComponent')
+      let $el
+      if (currentComponent.name === 'ServerWebView') {
+        const serverId = store.get('settings/activeServerId')
+        $el = document.querySelector(`webview[data-server-id="${serverId}"]`)
+        $el.replaceMisspelling(m)
+      }
+    })
+
     ipcRenderer.on('toggle-sidebar', () => {
       if (this.debug) { console.log('toggle-sidebar') }
 

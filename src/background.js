@@ -1,7 +1,7 @@
 "use strict"
 /* global __static */
 
-import { app, protocol, BrowserWindow, ipcMain } from "electron"
+import { app, protocol, BrowserWindow, ipcMain, Menu, MenuItem } from "electron"
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer"
 import windowStateKeeper from 'electron-window-state'
@@ -84,6 +84,34 @@ const showOrMinimizeWindow = win => {
   }
 }
 
+const handleSpellCheck = params => {
+  const menu = new Menu()
+
+  const replaceMisspelling = suggestion => {
+    mainWindow.webContents.replaceMisspelling(suggestion)
+    mainWindow.webContents.send('replace-misspelling', suggestion)
+  }
+
+  for (const suggestion of params.dictionarySuggestions) {
+    menu.append(new MenuItem({
+      label: suggestion,
+      click: () => replaceMisspelling(suggestion),
+    }))
+  }
+
+  // Allow users to add the misspelled word to the dictionary
+  if (params.misspelledWord) {
+    menu.append(
+      new MenuItem({
+        label: 'Add to dictionary',
+        click: () => mainWindow.webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
+      })
+    )
+  }
+
+  menu.popup()
+}
+
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } }
@@ -127,6 +155,7 @@ async function createWindow() {
       webviewTag: true,
       enableRemoteModule: true,
       allowRunningInsecureContent: true,
+      spellcheck: true,
     }
   })
 
@@ -164,6 +193,10 @@ async function createWindow() {
         win.hide()
       }
     }
+  })
+
+  win.webContents.on('context-menu', (event, params) => {
+    handleSpellCheck(params)
   })
 
   win.on('enter-full-screen', () => {
@@ -400,6 +433,10 @@ app.on("ready", async () => {
         console.log(`stdout: '${stdout}'`)
       }
     })
+  })
+
+  ipcMain.on('spellCheck', (event, params) => {
+    handleSpellCheck(params)
   })
 })
 
