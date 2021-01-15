@@ -245,6 +245,12 @@ class DomainUtil {
   verifyServer(server) {
     if (this.debug) { console.debug('verifyServer', server, server.url) }
 
+    if (!server.url && server.alias && server.alias.startsWith('http')) {
+      if (this.debug) { console.debug('attempting to get server by alias', server.alias) }
+      server.url = server.alias
+      return this.checkDomain(server.url, true)
+    }
+
     if (!(server.local && server.local.url)) {
       if (this.debug) { console.debug('no local url for', server.url) }
       return this.checkDomain(server.url, true)

@@ -1,5 +1,6 @@
 <template>
   <v-tooltip
+    v-if="item.icon"
     :key="inx"
     right
     :color="tipColor"
