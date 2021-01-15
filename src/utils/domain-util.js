@@ -243,7 +243,13 @@ class DomainUtil {
   }
 
   verifyServer(server) {
-    if (this.debug) { console.debug('verifyServer', server.url) }
+    if (this.debug) { console.debug('verifyServer', server, server.url) }
+
+    if (!server.url && server.alias && server.alias.startsWith('http')) {
+      if (this.debug) { console.debug('attempting to get server by alias', server.alias) }
+      server.url = server.alias
+      return this.checkDomain(server.url, true)
+    }
 
     if (!(server.local && server.local.url)) {
       if (this.debug) { console.debug('no local url for', server.url) }
@@ -284,6 +290,10 @@ class DomainUtil {
     if (this.debug) {
       console.debug('checkDomain', domain, silent)
     }
+    if (!domain) {
+      return Promise.reject($t('Invalid domain.'))
+    }
+
     if (!silent && this.duplicateDomain(domain)) {
       // Do not check duplicate in silent mode
       return Promise.reject($t('This server has been added.'))
@@ -592,6 +602,10 @@ class DomainUtil {
     }
     if (typeof server !== 'object') {
       new Error('server must be an object')
+    }
+
+    if (!(server.local.url && server.url)) {
+       return new Error('missing server url')
     }
 
     this.verifyServer(server).then(newServerConf => {

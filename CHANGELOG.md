@@ -1,5 +1,12 @@
 # InfinityOne Desktop Client Changelog
 
+# 2.0.0-rc2 (2021-01-15)
+
+### Bug Fixes
+
+* [FIX] Remove exceptions for invalid server config
+
+
 # 2.0.0-rc1 (2021-01-11)
 
 * Release cleanup

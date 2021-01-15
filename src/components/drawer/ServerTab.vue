@@ -1,5 +1,6 @@
 <template>
   <v-tooltip
+    v-if="item.icon"
     :key="inx"
     right
     :color="tipColor"
@@ -32,7 +33,7 @@
         </v-list-item-icon>
       </v-list-item>
     </template>
-    <span v-text="item.alias + ' (' + item.url.replace(/^https?:\/\//, '') + ')'" />
+    <span v-text="item.alias + ' (' + stripUrl(item.url) + ')'" />
   </v-tooltip>
 </template>
 
@@ -81,12 +82,22 @@
 
       icon (path) {
         // win 10 hack. v-icon seems to be stripping \ from the url.
+        if (!path) {
+          return ''
+        }
         const src = path.replace(/\\/g, '/')
         if (src.startsWith('/') || /^[A-Z]:/.test(src)) {
           const url = `local-resource://${src}`
           return url
         }
         return src
+      },
+
+      stripUrl (url)  {
+        if (!url) {
+          return ''
+        }
+        return url.replace(/^https?:\/\//, '')
       },
     },
   }
