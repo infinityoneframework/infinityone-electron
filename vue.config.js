@@ -12,7 +12,8 @@ module.exports = {
       builderOptions: {
         publish: ['github'],
         copyright: '©2020 E-MetroTel Global Inc.',
-        appId: 'com.emetrotel.infinityone-electron',
+        // appId: 'com.emetrotel.infinityone-electron',
+        appId: 'org.emetrotel.infinityone-electron',
         afterSign: "scripts/notarize.js",
         asar: true,
         asarUnpack: ['**/*.node'],

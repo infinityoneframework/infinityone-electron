@@ -6635,16 +6635,21 @@ jimp@^0.9.3:
     core-js "^3.4.1"
     regenerator-runtime "^0.13.3"
 
-"jitsi-meet-electron-utils@github:infinityoneframework/jitsi-meet-electron-utils":
-  version "2.0.11"
-  resolved "https://codeload.github.com/infinityoneframework/jitsi-meet-electron-utils/tar.gz/ac4e491552b19d00b94cd93efeece8fae30d67cc"
+"jitsi-meet-electron-utils@github:jitsi/jitsi-meet-electron-utils#v2.0.12":
+  version "2.0.12"
+  resolved "https://codeload.github.com/jitsi/jitsi-meet-electron-utils/tar.gz/d606da675a3e8f2e327bcf12b15120b188002d0f"
   dependencies:
+    jitsi-meet-logger "github:jitsi/jitsi-meet-logger#v1.0.0"
     mac-screen-capture-permissions "^1.1.0"
     nan "^2.14.0"
     postis "^2.2.0"
     prebuild-install "^5.3.0"
     robotjs "0.6.0"
     semver "7.1.1"
+
+"jitsi-meet-logger@github:jitsi/jitsi-meet-logger#v1.0.0":
+  version "1.0.0"
+  resolved "https://codeload.github.com/jitsi/jitsi-meet-logger/tar.gz/4add5bac2e4cea73a05f42b7596ee03c7f7a2567"
 
 jpeg-js@^0.3.4:
   version "0.3.7"

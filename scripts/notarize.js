@@ -21,7 +21,8 @@ exports.default = async function notarizing(context) {
 
   return new Promise((resolve, reject) => {
     notarize({
-      appBundleId: 'com.emetrotel.infinityone-electron',
+      // appBundleId: 'com.emetrotel.infinityone-electron',
+      appBundleId: 'org.emetrotel.infinityone-electron',
       appPath: appPath,
       appleId: process.env.APPLEID,
       appleIdPassword: process.env.APPLEIDPASS,

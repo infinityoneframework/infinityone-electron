@@ -1,7 +1,7 @@
 {
   "name": "infinityone",
   "productName": "InfinityOne",
-  "version": "2.0.0-rc2",
+  "version": "2.0.0-rc3",
   "private": true,
   "license": "MIT",
   "copyright": "E-MetroTel Global Inc.",
@@ -57,7 +57,7 @@
     "electron-log": "^4.2.2",
     "electron-updater": "^4.3.4",
     "electron-window-state": "^5.0.3",
-    "jitsi-meet-electron-utils": "github:infinityoneframework/jitsi-meet-electron-utils",
+    "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#v2.0.12",
     "gsap": "^3.5.0",
     "node-json-db": "^1.1.0",
     "request": "^2.88.2",
