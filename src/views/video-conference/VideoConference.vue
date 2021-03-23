@@ -8,6 +8,7 @@
       class="ma-0 pa-0"
     >
       <webview
+        v-if="videoActive"
         id="video-container"
         :class="enabledClass"
         style="height: 100%; width: 100%"
@@ -62,7 +63,9 @@
           this.videoActive = true
           if (this.ready) {
             const $el = document.getElementById('video-container')
-            $el.reload()
+            if ($el) {
+              $el.reload()
+            }
           }
         }
       },
@@ -101,6 +104,7 @@
         const $el = document.querySelector('webview#video-container')
 
         if ($el) {
+          if (debug) { console.debug('closeHandler', $el) }
           this.videoActive = false
           this.$store.set('video/url', null)
           this.$router.push({ path: `/server/${this.lastServerId}` })

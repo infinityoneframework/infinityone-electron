@@ -1,5 +1,12 @@
 # InfinityOne Desktop Client Changelog
 
+# 2.0.0-rc3 (2021-03-??)
+
+### Bug Fixes
+
+* [FIX] Remove video web control when video conference ends
+
+
 # 2.0.0-rc2 (2021-01-15)
 
 ### Bug Fixes
