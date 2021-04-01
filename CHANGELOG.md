@@ -1,6 +1,6 @@
 # InfinityOne-Electron Changelog
 
-# 2.0.0-rc3 (2021-04-01)
+# 2.0.0-rc4 (2021-04-01)
 
 ### Bug Fixes
 
