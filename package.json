@@ -81,7 +81,7 @@
     "@vue/cli-service": "~4.4.0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/test-utils": "^1.0.3",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-eslint": "^10.1.0",
     "chai": "^4.1.2",
     "electron": "^9.0.0",
