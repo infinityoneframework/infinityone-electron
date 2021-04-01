@@ -1,31 +1,26 @@
-# Dependency directories
-node_modules/
+.DS_Store
+node_modules
+/dist
 
-# npm cache directory
-.npm
+# local env files
+.env.local
+.env.*.local
+.env
 
-# Compiled binary build directory
-dist/
-
-# Logs
-logs
-*.log
+# Log files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
-// osx garbage
-*.DS_Store
-.DS_Store
-
-# dotenv environment variables file
-.env
-
-# miscellaneous
+# Editor directories and files
 .idea
-config.gypi
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# Test generated files
-tests/package.json
-
-.python-version
+#Electron-builder output
+/dist_electron
