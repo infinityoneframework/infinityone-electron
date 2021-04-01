@@ -1,9 +1,0 @@
-/* Override css rules */
-
-.portico-wrap>.header {
-    display: none;
-}
-
-.portico-container>.footer {
-    display: none;
-}
