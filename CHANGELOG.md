@@ -1,6 +1,6 @@
 # InfinityOne Desktop Client Changelog
 
-# 2.0.0-rc3 (2021-03-??)
+# 2.0.0-rc3 (2021-04-01)
 
 ### Bug Fixes
 
