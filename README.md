@@ -1,29 +1,32 @@
-# infinityone-electron-vue
+# Infinity One Desktop Client
+[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 
-## Project setup
-```
-yarn install
-```
+Desktop client for Infinity One. Available for Mac, Linux and Windows.
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+<img src="readme_hero.png"/>
 
-### Compiles and minifies for production
-```
-yarn build
-```
 
-### Run your unit tests
-```
-yarn test:unit
-```
+# Download
+Please see [installation guide](https://chat.spallen.com/help/desktop-app-install-guide).
 
-### Lints and fixes files
-```
-yarn lint
-```
+# Features
+* Sign in to multiple servers
+* Desktop Notifications
+* Video Conferencing
+* Multi-language SpellChecker
+* OSX/Win/Linux installers
+* Automatic Updates (macOS/Windows/Linux)
+* Keyboard shortcuts
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# Development
+Please see our [development guide](./development.md) to get started and run app locally.
+
+# Contribute
+
+If you want to contribute please make sure to read [our documentation about contributing](./CONTRIBUTING.md) first.
+
+* [Issue Tracker](https://github.com/infinityoneframework/infinityone-electron/issues)
+* [Source Code](https://github.com/infinityoneframework/infinityone-electron/)
+
+# License
+Released under the [MIT](./LICENSE) license.
