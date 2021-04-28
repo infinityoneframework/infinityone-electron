@@ -2258,13 +2258,12 @@ aws4@^1.8.0:
   resolved "https://registry.npm.taobao.org/aws4/download/aws4-1.10.0.tgz#a17b3a8ea811060e74d47d306122400ad4497ae2"
   integrity sha1-oXs6jqgRBg501H0wYSJACtRJeuI=
 
-axios@^0.18.0:
-  version "0.18.1"
-  resolved "https://registry.npm.taobao.org/axios/download/axios-0.18.1.tgz#ff3f0de2e7b5d180e757ad98000f1081b87bcea3"
-  integrity sha1-/z8N4ue10YDnV62YAA8Qgbh7zqM=
+axios@^0.21.1:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
   dependencies:
-    follow-redirects "1.5.10"
-    is-buffer "^2.0.2"
+    follow-redirects "^1.10.0"
 
 babel-eslint@^10.1.0:
   version "10.1.0"
@@ -3775,13 +3774,6 @@ debug@3.2.6, debug@^3.1.1, debug@^3.2.5:
   dependencies:
     ms "^2.1.1"
 
-debug@=3.1.0:
-  version "3.1.0"
-  resolved "https://registry.npm.taobao.org/debug/download/debug-3.1.0.tgz?cache=0&sync_timestamp=1589881975655&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdebug%2Fdownload%2Fdebug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
-  integrity sha1-W7WgZyYotkFJVmuhaBnmFRjGcmE=
-  dependencies:
-    ms "2.0.0"
-
 debug@^4.0.1, debug@^4.1.0, debug@^4.1.1:
   version "4.1.1"
   resolved "https://registry.npm.taobao.org/debug/download/debug-4.1.1.tgz?cache=0&sync_timestamp=1589881975655&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdebug%2Fdownload%2Fdebug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
@@ -4340,10 +4332,10 @@ electron-window-state@^5.0.3:
     jsonfile "^4.0.0"
     mkdirp "^0.5.1"
 
-electron@^9.0.0:
-  version "9.1.0"
-  resolved "https://registry.npm.taobao.org/electron/download/electron-9.1.0.tgz#ca77600c9e4cd591298c340e013384114d3d8d05"
-  integrity sha1-yndgDJ5M1ZEpjDQOATOEEU09jQU=
+electron@^9.4.4:
+  version "9.4.4"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-9.4.4.tgz#2a74a0655a74bd326216672c5ae6ed3a44451446"
+  integrity sha512-dcPlTrMWQu5xuSm6sYV42KK/BRIqh3erM8v/WtZqaDmG7pkCeJpvw26Dgbqhdt78XmqqGiN96giEe6A3S9vpAQ==
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"
@@ -5156,17 +5148,15 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
-follow-redirects@1.5.10:
-  version "1.5.10"
-  resolved "https://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.5.10.tgz?cache=0&sync_timestamp=1592518600310&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ffollow-redirects%2Fdownload%2Ffollow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
-  integrity sha1-e3qfmuov3/NnhqlP9kPtB/T/Xio=
-  dependencies:
-    debug "=3.1.0"
-
 follow-redirects@^1.0.0:
   version "1.12.1"
   resolved "https://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.12.1.tgz?cache=0&sync_timestamp=1592518600310&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ffollow-redirects%2Fdownload%2Ffollow-redirects-1.12.1.tgz#de54a6205311b93d60398ebc01cf7015682312b6"
   integrity sha1-3lSmIFMRuT1gOY68Ac9wFWgjErY=
+
+follow-redirects@^1.10.0:
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.0.tgz#f5d260f95c5f8c105894491feee5dc8993b402fe"
+  integrity sha512-0vRwd7RKQBTt+mgu87mtYeofLFZpTas2S9zY+jIeuLJMNvudIgF52nr19q40HOwH5RrhWIPuj9puybzSJiRrVg==
 
 for-in@^1.0.2:
   version "1.0.2"
@@ -5605,10 +5595,10 @@ growl@1.10.5:
   resolved "https://registry.npm.taobao.org/growl/download/growl-1.10.5.tgz#f2735dc2283674fa67478b10181059355c369e5e"
   integrity sha1-8nNdwig2dPpnR4sQGBBZNVw2nl4=
 
-gsap@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/gsap/-/gsap-3.5.0.tgz#ca1753b062309390b46fb3fda245a4a65fb52c2a"
-  integrity sha512-YewxuqAE0HjytsKFRUnjiUz0TatHR6L1aJjalYob1ajQpWCZz+gTRJOgQWiABfTEcA6YpgUcrWLEvEIM1Fftpg==
+gsap@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/gsap/-/gsap-3.6.1.tgz#618f2338044d2b78b8cbced8ea8bf246d1cf6407"
+  integrity sha512-hCkjk7UVbeEmlpFbiy7lIsh742bwVlMhdCnnQ1CvVOAdURyPX8hXjFZGh/0YzUyAcWPyJPE0/paMhSYtLhGlfA==
 
 gzip-size@^5.0.0:
   version "5.1.1"
@@ -6234,7 +6224,7 @@ is-buffer@^1.1.5:
   resolved "https://registry.npm.taobao.org/is-buffer/download/is-buffer-1.1.6.tgz?cache=0&sync_timestamp=1588707106955&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fis-buffer%2Fdownload%2Fis-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
   integrity sha1-76ouqdqg16suoTqXsritUf776L4=
 
-is-buffer@^2.0.2, is-buffer@~2.0.3, is-buffer@~2.0.4:
+is-buffer@~2.0.3, is-buffer@~2.0.4:
   version "2.0.4"
   resolved "https://registry.npm.taobao.org/is-buffer/download/is-buffer-2.0.4.tgz?cache=0&sync_timestamp=1588707106955&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fis-buffer%2Fdownload%2Fis-buffer-2.0.4.tgz#3e572f23c8411a5cfd9557c849e3665e0b290623"
   integrity sha1-PlcvI8hBGlz9lVfISeNmXgspBiM=
@@ -6635,17 +6625,16 @@ jimp@^0.9.3:
     core-js "^3.4.1"
     regenerator-runtime "^0.13.3"
 
-"jitsi-meet-electron-utils@github:jitsi/jitsi-meet-electron-utils#v2.0.12":
-  version "2.0.12"
-  resolved "https://codeload.github.com/jitsi/jitsi-meet-electron-utils/tar.gz/d606da675a3e8f2e327bcf12b15120b188002d0f"
+"jitsi-meet-electron-utils@github:jitsi/jitsi-meet-electron-utils#v2.0.16":
+  version "2.0.16"
+  resolved "https://codeload.github.com/jitsi/jitsi-meet-electron-utils/tar.gz/75d935cc2641791e39c49301cb4cc8b1519efafe"
   dependencies:
     jitsi-meet-logger "github:jitsi/jitsi-meet-logger#v1.0.0"
-    mac-screen-capture-permissions "^1.1.0"
+    mac-screen-capture-permissions "github:saghul/mac-screen-capture-permissions#14568eba35b0eebcf2b1b5c40d2c35fec3d88e89"
     nan "^2.14.0"
     postis "^2.2.0"
     prebuild-install "^5.3.0"
     robotjs "0.6.0"
-    semver "7.1.1"
 
 "jitsi-meet-logger@github:jitsi/jitsi-meet-logger#v1.0.0":
   version "1.0.0"
@@ -7248,19 +7237,19 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
-mac-screen-capture-permissions@^1.1.0:
+"mac-screen-capture-permissions@github:saghul/mac-screen-capture-permissions#14568eba35b0eebcf2b1b5c40d2c35fec3d88e89":
   version "1.1.0"
-  resolved "https://registry.yarnpkg.com/mac-screen-capture-permissions/-/mac-screen-capture-permissions-1.1.0.tgz#a60ac7f06240d5037b0e86d409723ec36d077c8c"
-  integrity sha512-jMRumlB3FScui/7yW+5FqqbuO7CQ0XOJVT5oTsb7W9eRQDhCIpJpIF0XxLVXwq2DIOp0fYsz1LFiBjnyDYULyQ==
+  resolved "https://codeload.github.com/saghul/mac-screen-capture-permissions/tar.gz/14568eba35b0eebcf2b1b5c40d2c35fec3d88e89"
   dependencies:
     electron-util "^0.13.0"
     execa "^2.0.4"
-    macos-version "^5.2.0"
+    macos-version "^5.2.1"
+    prebuild-install "^6.0.0"
 
-macos-version@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/macos-version/-/macos-version-5.2.0.tgz#ae3a25155877902bbc5f5ae6b2d57b1ddce2e79e"
-  integrity sha512-egt1bqVE1evUjCup2QN2F0g42AuVcumdM31xNbABz+uXquYPzWP4OrqDm+HpCfM+6t4JzWrzABQW+MZM+FW+Jg==
+macos-version@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/macos-version/-/macos-version-5.2.1.tgz#056c943aac8edb81d7cafef6445b7ca1d7a2e56e"
+  integrity sha512-OHJU8nTNxHYL1FQhD+nZawWgXKXAqDGr4kluLtaqKO4au3cR41y1mKuVShOU5U4rOYiuPanljq6oFGmV2B9DFA==
   dependencies:
     semver "^5.6.0"
 
@@ -7562,7 +7551,7 @@ mixin-deep@^1.2.0:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
 
-mkdirp-classic@^0.5.2:
+mkdirp-classic@^0.5.2, mkdirp-classic@^0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/mkdirp-classic/-/mkdirp-classic-0.5.3.tgz#fa10c9115cc6d8865be221ba47ee9bed78601113"
   integrity sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==
@@ -7760,6 +7749,13 @@ node-abi@^2.13.0, node-abi@^2.7.0:
   version "2.19.1"
   resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-2.19.1.tgz#6aa32561d0a5e2fdb6810d8c25641b657a8cea85"
   integrity sha512-HbtmIuByq44yhAzK7b9j/FelKlHYISKQn0mtvcBrU5QBkhoCMp5bu8Hv5AI34DcKfOAcJBcOEMwLlwO62FFu9A==
+  dependencies:
+    semver "^5.4.1"
+
+node-abi@^2.21.0:
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-2.26.0.tgz#355d5d4bc603e856f74197adbf3f5117a396ba40"
+  integrity sha512-ag/Vos/mXXpWLLAYWsAoQdgS+gW7IwvgMLOgqopm/DbzAjazLltzgzpVMsFlgmo9TzG5hGXeaBZx2AI731RIsQ==
   dependencies:
     semver "^5.4.1"
 
@@ -9012,6 +9008,26 @@ prebuild-install@^5.3.0, prebuild-install@^5.3.3:
     tunnel-agent "^0.6.0"
     which-pm-runs "^1.0.0"
 
+prebuild-install@^6.0.0:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/prebuild-install/-/prebuild-install-6.1.2.tgz#6ce5fc5978feba5d3cbffedca0682b136a0b5bff"
+  integrity sha512-PzYWIKZeP+967WuKYXlTOhYBgGOvTRSfaKI89XnfJ0ansRAH7hDU45X+K+FZeI1Wb/7p/NnuctPH3g0IqKUuSQ==
+  dependencies:
+    detect-libc "^1.0.3"
+    expand-template "^2.0.3"
+    github-from-package "0.0.0"
+    minimist "^1.2.3"
+    mkdirp-classic "^0.5.3"
+    napi-build-utils "^1.0.1"
+    node-abi "^2.21.0"
+    noop-logger "^0.1.1"
+    npmlog "^4.0.1"
+    pump "^3.0.0"
+    rc "^1.2.7"
+    simple-get "^3.0.3"
+    tar-fs "^2.0.0"
+    tunnel-agent "^0.6.0"
+
 prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/prelude-ls/download/prelude-ls-1.1.2.tgz?cache=0&sync_timestamp=1585869208651&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fprelude-ls%2Fdownload%2Fprelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
@@ -9830,11 +9846,6 @@ semver@7.0.0:
   version "7.0.0"
   resolved "https://registry.npm.taobao.org/semver/download/semver-7.0.0.tgz#5f3ca35761e47e05b206c6daff2cf814f0316b8e"
   integrity sha1-XzyjV2HkfgWyBsba/yz4FPAxa44=
-
-semver@7.1.1:
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.1.1.tgz#29104598a197d6cbe4733eeecbe968f7b43a9667"
-  integrity sha512-WfuG+fl6eh3eZ2qAf6goB7nhiCd7NPXhmyFxigB/TOkQyeLP8w8GsVehvtGNtnNmyboz4TgeK40B1Kbql/8c5A==
 
 semver@^6.0.0, semver@^6.1.0, semver@^6.1.2, semver@^6.2.0, semver@^6.3.0:
   version "6.3.0"
