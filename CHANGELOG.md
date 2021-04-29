@@ -1,5 +1,13 @@
 # InfinityOne-Electron Changelog
 
+# 2.0.0-rc5 (2021-04-28)
+
+### Bug Fixes
+
+* [FIX] Remove most build and runtime warnings
+  * Improved Video Conferences by updated JitsiMeet dependencies
+
+
 # 2.0.0-rc4 (2021-04-01)
 
 ### Bug Fixes
