@@ -125,6 +125,9 @@
           }
         })
       },
+      servers(curr) {
+        console.debug('servers change', curr)
+      },
     },
 
     methods: {

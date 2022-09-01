@@ -25,6 +25,9 @@
   import DomainUtil from '@/utils/domain-util'
 
   const name = 'FlexTab'
+  const DEBUG = false
+  const debug = DEBUG ? console.debug : () => null
+
   export default {
     name: name,
 
@@ -62,7 +65,15 @@
         const el = document.querySelector('webview.enabled')
         if (item.id === 'reload') {
           if (el) {
+            debug('reload !!')
+            if (window.newReload) {
+              debug('new reload')
+              el.executeJavaScript('window.location.reload()')
+              return
+            }
+            debug('old reload start')
             el.reload()
+            debug('old reload done')
           }
         } else if (item.id === 'back') {
           if (el) {

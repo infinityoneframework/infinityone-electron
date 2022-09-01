@@ -5,7 +5,8 @@ import DomainUtil from '@/utils/domain-util'
 import store from '@/store'
 
 const { session } = remote
-const DEBUG = false
+const DEBUG = true
+const debug = DEBUG ? console.debug : () => null
 
 let instance = null
 
@@ -50,7 +51,7 @@ class ServerManager {
     })
 
     ipcRenderer.on('open-dev-tools', () => {
-      if (this.debug) { console.debug('got open-dev-tools') }
+      debug('got open-dev-tools')
 
       const currentComponent = store.get('settings/currentComponent')
       let $el
@@ -127,7 +128,7 @@ class ServerManager {
   }
 
   initServers(servers) {
-    if (this.debug) { console.debug('initServers', servers) }
+    debug('initServers', servers)
 
     return new Promise(resolve => {
       if (servers.length === 0) {
@@ -140,16 +141,12 @@ class ServerManager {
 
           DomainUtil.verifyServer(server).then(
             serverConfig => {
-              if (this.debug) {
-                console.debug('same?', server.url, this.isServerChanged(server, serverConfig))
-                console.debug('serverConfig', serverConfig)
-              }
+                debug('same?', server.url, this.isServerChanged(server, serverConfig))
+                debug('serverConfig', serverConfig)
 
               if (this.isServerChanged(server, serverConfig)) {
                 DomainUtil.updateDomain(i, serverConfig)
-                if (this.debug) {
-                  console.debug('updated server', i, store.get(`settings/servers`)[i])
-                }
+                debug('updated server', i, store.get(`settings/servers`)[i])
               }
               if (--cnt <= 0) {
                 resolve()
@@ -173,6 +170,7 @@ class ServerManager {
   }
 
   registerIpcs() {
+    console.debug('registerIpcs...')
     ipcRenderer.on('open-settings', (event, settingNav) => {
       this.openSettings(settingNav)
     })
